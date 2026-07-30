@@ -1,0 +1,46 @@
+*
+{
+margin: 0;
+}
+.box
+{
+width: 1000px;
+height: 700px;
+background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV-FqHhilmAvjvTuaqyM8SnwrSdsCLiTNWl6AZYlroX3I00jfJWp3yf6E&s=10);
+background-repeat: no-repeat;
+background-size: cover;
+margin-left: 300px;
+margin-top: 50px;
+}
+.bj
+{
+background-color: black;
+width: 200px;
+height: 100px;
+color: white;
+font-family: sans-serif;
+border-radius: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+.ll
+{
+width: 700px;
+height: 700px;
+background: radial-gradient(white,black,white,black,white,black,white,black,white,black,white,black,white,black,white,black);
+margin: auto;
+border-radius: 50%;
+transition-property: all;
+transition-duration: 3s;
+}
+.ll:hover{
+background: radial-gradient(red,black,red,black,red,black,red,black,red,black,red,black,red,black,red,black);
+}
+.ll:active
+{
+background: radial-gradient(green,black,green,black,green,black,green,black,green,black,green,black,green,black,green,black);
+border-radius: 100px;
+rotate: 5turn;
+}
