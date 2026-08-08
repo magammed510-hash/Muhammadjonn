@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tj">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperMarket - Маҳсулоти Тоҷикистон</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- Навигатсия ва ҷустуҷӯ -->
+<header class="search-bar-section">
+    <div class="container search-container">
+        <div class="dropdown-category">
+            <span>🛒 SuperMarket TJ</span>
+        </div>
+        <div class="search-input-box">
+            <input type="text" id="searchInput" placeholder="Ҷустуҷӯи маҳсулот...">
+            <button class="search-btn" aria-label="Ҷустуҷӯ">🔍</button>
+        </div>
+        <div class="user-actions">
+            <button id="cartModalBtn" class="cart-open-btn" aria-label="Сабад">
+                🛒 Сабад <span class="badge" id="cartBadge">0</span>
+            </button>
+            <button id="darkModeToggle" class="dark-mode-btn" aria-label="Режими торик">🌙</button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-container">
+        <div class="hero-text">
+            <h1>Маҳсулоти тозаи ватанӣ,<br>Расонидани босуръат.</h1>
+            <p>Беҳтарин маҳсулоти хӯроквориро бо нархи дастрас харидорӣ кунед!</p>
+            <a href="#products" class="shop-now-btn">Харидро оғоз кунед</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e" alt="Supermarket">
+        </div>
+    </div>
+</section>
+
+<!-- Бахши Категорияҳо -->
+<section class="products-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Категорияҳо</h2>
+        </div>
+        <div class="category-grid">
+            <div class="category-card active" data-category="all">
+                <h3>🌐 Ҳамааш</h3>
+            </div>
+            <div class="category-card" data-category="fruits">
+                <h3>🍎 Меваҷот ва Сабзавот</h3>
+            </div>
+            <div class="category-card" data-category="sweets">
+                <h3>🍪 Шириниҳо</h3>
+            </div>
+            <div class="category-card" data-category="drinks">
+                <h3>🧃 Нӯшокиҳо</h3>
+            </div>
+            <div class="category-card" data-category="grocery">
+                <h3>🍞 Маҳсулоти хӯрокворӣ</h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Бахши Маҳсулот -->
+<section class="products-section" id="products">
+    <div class="container">
+        <div class="section-header">
+            <h2 id="sectionTitle">Ҳамаи маҳсулот</h2>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+            <!-- 1. Себ -->
+            <div class="product-card" data-category="fruits" data-name="Себи Соҳилӣ" data-base-price="12.00">
+                <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6" alt="Себ">
+                <h3>Себи Соҳилӣ</h3>
+                <p class="weight">1 кг</p>
+                <div class="price-box">
+                    <span class="old-price">15.00 сом</span>
+                    <span class="new-price product-price">12.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 2. Нон -->
+            <div class="product-card" data-category="grocery" data-name="Нони Фатир" data-base-price="6.00">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff" alt="Нон">
+                <h3>Нони Фатири Тоҷикӣ</h3>
+                <p class="weight">1 дона</p>
+                <div class="price-box">
+                    <span class="old-price">7.50 сом</span>
+                    <span class="new-price product-price">6.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 3. Набот -->
+            <div class="product-card" data-category="sweets" data-name="Наботи Хуҷанд" data-base-price="25.00">
+                <img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f" alt="Набот">
+                <h3>Наботи Асли Хуҷанд</h3>
+                <p class="weight">500 г</p>
+                <div class="price-box">
+                    <span class="old-price">30.00 сом</span>
+                    <span class="new-price product-price">25.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 4. Об -->
+            <div class="product-card" data-category="drinks" data-name="Оби Сиёма" data-base-price="4.00">
+                <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d" alt="Об">
+                <h3>Оби Маъдании Сиёма</h3>
+                <p class="weight">1.5 литр</p>
+                <div class="price-box">
+                    <span class="old-price">5.50 сом</span>
+                    <span class="new-price product-price">4.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+            </div>
+        </div>
+
+        <div id="emptySearchState" class="empty-state" style="display: none;">
+            <p>❌ Ягон маҳсулот ёфт нашуд.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Modal-и сабад ва фармоиш -->
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Сабади харид</h2>
+        <div id="cartItemsList" class="cart-items-container">
+            <p class="empty-cart-text">Сабади шумо холӣ аст.</p>
+        </div>
+        
+        <div class="cart-modal-total">
+            <span>Ҷами умумӣ:</span>
+            <strong id="modalTotalPrice">0.00 сом</strong>
+        </div>
+
+        <div class="checkout-form">
+            <h3>Маълумот барои таҳвил</h3>
+            <input type="text" id="clientName" placeholder="Номи шумо..." required>
+            <input type="text" id="clientPhone" placeholder="Рақами телефон (масалан: 900210802)..." required>
+            
+            <div class="location-box">
+                <input type="text" id="clientAddress" placeholder="Суроғаи худро нависед..." required>
+                <button type="button" id="getGpsBtn" class="gps-btn">📍 GPS</button>
+            </div>
+            
+            <div class="checkout-buttons">
+                <button id="sendWhatsApp" class="order-btn whatsapp-btn">📱 WhatsApp</button>
+                <button id="sendTelegram" class="order-btn telegram-btn">✈️ Telegram</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>
