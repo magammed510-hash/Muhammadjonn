@@ -209,3 +209,74 @@ document.getElementById('sendTelegram').addEventListener('click', () => {
     if (!text) return;
     window.open(`https://t.me/Amirshoev_2010?text=${encodeURIComponent(text)}`, '_blank');
 });
+
+// Тарҷумаҳо барои 4 забон
+const translations = {
+    tj: {
+        cart: "Сабад",
+        searchPlaceholder: "Ҷустуҷӯи маҳсулот...",
+        categories: "Категорияҳо"
+    },
+    ru: {
+        cart: "Корзина",
+        searchPlaceholder: "Поиск товаров...",
+        categories: "Категории"
+    },
+    en: {
+        cart: "Cart",
+        searchPlaceholder: "Search products...",
+        categories: "Categories"
+    },
+    uz: {
+        cart: "Savat",
+        searchPlaceholder: "Mahsulotlarni qidirish...",
+        categories: "Kategoriyalar"
+    }
+};
+
+// Функцияи ивазкунии забон
+function changeLanguage(lang) {
+    localStorage.setItem('selectedLanguage', lang);
+    
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+            element.innerText = translations[lang][key];
+        }
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+        const key = element.getAttribute("data-i18n-placeholder");
+        if (translations[lang] && translations[lang][key]) {
+            element.placeholder = translations[lang][key];
+        }
+    });
+}
+
+// Ҳангоми боршавии сайт забони интихобшударо мемонем
+window.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
+    changeLanguage(savedLang);
+});
+// Кор кардани Модали Танзимот
+const settingsModal = document.getElementById('settingsModal');
+const settingsBtn = document.getElementById('settingsBtn');
+const closeSettings = document.querySelector('.close-settings');
+
+if (settingsBtn) {
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'block';
+    });
+}
+
+if (closeSettings) {
+    closeSettings.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+        settingsModal.style.display = 'none';
+    }
+});

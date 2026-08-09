@@ -564,7 +564,18 @@ body.dark-theme .category-card {
     background-color: #1f2937;
     border-color: #374151;
 }
-
+.settings-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+.settings-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
 body.dark-theme .category-card h3 {
     color: #f3f4f6;
 }

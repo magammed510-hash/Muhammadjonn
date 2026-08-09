@@ -15,15 +15,25 @@
             <span>🛒 SuperMarket TJ</span>
         </div>
         <div class="search-input-box">
-            <input type="text" id="searchInput" placeholder="Ҷустуҷӯи маҳсулот...">
+            <input type="text" id="searchInput" placeholder="Ҷустуҷӯи маҳсулот..." data-i18n-placeholder="searchPlaceholder">
             <button class="search-btn" aria-label="Ҷустуҷӯ">🔍</button>
         </div>
+        
+        <!-- Илова кардани тугмаҳои интихоби 4 забон дар ҳидер -->
+        <div class="language-selector" style="display: flex; gap: 4px;">
+            <button onclick="changeLanguage('tj')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">TJ</button>
+            <button onclick="changeLanguage('ru')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">RU</button>
+            <button onclick="changeLanguage('en')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">EN</button>
+            <button onclick="changeLanguage('uz')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">UZ</button>
+        </div>
+
         <div class="user-actions">
             <button id="cartModalBtn" class="cart-open-btn" aria-label="Сабад">
-                🛒 Сабад <span class="badge" id="cartBadge">0</span>
+                🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadge">0</span>
             </button>
             <button id="darkModeToggle" class="dark-mode-btn" aria-label="Режими торик">🌙</button>
         </div>
+        <button id="settingsBtn" class="settings-btn" aria-label="Танзимот">⚙️</button>
     </div>
 </header>
 
@@ -453,7 +463,20 @@
         </div>
     </div>
 </div>
-
+<!-- Modal-и танзимот -->
+<div id="settingsModal" class="modal">
+    <div class="modal-content" style="max-width: 300px; text-align: center;">
+        <span class="close-settings" style="float: right; cursor: pointer; font-size: 20px;">&times;</span>
+        <h3 data-i18n="settings">Танзимот</h3>
+        <p>Интихоби забон / Выберите язык:</p>
+        <div class="language-selector" style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+            <button onclick="changeLanguage('tj')" style="padding: 8px; cursor: pointer;">🇹🇯 Тоҷикӣ</button>
+            <button onclick="changeLanguage('ru')" style="padding: 8px; cursor: pointer;">🇷🇺 Русский</button>
+            <button onclick="changeLanguage('en')" style="padding: 8px; cursor: pointer;">🇬🇧 English</button>
+            <button onclick="changeLanguage('uz')" style="padding: 8px; cursor: pointer;">🇺🇿 O‘zbekcha</button>
+        </div>
+    </div>
+</div>
 <script src="./script.js"></script>
 </body>
 </html>
