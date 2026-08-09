@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tj">
+<html lang="tg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,19 +18,17 @@
             <span>🛒 SuperMarket TJ</span>
         </div>
 
-        <!-- МЕНЮИ АСОСӢ БАРОИ КОМПЮТЕР -->
-    git add .
-        
         <div class="search-input-box">
             <input type="text" id="searchInput" placeholder="Ҷустуҷӯи маҳсулот..." data-i18n-placeholder="searchPlaceholder">
             <button class="search-btn" aria-label="Ҷустуҷӯ">🔍</button>
         </div>
 
         <div class="user-actions">
-            <button id="profileModalBtn" class="profile-btn" aria-label="Шахсият">👤</button>
-            <button id="cartModalBtn" class="cart-open-btn" aria-label="Сабад">
-                🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadge">0</span>
+            <!-- Сабад барои Компютер (дар бари боло) -->
+            <button id="cartModalBtn" class="cart-open-btn desktop-cart-btn">
+                🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadgeDesktop">0</span>
             </button>
+            <button id="profileModalBtn" class="profile-btn" aria-label="Шахсият">👤</button>
             <button id="darkModeToggle" class="dark-mode-btn" aria-label="Режими торик">🌙</button>
             <button id="settingsBtn" class="settings-btn" aria-label="Танзимот">⚙️</button>
         </div>
@@ -103,8 +101,8 @@
             <!-- 1. Себ -->
             <div class="product-card" data-category="fruits" data-name="Себи Соҳилӣ" data-base-price="12.00">
                 <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6" alt="Себ">
-                <h3>Себи Соҳилӣ</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p1">Себи Соҳилӣ</h3>
+                <p class="weight" data-i18n="w1">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">15.00 сом</span>
                     <span class="new-price product-price">12.00 сом</span>
@@ -120,8 +118,8 @@
             <!-- 2. Нон -->
             <div class="product-card" data-category="grocery" data-name="Нони Фатир" data-base-price="6.00">
                 <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff" alt="Нон">
-                <h3>Нони Фатири Тоҷикӣ</h3>
-                <p class="weight">1 дона</p>
+                <h3 data-i18n="p2">Нони Фатири Тоҷикӣ</h3>
+                <p class="weight" data-i18n="w2">1 дона</p>
                 <div class="price-box">
                     <span class="old-price">7.50 сом</span>
                     <span class="new-price product-price">6.00 сом</span>
@@ -137,8 +135,8 @@
             <!-- 3. Набот -->
             <div class="product-card" data-category="sweets" data-name="Наботи Хуҷанд" data-base-price="25.00">
                 <img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f" alt="Набот">
-                <h3>Наботи Асли Хуҷанд</h3>
-                <p class="weight">500 г</p>
+                <h3 data-i18n="p3">Наботи Асли Хуҷанд</h3>
+                <p class="weight" data-i18n="w3">500 г</p>
                 <div class="price-box">
                     <span class="old-price">30.00 сом</span>
                     <span class="new-price product-price">25.00 сом</span>
@@ -154,8 +152,8 @@
             <!-- 4. Об -->
             <div class="product-card" data-category="drinks" data-name="Оби Сиёма" data-base-price="4.00">
                 <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d" alt="Об">
-                <h3>Оби Маъдании Сиёма</h3>
-                <p class="weight">1.5 литр</p>
+                <h3 data-i18n="p4">Оби Маъдании Сиёма</h3>
+                <p class="weight" data-i18n="w4">1.5 литр</p>
                 <div class="price-box">
                     <span class="old-price">5.50 сом</span>
                     <span class="new-price product-price">4.00 сом</span>
@@ -171,8 +169,8 @@
             <!-- 5. Банан -->
             <div class="product-card" data-category="fruits" data-name="Бананҳои тоза" data-base-price="18.00">
                 <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e" alt="Банан">
-                <h3>Бананҳои тоза</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p5">Бананҳои тоза</h3>
+                <p class="weight" data-i18n="w5">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">22.00 сом</span>
                     <span class="new-price product-price">18.00 сом</span>
@@ -188,8 +186,8 @@
             <!-- 6. Помидор -->
             <div class="product-card" data-category="fruits" data-name="Помидори сабзавот" data-base-price="15.00">
                 <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea" alt="Помидор">
-                <h3>Помидори сабзавот</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p6">Помидори сабзавот</h3>
+                <p class="weight" data-i18n="w6">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">18.00 сом</span>
                     <span class="new-price product-price">15.00 сом</span>
@@ -205,8 +203,8 @@
             <!-- 7. Бодиринг -->
             <div class="product-card" data-category="fruits" data-name="Бодиринг" data-base-price="10.00">
                 <img src="https://images.unsplash.com/photo-1449300079323-02e209d9d3a6" alt="Бодиринг">
-                <h3>Бодиринг</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p7">Бодиринг</h3>
+                <p class="weight" data-i18n="w7">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">13.00 сом</span>
                     <span class="new-price product-price">10.00 сом</span>
@@ -222,8 +220,8 @@
             <!-- 8. Картошка -->
             <div class="product-card" data-category="grocery" data-name="Картошка" data-base-price="7.00">
                 <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da" alt="Картошка">
-                <h3>Картошка</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p8">Картошка</h3>
+                <p class="weight" data-i18n="w8">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">9.00 сом</span>
                     <span class="new-price product-price">7.00 сом</span>
@@ -239,8 +237,8 @@
             <!-- 9. Пиёз -->
             <div class="product-card" data-category="grocery" data-name="Пиёз" data-base-price="6.00">
                 <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da" alt="Пиёз">
-                <h3>Пиёз</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p9">Пиёз</h3>
+                <p class="weight" data-i18n="w9">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">8.00 сом</span>
                     <span class="new-price product-price">6.00 сом</span>
@@ -256,8 +254,8 @@
             <!-- 10. Шир -->
             <div class="product-card" data-category="grocery" data-name="Шир (1 литр)" data-base-price="11.00">
                 <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150" alt="Шир">
-                <h3>Шир (1 литр)</h3>
-                <p class="weight">1 л</p>
+                <h3 data-i18n="p10">Шир (1 литр)</h3>
+                <p class="weight" data-i18n="w10">1 л</p>
                 <div class="price-box">
                     <span class="old-price">14.00 сом</span>
                     <span class="new-price product-price">11.00 сом</span>
@@ -273,8 +271,8 @@
             <!-- 11. Қаймоқ -->
             <div class="product-card" data-category="grocery" data-name="Қаймоқ" data-base-price="25.00">
                 <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da" alt="Қаймоқ">
-                <h3>Қаймоқ</h3>
-                <p class="weight">400 г</p>
+                <h3 data-i18n="p11">Қаймоқ</h3>
+                <p class="weight" data-i18n="w11">400 г</p>
                 <div class="price-box">
                     <span class="old-price">30.00 сом</span>
                     <span class="new-price product-price">25.00 сом</span>
@@ -290,8 +288,8 @@
             <!-- 12. Тухм -->
             <div class="product-card" data-category="grocery" data-name="Тухм (1 дона)" data-base-price="2.00">
                 <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5" alt="Тухм">
-                <h3>Тухм (1 дона)</h3>
-                <p class="weight">1 дона</p>
+                <h3 data-i18n="p12">Тухм (1 дона)</h3>
+                <p class="weight" data-i18n="w12">1 дона</p>
                 <div class="price-box">
                     <span class="old-price">2.50 сом</span>
                     <span class="new-price product-price">2.00 сом</span>
@@ -307,8 +305,8 @@
             <!-- 13. Равған -->
             <div class="product-card" data-category="grocery" data-name="Равғани офтобпараст" data-base-price="22.00">
                 <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5" alt="Равған">
-                <h3>Равғани офтобпараст</h3>
-                <p class="weight">1 л</p>
+                <h3 data-i18n="p13">Равғани офтобпараст</h3>
+                <p class="weight" data-i18n="w13">1 л</p>
                 <div class="price-box">
                     <span class="old-price">26.00 сом</span>
                     <span class="new-price product-price">22.00 сом</span>
@@ -324,8 +322,8 @@
             <!-- 14. Орд -->
             <div class="product-card" data-category="grocery" data-name="Орд (1 кг)" data-base-price="8.00">
                 <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df" alt="Орд">
-                <h3>Орд (1 кг)</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p14">Орд (1 кг)</h3>
+                <p class="weight" data-i18n="w14">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">10.00 сом</span>
                     <span class="new-price product-price">8.00 сом</span>
@@ -341,8 +339,8 @@
             <!-- 15. Шакар -->
             <div class="product-card" data-category="grocery" data-name="Шакар" data-base-price="13.00">
                 <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Шакар">
-                <h3>Шакар</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p15">Шакар</h3>
+                <p class="weight" data-i18n="w15">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">16.00 сом</span>
                     <span class="new-price product-price">13.00 сом</span>
@@ -358,8 +356,8 @@
             <!-- 16. Чои сабз -->
             <div class="product-card" data-category="drinks" data-name="Чои сабз" data-base-price="15.00">
                 <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3" alt="Чои сабз">
-                <h3>Чои сабз</h3>
-                <p class="weight">100 г</p>
+                <h3 data-i18n="p16">Чои сабз</h3>
+                <p class="weight" data-i18n="w16">100 г</p>
                 <div class="price-box">
                     <span class="old-price">18.00 сом</span>
                     <span class="new-price product-price">15.00 сом</span>
@@ -375,8 +373,8 @@
             <!-- 17. Чои сиёҳ -->
             <div class="product-card" data-category="drinks" data-name="Чои сиёҳ" data-base-price="16.00">
                 <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Чои сиёҳ">
-                <h3>Чои сиёҳ</h3>
-                <p class="weight">100 г</p>
+                <h3 data-i18n="p17">Чои сиёҳ</h3>
+                <p class="weight" data-i18n="w17">100 г</p>
                 <div class="price-box">
                     <span class="old-price">20.00 сом</span>
                     <span class="new-price product-price">16.00 сом</span>
@@ -392,8 +390,8 @@
             <!-- 18. Шоколад -->
             <div class="product-card" data-category="sweets" data-name="Шоколад" data-base-price="20.00">
                 <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Шоколад">
-                <h3>Шоколад</h3>
-                <p class="weight">1 дона</p>
+                <h3 data-i18n="p18">Шоколад</h3>
+                <p class="weight" data-i18n="w18">1 дона</p>
                 <div class="price-box">
                     <span class="old-price">25.00 сом</span>
                     <span class="new-price product-price">20.00 сом</span>
@@ -409,8 +407,8 @@
             <!-- 19. Печенье -->
             <div class="product-card" data-category="sweets" data-name="Печенье" data-base-price="10.00">
                 <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35" alt="Печенье">
-                <h3>Печенье</h3>
-                <p class="weight">300 г</p>
+                <h3 data-i18n="p19">Печенье</h3>
+                <p class="weight" data-i18n="w19">300 г</p>
                 <div class="price-box">
                     <span class="old-price">13.00 сом</span>
                     <span class="new-price product-price">10.00 сом</span>
@@ -426,8 +424,8 @@
             <!-- 20. Лимон -->
             <div class="product-card" data-category="fruits" data-name="Лимон" data-base-price="30.00">
                 <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Лимон">
-                <h3>Лимон</h3>
-                <p class="weight">1 кг</p>
+                <h3 data-i18n="p20">Лимон</h3>
+                <p class="weight" data-i18n="w20">1 кг</p>
                 <div class="price-box">
                     <span class="old-price">35.00 сом</span>
                     <span class="new-price product-price">30.00 сом</span>
@@ -460,6 +458,27 @@
             <span data-i18n="total">Ҷами умумӣ:</span>
             <strong id="modalTotalPrice">0.00 сом</strong>
         </div>
+        <!-- Бахши Пардохти Dushanbe City бо 2 вариант -->
+<div class="dc-payment-section">
+    <h3 class="dc-section-title" data-i18n="dcPaymentTitle">💳 Пардохт тавассути Dushanbe City</h3>
+    
+    <div class="dc-options-container">
+        <!-- Варианти 1: QR Код -->
+        
+           
+            
+
+        <!-- Варианти 2: Тугмаи Картаи Ман -->
+        <a href="#" id="dcCardPayBtn" target="_blank" class="dc-card-option dc-direct-pay">
+            <div class="dc-icon-box">💳</div>
+            <div class="dc-info">
+                <span class="dc-title" data-i18n="dcCardTitle">Картаи Душанбе Сити</span>
+                <span class="dc-desc">8720 9090 6</span>
+            </div>
+            <span class="dc-action-btn pulse-btn" data-i18n="dcPayBtn">Пардохт</span>
+        </a>
+    </div>
+</div>
 
         <div class="checkout-form">
             <h3 data-i18n="deliveryInfo">Маълумот барои таҳвил</h3>
@@ -502,26 +521,35 @@
 
 <!-- Modal-и танзимот -->
 <div id="settingsModal" class="modal">
-    <div class="modal-content settings-modal-content">
+    <div class="modal-content settings-modal-content magic-settings-box">
         <span class="close-settings">&times;</span>
-        <h3 data-i18n="settings">Танзимот</h3>
-        <p data-i18n="selectLang">Интихоби забон:</p>
+        <h3 data-i18n="settings" class="magic-title">⚙️ Танзимот</h3>
+        <p data-i18n="selectLang" class="magic-subtitle">Интихоби забон:</p>
         
         <div class="lang-options-grid">
             <button onclick="changeLanguage('tj')" class="lang-option-btn">
-                <span class="flag">🇹🇯</span> <span class="lang-name">Тоҷикӣ</span>
+                <span class="flag">🇹🇯</span> <span class="lang-name" data-i18n="langTj">Тоҷикӣ</span>
             </button>
             <button onclick="changeLanguage('ru')" class="lang-option-btn">
-                <span class="flag">🇷🇺</span> <span class="lang-name">Русский</span>
+                <span class="flag">🇷🇺</span> <span class="lang-name" data-i18n="langRu">Русский</span>
             </button>
             <button onclick="changeLanguage('en')" class="lang-option-btn">
-                <span class="flag">🇬🇧</span> <span class="lang-name">English</span>
+                <span class="flag">🇬🇧</span> <span class="lang-name" data-i18n="langEn">English</span>
             </button>
             <button onclick="changeLanguage('uz')" class="lang-option-btn">
-                <span class="flag">🇺🇿</span> <span class="lang-name">O‘zbekcha</span>
+                <span class="flag">🇺🇿</span> <span class="lang-name" data-i18n="langUz">O‘zbekcha</span>
             </button>
         </div>
     </div>
+</div>
+
+<!-- Сабади волшебний бо дизайни махсус танҳо барои телефонҳои мобилӣ -->
+<div class="fixed-bottom-cart-panel magical-mobile-cart" id="fixedCartContainer">
+    <button id="cartModalBtnMobile" class="cart-open-btn magical-cart-btn">
+        <div class="magical-icon-box">🛒</div>
+        <span data-i18n="cart" class="magical-cart-text">Сабад</span> 
+        <span id="cartBadge" class="magical-badge">0</span>
+    </button>
 </div>
 
 <script src="./script.js"></script>
