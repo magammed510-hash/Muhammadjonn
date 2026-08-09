@@ -58,7 +58,7 @@ function updateBadge() {
 
 function updateCartUI() {
     if (cart.length === 0) {
-        cartItemsList.innerHTML = '<p class="empty-cart-text">Сабади шумо холӣ аст.</p>';
+        cartItemsList.innerHTML = '<p class="empty-cart-text" data-i18n="emptyCart">Сабади шумо холӣ аст.</p>';
         modalTotalPrice.textContent = '0.00 сом';
         return;
     }
@@ -210,38 +210,114 @@ document.getElementById('sendTelegram').addEventListener('click', () => {
     window.open(`https://t.me/Amirshoev_2010?text=${encodeURIComponent(text)}`, '_blank');
 });
 
-// Тарҷумаҳо барои 4 забон
+// Тарҷумаҳои пурра барои 4 забон
 const translations = {
     tj: {
+        settings: "Танзимот",
+        selectLang: "Интихоби забон:",
         cart: "Сабад",
         searchPlaceholder: "Ҷустуҷӯи маҳсулот...",
-        categories: "Категорияҳо"
+        heroTitle: "Маҳсулоти тозаи ватанӣ,<br>Расонидани босуръат.",
+        heroDesc: "Беҳтарин маҳсулоти хӯроквориро бо нархи дастрас харидорӣ кунед!",
+        shopNow: "Харидро оғоз кунед",
+        categoriesTitle: "Категорияҳо",
+        allCat: "🌐 Ҳамааш",
+        fruitsCat: "🍎 Меваҷот ва Сабзавот",
+        sweetsCat: "🍪 Шириниҳо",
+        drinksCat: "🧃 Нӯшокиҳо",
+        groceryCat: "🍞 Маҳсулоти хӯрокворӣ",
+        allProducts: "Ҳамаи маҳсулот",
+        addToCart: "🛒 Илова ба сабад",
+        cartTitle: "Сабади харид",
+        emptyCart: "Сабади шумо холӣ аст.",
+        total: "Ҷами умумӣ:",
+        deliveryInfo: "Маълумот барои таҳвил",
+        namePlaceholder: "Номи шумо...",
+        phonePlaceholder: "Рақами телефон (масалан: 900210802)...",
+        addressPlaceholder: "Суроғаи худро нависед..."
     },
     ru: {
+        settings: "Настройки",
+        selectLang: "Выберите язык:",
         cart: "Корзина",
         searchPlaceholder: "Поиск товаров...",
-        categories: "Категории"
+        heroTitle: "Свежие отечественные продукты,<br>Быстрая доставка.",
+        heroDesc: "Покупайте лучшие продукты питания по доступным ценам!",
+        shopNow: "Начать покупки",
+        categoriesTitle: "Категории",
+        allCat: "🌐 Все",
+        fruitsCat: "🍎 Фрукты и Овощи",
+        sweetsCat: "🍪 Сладости",
+        drinksCat: "🧃 Напитки",
+        groceryCat: "🍞 Продукты питания",
+        allProducts: "Все продукты",
+        addToCart: "🛒 В корзину",
+        cartTitle: "Корзина покупок",
+        emptyCart: "Ваша корзина пуста.",
+        total: "Итого:",
+        deliveryInfo: "Информация для доставки",
+        namePlaceholder: "Ваше имя...",
+        phonePlaceholder: "Номер телефона (например: 900210802)...",
+        addressPlaceholder: "Введите ваш адрес..."
     },
     en: {
+        settings: "Settings",
+        selectLang: "Select Language:",
         cart: "Cart",
         searchPlaceholder: "Search products...",
-        categories: "Categories"
+        heroTitle: "Fresh local products,<br>Fast delivery.",
+        heroDesc: "Buy the best grocery products at affordable prices!",
+        shopNow: "Start Shopping",
+        categoriesTitle: "Categories",
+        allCat: "🌐 All",
+        fruitsCat: "🍎 Fruits & Vegetables",
+        sweetsCat: "🍪 Sweets",
+        drinksCat: "🧃 Drinks",
+        groceryCat: "🍞 Groceries",
+        allProducts: "All Products",
+        addToCart: "🛒 Add to Cart",
+        cartTitle: "Shopping Cart",
+        emptyCart: "Your cart is empty.",
+        total: "Total:",
+        deliveryInfo: "Delivery Information",
+        namePlaceholder: "Your name...",
+        phonePlaceholder: "Phone number (e.g., 900210802)...",
+        addressPlaceholder: "Enter your address..."
     },
     uz: {
+        settings: "Sozlamalar",
+        selectLang: "Tilni tanlang:",
         cart: "Savat",
         searchPlaceholder: "Mahsulotlarni qidirish...",
-        categories: "Kategoriyalar"
+        heroTitle: "Yangi mahalliy mahsulotlar,<br>Tezkor yetkazib berish.",
+        heroDesc: "Eng yaxshi oziq-ovqat mahsulotlarini hamyonbop narxlarda xarid qiling!",
+        shopNow: "Xaridni boshlash",
+        categoriesTitle: "Kategoriyalar",
+        allCat: "🌐 Hammasi",
+        fruitsCat: "🍎 Mevalar va Sabzavotlar",
+        sweetsCat: "🍪 Shirinliklar",
+        drinksCat: "🧃 Ichimliklar",
+        groceryCat: "🍞 Oziq-ovqat",
+        allProducts: "Barcha mahsulotlar",
+        addToCart: "🛒 Savatga qo'shish",
+        cartTitle: "Savat",
+        emptyCart: "Savatgiz bo'sh.",
+        total: "Jami:",
+        deliveryInfo: "Yetkazib berish uchun ma'lumot",
+        namePlaceholder: "Ismingiz...",
+        phonePlaceholder: "Telefon raqam (masalan: 900210802)...",
+        addressPlaceholder: "Man manzilingizni kiriting..."
     }
 };
 
-// Функцияи ивазкунии забон
+// Функцияи ивазкунии забон ва пӯшидани модал
 function changeLanguage(lang) {
     localStorage.setItem('selectedLanguage', lang);
     
     document.querySelectorAll("[data-i18n]").forEach(element => {
         const key = element.getAttribute("data-i18n");
         if (translations[lang] && translations[lang][key]) {
-            element.innerText = translations[lang][key];
+            element.innerHTML = translations[lang][key];
         }
     });
 
@@ -251,6 +327,11 @@ function changeLanguage(lang) {
             element.placeholder = translations[lang][key];
         }
     });
+
+    const settingsModal = document.getElementById('settingsModal');
+    if (settingsModal) {
+        settingsModal.style.display = 'none';
+    }
 }
 
 // Ҳангоми боршавии сайт забони интихобшударо мемонем
@@ -258,6 +339,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
     changeLanguage(savedLang);
 });
+
 // Кор кардани Модали Танзимот
 const settingsModal = document.getElementById('settingsModal');
 const settingsBtn = document.getElementById('settingsBtn');

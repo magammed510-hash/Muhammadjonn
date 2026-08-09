@@ -18,22 +18,14 @@
             <input type="text" id="searchInput" placeholder="Ҷустуҷӯи маҳсулот..." data-i18n-placeholder="searchPlaceholder">
             <button class="search-btn" aria-label="Ҷустуҷӯ">🔍</button>
         </div>
-        
-        <!-- Илова кардани тугмаҳои интихоби 4 забон дар ҳидер -->
-        <div class="language-selector" style="display: flex; gap: 4px;">
-            <button onclick="changeLanguage('tj')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">TJ</button>
-            <button onclick="changeLanguage('ru')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">RU</button>
-            <button onclick="changeLanguage('en')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">EN</button>
-            <button onclick="changeLanguage('uz')" style="padding: 3px 6px; cursor: pointer; font-size: 12px;">UZ</button>
-        </div>
 
         <div class="user-actions">
             <button id="cartModalBtn" class="cart-open-btn" aria-label="Сабад">
                 🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadge">0</span>
             </button>
             <button id="darkModeToggle" class="dark-mode-btn" aria-label="Режими торик">🌙</button>
+            <button id="settingsBtn" class="settings-btn" aria-label="Танзимот">⚙️</button>
         </div>
-        <button id="settingsBtn" class="settings-btn" aria-label="Танзимот">⚙️</button>
     </div>
 </header>
 
@@ -41,9 +33,9 @@
 <section class="hero-section">
     <div class="container hero-container">
         <div class="hero-text">
-            <h1>Маҳсулоти тозаи ватанӣ,<br>Расонидани босуръат.</h1>
-            <p>Беҳтарин маҳсулоти хӯроквориро бо нархи дастрас харидорӣ кунед!</p>
-            <a href="#products" class="shop-now-btn">Харидро оғоз кунед</a>
+            <h1 data-i18n="heroTitle">Маҳсулоти тозаи ватанӣ,<br>Расонидани босуръат.</h1>
+            <p data-i18n="heroDesc">Беҳтарин маҳсулоти хӯроквориро бо нархи дастрас харидорӣ кунед!</p>
+            <a href="#products" class="shop-now-btn" data-i18n="shopNow">Харидро оғоз кунед</a>
         </div>
         <div class="hero-image">
             <img src="https://images.unsplash.com/photo-1542838132-92c53300491e" alt="Supermarket">
@@ -55,23 +47,23 @@
 <section class="products-section">
     <div class="container">
         <div class="section-header">
-            <h2>Категорияҳо</h2>
+            <h2 data-i18n="categoriesTitle">Категорияҳо</h2>
         </div>
         <div class="category-grid">
             <div class="category-card active" data-category="all">
-                <h3>🌐 Ҳамааш</h3>
+                <h3 data-i18n="allCat">🌐 Ҳамааш</h3>
             </div>
             <div class="category-card" data-category="fruits">
-                <h3>🍎 Меваҷот ва Сабзавот</h3>
+                <h3 data-i18n="fruitsCat">🍎 Меваҷот ва Сабзавот</h3>
             </div>
             <div class="category-card" data-category="sweets">
-                <h3>🍪 Шириниҳо</h3>
+                <h3 data-i18n="sweetsCat">🍪 Шириниҳо</h3>
             </div>
             <div class="category-card" data-category="drinks">
-                <h3>🧃 Нӯшокиҳо</h3>
+                <h3 data-i18n="drinksCat">🧃 Нӯшокиҳо</h3>
             </div>
             <div class="category-card" data-category="grocery">
-                <h3>🍞 Маҳсулоти хӯрокворӣ</h3>
+                <h3 data-i18n="groceryCat">🍞 Маҳсулоти хӯрокворӣ</h3>
             </div>
         </div>
     </div>
@@ -81,7 +73,7 @@
 <section class="products-section" id="products">
     <div class="container">
         <div class="section-header">
-            <h2 id="sectionTitle">Ҳамаи маҳсулот</h2>
+            <h2 id="sectionTitle" data-i18n="allProducts">Ҳамаи маҳсулот</h2>
         </div>
 
         <div class="product-grid" id="productGrid">
@@ -99,7 +91,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 2. Нон -->
@@ -116,7 +108,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 3. Набот -->
@@ -133,7 +125,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 4. Об -->
@@ -150,7 +142,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 5. Банан -->
@@ -167,7 +159,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 6. Помидор -->
@@ -184,7 +176,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 7. Бодиринг -->
@@ -201,7 +193,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 8. Картошка -->
@@ -218,7 +210,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 9. Пиёз -->
@@ -235,7 +227,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 10. Шир -->
@@ -252,7 +244,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 11. Қаймоқ -->
@@ -269,7 +261,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 12. Тухм -->
@@ -286,7 +278,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 13. Равған -->
@@ -303,7 +295,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 14. Орд -->
@@ -320,7 +312,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 15. Шакар -->
@@ -337,7 +329,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 16. Чои сабз -->
@@ -354,7 +346,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 17. Чои сиёҳ -->
@@ -371,7 +363,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 18. Шоколад -->
@@ -388,7 +380,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 19. Печенье -->
@@ -405,7 +397,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
             <!-- 20. Лимон -->
@@ -422,7 +414,7 @@
                     <span class="qty-value">1</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <button class="add-to-cart-btn">🛒 Илова ба сабад</button>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
         </div>
 
@@ -436,23 +428,23 @@
 <div id="cartModal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <h2>Сабади харид</h2>
+        <h2 data-i18n="cartTitle">Сабади харид</h2>
         <div id="cartItemsList" class="cart-items-container">
-            <p class="empty-cart-text">Сабади шумо холӣ аст.</p>
+            <p class="empty-cart-text" data-i18n="emptyCart">Сабади шумо холӣ аст.</p>
         </div>
         
         <div class="cart-modal-total">
-            <span>Ҷами умумӣ:</span>
+            <span data-i18n="total">Ҷами умумӣ:</span>
             <strong id="modalTotalPrice">0.00 сом</strong>
         </div>
 
         <div class="checkout-form">
-            <h3>Маълумот барои таҳвил</h3>
-            <input type="text" id="clientName" placeholder="Номи шумо..." required>
-            <input type="text" id="clientPhone" placeholder="Рақами телефон (масалан: 900210802)..." required>
+            <h3 data-i18n="deliveryInfo">Маълумот барои таҳвил</h3>
+            <input type="text" id="clientName" placeholder="Номи шумо..." data-i18n-placeholder="namePlaceholder" required>
+            <input type="text" id="clientPhone" placeholder="Рақами телефон (масалан: 900210802)..." data-i18n-placeholder="phonePlaceholder" required>
             
             <div class="location-box">
-                <input type="text" id="clientAddress" placeholder="Суроғаи худро нависед..." required>
+                <input type="text" id="clientAddress" placeholder="Суроғаи худро нависед..." data-i18n-placeholder="addressPlaceholder" required>
                 <button type="button" id="getGpsBtn" class="gps-btn">📍 GPS</button>
             </div>
             
@@ -463,20 +455,31 @@
         </div>
     </div>
 </div>
-<!-- Modal-и танзимот -->
+
+<!-- Modal-и танзимот бо парчамҳо ва тарҳи мобилӣ -->
 <div id="settingsModal" class="modal">
-    <div class="modal-content" style="max-width: 300px; text-align: center;">
-        <span class="close-settings" style="float: right; cursor: pointer; font-size: 20px;">&times;</span>
+    <div class="modal-content settings-modal-content">
+        <span class="close-settings">&times;</span>
         <h3 data-i18n="settings">Танзимот</h3>
-        <p>Интихоби забон / Выберите язык:</p>
-        <div class="language-selector" style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
-            <button onclick="changeLanguage('tj')" style="padding: 8px; cursor: pointer;">🇹🇯 Тоҷикӣ</button>
-            <button onclick="changeLanguage('ru')" style="padding: 8px; cursor: pointer;">🇷🇺 Русский</button>
-            <button onclick="changeLanguage('en')" style="padding: 8px; cursor: pointer;">🇬🇧 English</button>
-            <button onclick="changeLanguage('uz')" style="padding: 8px; cursor: pointer;">🇺🇿 O‘zbekcha</button>
+        <p data-i18n="selectLang">Интихоби забон:</p>
+        
+        <div class="lang-options-grid">
+            <button onclick="changeLanguage('tj')" class="lang-option-btn">
+                <span class="flag">🇹🇯</span> <span class="lang-name">Тоҷикӣ</span>
+            </button>
+            <button onclick="changeLanguage('ru')" class="lang-option-btn">
+                <span class="flag">🇷🇺</span> <span class="lang-name">Русский</span>
+            </button>
+            <button onclick="changeLanguage('en')" class="lang-option-btn">
+                <span class="flag">🇬🇧</span> <span class="lang-name">English</span>
+            </button>
+            <button onclick="changeLanguage('uz')" class="lang-option-btn">
+                <span class="flag">🇺🇿</span> <span class="lang-name">O‘zbekcha</span>
+            </button>
         </div>
     </div>
 </div>
+
 <script src="./script.js"></script>
 </body>
 </html>
