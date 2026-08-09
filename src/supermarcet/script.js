@@ -7,9 +7,66 @@ const closeModal = document.querySelector('.close-modal');
 const cartItemsList = document.getElementById('cartItemsList');
 const modalTotalPrice = document.getElementById('modalTotalPrice');
 
-cartModalBtn.addEventListener('click', () => { cartModal.style.display = 'block'; updateCartUI(); });
+cartModalBtn.addEventListener('click', () => { 
+    cartModal.style.display = 'block'; 
+    updateCartUI(); 
+    const savedUser = JSON.parse(localStorage.getItem('supermarketUser'));
+    if (savedUser) {
+        document.getElementById('clientName').value = savedUser.name || '';
+        document.getElementById('clientPhone').value = savedUser.phone || '';
+    }
+});
+
 closeModal.addEventListener('click', () => { cartModal.style.display = 'none'; });
 window.addEventListener('click', (e) => { if (e.target === cartModal) cartModal.style.display = 'none'; });
+
+// Менюи Гамбургер (Се полоска)
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const sideDrawer = document.getElementById('sideDrawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+const closeDrawer = document.getElementById('closeDrawer');
+const drawerProfile = document.getElementById('drawerProfile');
+const drawerSettings = document.getElementById('drawerSettings');
+
+if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', () => {
+        sideDrawer.classList.add('active');
+        drawerOverlay.classList.add('active');
+    });
+}
+
+if (closeDrawer) {
+    closeDrawer.addEventListener('click', () => {
+        sideDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+    });
+}
+
+if (drawerOverlay) {
+    drawerOverlay.addEventListener('click', () => {
+        sideDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+    });
+}
+
+if (drawerProfile) {
+    drawerProfile.addEventListener('click', (e) => {
+        e.preventDefault();
+        sideDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+        document.getElementById('profileModal').style.display = 'block';
+        checkUserState();
+    });
+}
+
+if (drawerSettings) {
+    drawerSettings.addEventListener('click', (e) => {
+        e.preventDefault();
+        sideDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+        document.getElementById('settingsModal').style.display = 'block';
+    });
+}
 
 document.querySelectorAll('.product-card').forEach(card => {
     const minusBtn = card.querySelector('.minus-btn');
@@ -90,7 +147,6 @@ window.removeItem = function(index) {
     updateCartUI();
 }
 
-// Категорияҳо
 const categoryCards = document.querySelectorAll('.category-card');
 const productCards = document.querySelectorAll('.product-card');
 const sectionTitle = document.getElementById('sectionTitle');
@@ -113,7 +169,6 @@ categoryCards.forEach(catCard => {
     });
 });
 
-// Ҷустуҷӯ
 const searchInput = document.getElementById('searchInput');
 const emptySearchState = document.getElementById('emptySearchState');
 
@@ -136,7 +191,6 @@ if (searchInput) {
     });
 }
 
-// Режими торик
 const darkModeBtn = document.getElementById('darkModeToggle');
 if (darkModeBtn) {
     darkModeBtn.addEventListener('click', () => {
@@ -145,7 +199,6 @@ if (darkModeBtn) {
     });
 }
 
-// GPS ва суроға
 const clientAddressInput = document.getElementById('clientAddress');
 const getGpsBtn = document.getElementById('getGpsBtn');
 
@@ -169,7 +222,6 @@ if (getGpsBtn) {
     });
 }
 
-// Фиристодан
 function generateOrderText() {
     if (cart.length === 0) return null;
     const name = document.getElementById('clientName').value.trim();
@@ -210,7 +262,70 @@ document.getElementById('sendTelegram').addEventListener('click', () => {
     window.open(`https://t.me/Amirshoev_2010?text=${encodeURIComponent(text)}`, '_blank');
 });
 
-// Тарҷумаҳои пурра барои 4 забон
+const profileModal = document.getElementById('profileModal');
+const profileModalBtn = document.getElementById('profileModalBtn');
+const closeProfile = document.querySelector('.close-profile');
+const authFormSection = document.getElementById('authFormSection');
+const profileInfoSection = document.getElementById('profileInfoSection');
+const saveProfileBtn = document.getElementById('saveProfileBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const userDisplayName = document.getElementById('userDisplayName');
+const userDisplayPhone = document.getElementById('userDisplayPhone');
+
+if (profileModalBtn) {
+    profileModalBtn.addEventListener('click', () => {
+        profileModal.style.display = 'block';
+        checkUserState();
+    });
+}
+
+if (closeProfile) {
+    closeProfile.addEventListener('click', () => { profileModal.style.display = 'none'; });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === profileModal) profileModal.style.display = 'none';
+});
+
+function checkUserState() {
+    const savedUser = JSON.parse(localStorage.getItem('supermarketUser'));
+    if (savedUser) {
+        authFormSection.style.display = 'none';
+        profileInfoSection.style.display = 'block';
+        userDisplayName.textContent = savedUser.name;
+        userDisplayPhone.textContent = savedUser.phone;
+    } else {
+        authFormSection.style.display = 'block';
+        profileInfoSection.style.display = 'none';
+    }
+}
+
+if (saveProfileBtn) {
+    saveProfileBtn.addEventListener('click', () => {
+        const name = document.getElementById('authName').value.trim();
+        const phone = document.getElementById('authPhone').value.trim();
+
+        if (!name || !phone) {
+            alert('Лутфан ном ва рақами телефонро ворид кунед!');
+            return;
+        }
+
+        const userData = { name, phone };
+        localStorage.setItem('supermarketUser', JSON.stringify(userData));
+        checkUserState();
+        alert('Маълумоти шумо бомуваффақият сабт шуд!');
+    });
+}
+
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('supermarketUser');
+        document.getElementById('authName').value = '';
+        document.getElementById('authPhone').value = '';
+        checkUserState();
+    });
+}
+
 const translations = {
     tj: {
         settings: "Танзимот",
@@ -233,8 +348,12 @@ const translations = {
         total: "Ҷами умумӣ:",
         deliveryInfo: "Маълумот барои таҳвил",
         namePlaceholder: "Номи шумо...",
-        phonePlaceholder: "Рақами телефон (масалан: 900210802)...",
-        addressPlaceholder: "Суроғаи худро нависед..."
+        phonePlaceholder: "Рақами телефон...",
+        addressPlaceholder: "Суроғаи худро нависед...",
+        profileTitle: "👤 Шахсият / Ҳисоби ман",
+        authDesc: "Барои сабти ном ё ворид шудан маълумоти худро ворид кунед:",
+        saveProfile: "Сабт кардан",
+        logout: "Баромадан"
     },
     ru: {
         settings: "Настройки",
@@ -257,8 +376,12 @@ const translations = {
         total: "Итого:",
         deliveryInfo: "Информация для доставки",
         namePlaceholder: "Ваше имя...",
-        phonePlaceholder: "Номер телефона (например: 900210802)...",
-        addressPlaceholder: "Введите ваш адрес..."
+        phonePlaceholder: "Номер телефона...",
+        addressPlaceholder: "Введите ваш адрес...",
+        profileTitle: "👤 Личный кабинет",
+        authDesc: "Введите свои данные для входа или регистрации:",
+        saveProfile: "Сохранить",
+        logout: "Выйти"
     },
     en: {
         settings: "Settings",
@@ -281,8 +404,12 @@ const translations = {
         total: "Total:",
         deliveryInfo: "Delivery Information",
         namePlaceholder: "Your name...",
-        phonePlaceholder: "Phone number (e.g., 900210802)...",
-        addressPlaceholder: "Enter your address..."
+        phonePlaceholder: "Phone number...",
+        addressPlaceholder: "Enter your address...",
+        profileTitle: "👤 My Profile",
+        authDesc: "Enter your details to sign in or register:",
+        saveProfile: "Save",
+        logout: "Log out"
     },
     uz: {
         settings: "Sozlamalar",
@@ -305,12 +432,15 @@ const translations = {
         total: "Jami:",
         deliveryInfo: "Yetkazib berish uchun ma'lumot",
         namePlaceholder: "Ismingiz...",
-        phonePlaceholder: "Telefon raqam (masalan: 900210802)...",
-        addressPlaceholder: "Man manzilingizni kiriting..."
+        phonePlaceholder: "Telefon raqam...",
+        addressPlaceholder: "Manzilingizni kiriting...",
+        profileTitle: "👤 Shaxsiy kabinet",
+        authDesc: "Kirish yoki ro'yxatdan o'tish uchun ma'lumotlaringizni kiriting:",
+        saveProfile: "Saqlash",
+        logout: "Chiqish"
     }
 };
 
-// Функцияи ивазкунии забон ва пӯшидани модал
 function changeLanguage(lang) {
     localStorage.setItem('selectedLanguage', lang);
     
@@ -334,31 +464,23 @@ function changeLanguage(lang) {
     }
 }
 
-// Ҳангоми боршавии сайт забони интихобшударо мемонем
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
     changeLanguage(savedLang);
 });
 
-// Кор кардани Модали Танзимот
 const settingsModal = document.getElementById('settingsModal');
 const settingsBtn = document.getElementById('settingsBtn');
 const closeSettings = document.querySelector('.close-settings');
 
 if (settingsBtn) {
-    settingsBtn.addEventListener('click', () => {
-        settingsModal.style.display = 'block';
-    });
+    settingsBtn.addEventListener('click', () => { settingsModal.style.display = 'block'; });
 }
 
 if (closeSettings) {
-    closeSettings.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
-    });
+    closeSettings.addEventListener('click', () => { settingsModal.style.display = 'none'; });
 }
 
 window.addEventListener('click', (e) => {
-    if (e.target === settingsModal) {
-        settingsModal.style.display = 'none';
-    }
+    if (e.target === settingsModal) { settingsModal.style.display = 'none'; }
 });
