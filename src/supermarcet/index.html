@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperMarket - Маҳсулоти Тоҷикистон</title>
     <link rel="stylesheet" href="./style.css">
+    <!-- Китобхонаи тавлиди QR-код -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -458,27 +460,33 @@
             <span data-i18n="total">Ҷами умумӣ:</span>
             <strong id="modalTotalPrice">0.00 сом</strong>
         </div>
-        <!-- Бахши Пардохти Dushanbe City бо 2 вариант -->
-<div class="dc-payment-section">
-    <h3 class="dc-section-title" data-i18n="dcPaymentTitle">💳 Пардохт тавассути Dushanbe City</h3>
-    
-    <div class="dc-options-container">
-        <!-- Варианти 1: QR Код -->
-        
-           
-            
 
-        <!-- Варианти 2: Тугмаи Картаи Ман -->
-        <a href="#" id="dcCardPayBtn" target="_blank" class="dc-card-option dc-direct-pay">
-            <div class="dc-icon-box">💳</div>
-            <div class="dc-info">
-                <span class="dc-title" data-i18n="dcCardTitle">Картаи Душанбе Сити</span>
-                <span class="dc-desc">8720 9090 6</span>
+        <!-- Бахши Пардохти Dushanbe City бо 2 вариант -->
+        <div class="dc-payment-section">
+            <h3 class="dc-section-title" data-i18n="dcPaymentTitle">💳 Пардохт тавассути Dushanbe City</h3>
+            
+            <div class="dc-options-container">
+                <!-- Варианти 1: QR Код -->
+                <div class="dc-card-option">
+                    <div class="dc-icon-box">📷</div>
+                    <div class="dc-info">
+                        <span class="dc-title" data-i18n="dcQrTitle">Бо QR Код</span>
+                        <span class="dc-desc" data-i18n="dcQrDesc">Скан кунед ва пардохт кунед</span>
+                    </div>
+                    <button type="button" id="openQrModalBtn" class="dc-action-btn" data-i18n="dcScanBtn">Кушодан</button>
+                </div>
+
+                <!-- Варианти 2: Тугмаи Картаи Ман -->
+                <a href="#" id="dcCardPayBtn" target="_blank" class="dc-card-option dc-direct-pay">
+                    <div class="dc-icon-box">💳</div>
+                    <div class="dc-info">
+                        <span class="dc-title" data-i18n="dcCardTitle">Картаи Душанбе Сити</span>
+                        <span class="dc-desc">8720 9090 6</span>
+                    </div>
+                    <span class="dc-action-btn pulse-btn" data-i18n="dcPayBtn">Пардохт</span>
+                </a>
             </div>
-            <span class="dc-action-btn pulse-btn" data-i18n="dcPayBtn">Пардохт</span>
-        </a>
-    </div>
-</div>
+        </div>
 
         <div class="checkout-form">
             <h3 data-i18n="deliveryInfo">Маълумот барои таҳвил</h3>
@@ -495,6 +503,17 @@
                 <button id="sendTelegram" class="order-btn telegram-btn">✈️ Telegram</button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Модали хурд барои QR Код -->
+<div id="dcQrModal" class="modal" style="display: none;">
+    <div class="modal-content magic-qr-box">
+        <span class="close-dc-qr">&times;</span>
+        <h3 data-i18n="dcQrModalTitle">QR Коди Dushanbe City</h3>
+        <div class="qr-code-wrapper" id="qrcodeContainer"></div>
+        <p class="qr-card-number">Карта: <strong>8720 9090 6</strong></p>
+        <p class="qr-amount-text" data-i18n="dcQrScanInfo">Маблағ барои пардохт: <strong id="qrModalAmount">0.00 сом</strong></p>
     </div>
 </div>
 
