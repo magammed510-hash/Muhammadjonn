@@ -22,13 +22,8 @@ function openCart() {
     }
 }
 
-if (cartModalBtn) {
-    cartModalBtn.addEventListener('click', openCart);
-}
-
-if (cartModalBtnMobile) {
-    cartModalBtnMobile.addEventListener('click', openCart);
-}
+if (cartModalBtn) cartModalBtn.addEventListener('click', openCart);
+if (cartModalBtnMobile) cartModalBtnMobile.addEventListener('click', openCart);
 
 if (closeModal) {
     closeModal.addEventListener('click', () => { 
@@ -36,19 +31,18 @@ if (closeModal) {
     });
 }
 
+// Пӯшидани модалҳо ҳангоми пахш дар берун
 window.addEventListener('click', (e) => { 
-    if (e.target === cartModal) {
-        cartModal.style.display = 'none';
-    }
-    if (e.target === profileModal) {
-        profileModal.style.display = 'none';
-    }
-    if (e.target === settingsModal) {
-        settingsModal.style.display = 'none';
-    }
+    if (e.target === cartModal) cartModal.style.display = 'none';
+    const profileModal = document.getElementById('profileModal');
+    if (e.target === profileModal) profileModal.style.display = 'none';
+    const settingsModal = document.getElementById('settingsModal');
+    if (e.target === settingsModal) settingsModal.style.display = 'none';
+    const dcQrModal = document.getElementById('dcQrModal');
+    if (e.target === dcQrModal) dcQrModal.style.display = 'none';
 });
 
-// Менюи Гамбургер (Се полоска)
+// Менюи Гамбургер
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const sideDrawer = document.getElementById('sideDrawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
@@ -96,6 +90,7 @@ if (drawerSettings) {
     });
 }
 
+// Плюс ва минус кардани маҳсулот дар карточкаҳо
 document.querySelectorAll('.product-card').forEach(card => {
     const minusBtn = card.querySelector('.minus-btn');
     const plusBtn = card.querySelector('.plus-btn');
@@ -154,6 +149,7 @@ function updateCartUI() {
     if (cart.length === 0) {
         cartItemsList.innerHTML = '<p class="empty-cart-text" data-i18n="emptyCart">Сабади шумо холӣ аст.</p>';
         modalTotalPrice.textContent = '0.00 сом';
+        updateDushanbeCityPayment(0);
         return;
     }
 
@@ -176,6 +172,9 @@ function updateCartUI() {
 
     cartItemsList.innerHTML = html;
     modalTotalPrice.textContent = total.toFixed(2) + ' сом';
+    
+    // Навсозии маблағ ва QR-коди Душанбе Сити
+    updateDushanbeCityPayment(total);
 }
 
 window.removeItem = function(index) {
@@ -184,6 +183,55 @@ window.removeItem = function(index) {
     updateCartUI();
 }
 
+// Системаи пардохти Dushanbe City ва QR Код
+function updateDushanbeCityPayment(totalAmount) {
+    const cardNum = "872090906";
+    
+    const dcCardPayBtn = document.getElementById('dcCardPayBtn');
+    if (dcCardPayBtn) {
+        dcCardPayBtn.href = `https://dushanbepay.tj/pay?card=${cardNum}&amount=${totalAmount}`;
+    }
+
+    const qrModalAmount = document.getElementById('qrModalAmount');
+    if (qrModalAmount) {
+        qrModalAmount.textContent = totalAmount.toFixed(2) + ' сом';
+    }
+
+    const qrcodeContainer = document.getElementById('qrcodeContainer');
+    if (qrcodeContainer && typeof QRCode !== 'undefined') {
+        qrcodeContainer.innerHTML = "";
+        const qrData = `DUSHANBECITY:CARD=${cardNum};AMOUNT=${totalAmount.toFixed(2)}`;
+        
+        new QRCode(qrcodeContainer, {
+            text: qrData,
+            width: 160,
+            height: 160,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+}
+
+// Кушодани модали QR Код
+const dcQrModal = document.getElementById('dcQrModal');
+const openQrModalBtn = document.getElementById('openQrModalBtn');
+const closeDcQr = document.querySelector('.close-dc-qr');
+
+if (openQrModalBtn) {
+    openQrModalBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (dcQrModal) dcQrModal.style.display = 'flex';
+    });
+}
+
+if (closeDcQr) {
+    closeDcQr.addEventListener('click', () => {
+        if (dcQrModal) dcQrModal.style.display = 'none';
+    });
+}
+
+// Категорияҳо ва Филтр
 const categoryCards = document.querySelectorAll('.category-card');
 const productCards = document.querySelectorAll('.product-card');
 const sectionTitle = document.getElementById('sectionTitle');
@@ -208,6 +256,7 @@ categoryCards.forEach(catCard => {
     });
 });
 
+// Ҷустуҷӯ (Search)
 const searchInput = document.getElementById('searchInput');
 const emptySearchState = document.getElementById('emptySearchState');
 
@@ -232,6 +281,7 @@ if (searchInput) {
     });
 }
 
+// Режими торик (Dark Mode)
 const darkModeBtn = document.getElementById('darkModeToggle');
 if (darkModeBtn) {
     darkModeBtn.addEventListener('click', () => {
@@ -240,6 +290,7 @@ if (darkModeBtn) {
     });
 }
 
+// GPS ва суроға
 const clientAddressInput = document.getElementById('clientAddress');
 const getGpsBtn = document.getElementById('getGpsBtn');
 
@@ -263,11 +314,12 @@ if (getGpsBtn) {
     });
 }
 
+// Генерацияи матни фармоиш
 function generateOrderText() {
     if (cart.length === 0) return null;
     const name = document.getElementById('clientName').value.trim();
     const phone = document.getElementById('clientPhone').value.trim();
-    const address = clientAddressInput.value.trim();
+    const address = clientAddressInput ? clientAddressInput.value.trim() : '';
 
     if (!name || !phone || !address) {
         alert('Лутфан майдонҳоро пур кунед!');
@@ -309,6 +361,7 @@ if (sendTelegram) {
     });
 }
 
+// Бахши Профил / Шахсият
 const profileModal = document.getElementById('profileModal');
 const profileModalBtn = document.getElementById('profileModalBtn');
 const closeProfile = document.querySelector('.close-profile');
@@ -371,6 +424,7 @@ if (logoutBtn) {
     });
 }
 
+// Тарҷумаи забонҳо
 const translations = {
     tj: {
         settings: "Танзимот", selectLang: "Интихоби забон:", cart: "Сабад", searchPlaceholder: "Ҷустуҷӯи маҳсулот...",
@@ -381,6 +435,9 @@ const translations = {
         total: "Ҷами умумӣ:", deliveryInfo: "Маълумот барои таҳвил", namePlaceholder: "Номи шумо...", phonePlaceholder: "Рақами телефон...",
         addressPlaceholder: "Суроғаи худро нависед...", profileTitle: "👤 Шахсият / Ҳисоби ман", authDesc: "Барои сабти ном ё ворид шудан маълумоти худро ворид кунед:",
         saveProfile: "Сабт кардан", logout: "Баромадан", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        dcPaymentTitle: "💳 Пардохт тавассути Dushanbe City", dcQrTitle: "Бо QR Код", dcQrDesc: "Скан кунед ва пардохт кунед",
+        dcScanBtn: "Кушодан", dcCardTitle: "Картаи Душанбе Сити", dcPayBtn: "Пардохт", dcQrModalTitle: "QR Коди Dushanbe City",
+        dcQrScanInfo: "Маблағ барои пардохт:",
         p1: "Себи Соҳилӣ", w1: "1 кг", p2: "Нони Фатири Тоҷикӣ", w2: "1 дона", p3: "Наботи Асли Хуҷанд", w3: "500 г",
         p4: "Оби Маъдании Сиёма", w4: "1.5 литр", p5: "Бананҳои тоза", w5: "1 кг", p6: "Помидори сабзавот", w6: "1 кг",
         p7: "Бодиринг", w7: "1 кг", p8: "Картошка", w8: "1 кг", p9: "Пиёз", w9: "1 кг", p10: "Шир (1 литр)", w10: "1 л",
@@ -397,6 +454,9 @@ const translations = {
         total: "Итого:", deliveryInfo: "Информация для доставки", namePlaceholder: "Ваше имя...", phonePlaceholder: "Номер телефона...",
         addressPlaceholder: "Введите ваш адрес...", profileTitle: "👤 Личный кабинет", authDesc: "Введите свои данные для входа или регистрации:",
         saveProfile: "Сохранить", logout: "Выйти", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        dcPaymentTitle: "💳 Оплата через Dushanbe City", dcQrTitle: "По QR Коду", dcQrDesc: "Сканируйте и оплачивайте",
+        dcScanBtn: "Открыть", dcCardTitle: "Карта Душанбе Сити", dcPayBtn: "Оплатить", dcQrModalTitle: "QR Код Dushanbe City",
+        dcQrScanInfo: "Сумма к оплате:",
         p1: "Яблоко Береговое", w1: "1 кг", p2: "Таджикская лепешка", w2: "1 шт", p3: "Набот Худжандский", w3: "500 г",
         p4: "Минеральная вода Сиёма", w4: "1.5 литра", p5: "Свежие бананы", w5: "1 кг", p6: "Помидоры", w6: "1 кг",
         p7: "Огурцы", w7: "1 кг", p8: "Картофель", w8: "1 кг", p9: "Лук", w9: "1 кг", p10: "Молоко (1 литр)", w10: "1 л",
@@ -413,6 +473,9 @@ const translations = {
         total: "Total:", deliveryInfo: "Delivery Information", namePlaceholder: "Your name...", phonePlaceholder: "Phone number...",
         addressPlaceholder: "Enter your address...", profileTitle: "👤 My Profile", authDesc: "Enter your details to sign in or register:",
         saveProfile: "Save", logout: "Log out", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        dcPaymentTitle: "💳 Pay via Dushanbe City", dcQrTitle: "By QR Code", dcQrDesc: "Scan and pay",
+        dcScanBtn: "Open", dcCardTitle: "Dushanbe City Card", dcPayBtn: "Pay", dcQrModalTitle: "Dushanbe City QR Code",
+        dcQrScanInfo: "Amount to pay:",
         p1: "Coastal Apple", w1: "1 kg", p2: "Tajik Flatbread", w2: "1 pcs", p3: "Khujand Nabot", w3: "500 g",
         p4: "Siyoma Mineral Water", w4: "1.5 liters", p5: "Fresh Bananas", w5: "1 kg", p6: "Tomatoes", w6: "1 kg",
         p7: "Cucumbers", w7: "1 kg", p8: "Potatoes", w8: "1 kg", p9: "Onion", w9: "1 kg", p10: "Milk (1 liter)", w10: "1 L",
@@ -429,6 +492,9 @@ const translations = {
         total: "Jami:", deliveryInfo: "Yetkazib berish uchun ma'lumot", namePlaceholder: "Ismingiz...", phonePlaceholder: "Telefon raqam...",
         addressPlaceholder: "Manzilingizni kiriting...", profileTitle: "👤 Shaxsiy kabinet", authDesc: "Kirish yoki ro'yxatdan o'tish uchun ma'lumotlaringizni kiriting:",
         saveProfile: "Saqlash", logout: "Chiqish", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        dcPaymentTitle: "💳 Dushanbe City orqali to'lov", dcQrTitle: "QR Kod orqali", dcQrDesc: "Skanerlang va to'lang",
+        dcScanBtn: "Ochish", dcCardTitle: "Dushanbe City Karti", dcPayBtn: "To'lash", dcQrModalTitle: "Dushanbe City QR Kodi",
+        dcQrScanInfo: "To'lov summasi:",
         p1: "Qirg'oq olmasi", w1: "1 kg", p2: "Tojik noni", w2: "1 dona", p3: "Xo'jand naboti", w3: "500 g",
         p4: "Siyoma mineral suvi", w4: "1.5 litr", p5: "Yangi bananlar", w5: "1 kg", p6: "Pomidor", w6: "1 kg",
         p7: "Bodring", w7: "1 kg", p8: "Kartoshka", w8: "1 kg", p9: "Piyoz", w9: "1 kg", p10: "Sut (1 litr)", w10: "1 l",
