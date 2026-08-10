@@ -1,6 +1,7 @@
 let cart = [];
 
 const cartBadge = document.getElementById('cartBadge');
+const cartBadgeDesktop = document.getElementById('cartBadgeDesktop');
 const cartModal = document.getElementById('cartModal');
 const cartModalBtn = document.getElementById('cartModalBtn');
 const cartModalBtnMobile = document.getElementById('cartModalBtnMobile');
@@ -12,12 +13,12 @@ function openCart() {
     if (cartModal) {
         cartModal.style.display = 'flex'; 
         updateCartUI(); 
-        const savedUser = JSON.parse(localStorage.getItem('supermarketUser'));
-        if (savedUser) {
+        const savedSession = JSON.parse(localStorage.getItem('market_user_session'));
+        if (savedSession && savedSession.role !== 'admin') {
             const clientNameElem = document.getElementById('clientName');
             const clientPhoneElem = document.getElementById('clientPhone');
-            if (clientNameElem) clientNameElem.value = savedUser.name || '';
-            if (clientPhoneElem) clientPhoneElem.value = savedUser.phone || '';
+            if (clientNameElem) clientNameElem.value = savedSession.name || '';
+            if (clientPhoneElem) clientPhoneElem.value = savedSession.phone || '';
         }
     }
 }
@@ -141,6 +142,7 @@ document.querySelectorAll('.product-card').forEach(card => {
 function updateBadge() {
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     if (cartBadge) cartBadge.textContent = totalCount;
+    if (cartBadgeDesktop) cartBadgeDesktop.textContent = totalCount;
 }
 
 function updateCartUI() {
@@ -165,15 +167,13 @@ function updateCartUI() {
                     <strong>${item.name}</strong>
                     <p style="margin: 0; font-size: 13px; color: #666;">${item.basePrice} сом × ${item.quantity} = ${itemTotal.toFixed(2)} сом</p>
                 </div>
-                <button class="remove-item-btn" onclick="removeItem(${index})" style="background: none; border: none; cursor: pointer; font-size: 16px;">❌</button>
+                <button class="remove-item-btn" onclick="removeItem(${index})">❌</button>
             </div>
         `;
     });
 
     cartItemsList.innerHTML = html;
     modalTotalPrice.textContent = total.toFixed(2) + ' сом';
-    
-    // Навсозии маблағ ва QR-коди Душанбе Сити
     updateDushanbeCityPayment(total);
 }
 
@@ -314,7 +314,18 @@ if (getGpsBtn) {
     });
 }
 
-// Генерацияи матни фармоиш
+// Сабти фармоиш ва фиристодан ба Админ (Босс)
+function saveOrderToAdmin(clientName, clientPhone, productsSummary) {
+    let allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
+    allOrders.push({
+        name: clientName,
+        phone: clientPhone,
+        products: productsSummary,
+        date: new Date().toLocaleString()
+    });
+    localStorage.setItem('market_all_orders', JSON.stringify(allOrders));
+}
+
 function generateOrderText() {
     if (cart.length === 0) return null;
     const name = document.getElementById('clientName').value.trim();
@@ -322,7 +333,7 @@ function generateOrderText() {
     const address = clientAddressInput ? clientAddressInput.value.trim() : '';
 
     if (!name || !phone || !address) {
-        alert('Лутфан майдонҳоро пур кунед!');
+        alert('Лутфан ҳамаи майдонҳои таҳвилро пур кунед!');
         return null;
     }
 
@@ -333,13 +344,19 @@ function generateOrderText() {
     text += `📦 Маҳсулот:\n`;
 
     let total = 0;
+    let productsListStr = "";
     cart.forEach(item => {
         let sum = item.basePrice * item.quantity;
         total += sum;
         text += `- ${item.name} (${item.quantity} дона) — ${sum.toFixed(2)} сом\n`;
+        productsListStr += `${item.name} (${item.quantity}д), `;
     });
 
     text += `\n💰 Ҷами умумӣ: ${total.toFixed(2)} сомонӣ`;
+
+    // Сабти харид дар омори Админ (Босс)
+    saveOrderToAdmin(name, phone, productsListStr);
+
     return text;
 }
 
@@ -361,16 +378,19 @@ if (sendTelegram) {
     });
 }
 
-// Бахши Профил / Шахсият
+// Бахши Профил, Сессия ва Панели Админ
 const profileModal = document.getElementById('profileModal');
 const profileModalBtn = document.getElementById('profileModalBtn');
 const closeProfile = document.querySelector('.close-profile');
 const authFormSection = document.getElementById('authFormSection');
 const profileInfoSection = document.getElementById('profileInfoSection');
+const adminPanelSection = document.getElementById('adminPanelSection');
 const saveProfileBtn = document.getElementById('saveProfileBtn');
 const logoutBtn = document.getElementById('logoutBtn');
+const adminLogoutBtn = document.getElementById('adminLogoutBtn');
 const userDisplayName = document.getElementById('userDisplayName');
 const userDisplayPhone = document.getElementById('userDisplayPhone');
+const userDisplayId = document.getElementById('userDisplayId');
 
 if (profileModalBtn) {
     profileModalBtn.addEventListener('click', () => {
@@ -384,15 +404,71 @@ if (closeProfile) {
 }
 
 function checkUserState() {
-    const savedUser = JSON.parse(localStorage.getItem('supermarketUser'));
-    if (savedUser) {
-        if (authFormSection) authFormSection.style.display = 'none';
-        if (profileInfoSection) profileInfoSection.style.display = 'block';
-        if (userDisplayName) userDisplayName.textContent = savedUser.name;
-        if (userDisplayPhone) userDisplayPhone.textContent = savedUser.phone;
+    const savedSession = JSON.parse(localStorage.getItem('market_user_session'));
+    if (!savedSession) {
+        showAuthForm();
+        return;
+    }
+
+    const currentTime = new Date().getTime();
+    const tenDaysInMillis = 10 * 24 * 60 * 60 * 1000; // Мӯҳлати 10 рӯз
+
+    // Санҷиши мӯҳлати 10 рӯз барои муштарии оддӣ
+    if (savedSession.role !== 'admin' && (currentTime - savedSession.loginTime > tenDaysInMillis)) {
+        localStorage.removeItem('market_user_session');
+        alert('Мӯҳлати сессияи 10-рӯзаи шумо ба охир расид. Лутфан аз нав ворид шавед.');
+        showAuthForm();
+        return;
+    }
+
+    if (savedSession.role === 'admin') {
+        showAdminDashboard();
     } else {
-        if (authFormSection) authFormSection.style.display = 'block';
-        if (profileInfoSection) profileInfoSection.style.display = 'none';
+        showClientCabinet(savedSession);
+    }
+}
+
+function showAuthForm() {
+    if (authFormSection) authFormSection.style.display = 'block';
+    if (profileInfoSection) profileInfoSection.style.display = 'none';
+    if (adminPanelSection) adminPanelSection.style.display = 'none';
+}
+
+function showClientCabinet(user) {
+    if (authFormSection) authFormSection.style.display = 'none';
+    if (adminPanelSection) adminPanelSection.style.display = 'none';
+    if (profileInfoSection) profileInfoSection.style.display = 'block';
+
+    if (userDisplayName) userDisplayName.textContent = user.name;
+    if (userDisplayPhone) userDisplayPhone.textContent = 'Рақам: ' + user.phone;
+    if (userDisplayId) userDisplayId.textContent = user.userId;
+}
+
+function showAdminDashboard() {
+    if (authFormSection) authFormSection.style.display = 'none';
+    if (profileInfoSection) profileInfoSection.style.display = 'none';
+    if (adminPanelSection) adminPanelSection.style.display = 'block';
+
+    // Пур кардани ҷадвали мизоҷон
+    const clientsTable = document.getElementById('adminUsersList');
+    const allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
+    if (clientsTable) {
+        if (allClients.length > 0) {
+            clientsTable.innerHTML = allClients.map(c => `<tr><td>${c.name}</td><td>${c.phone}</td><td>${c.date}</td></tr>`).join('');
+        } else {
+            clientsTable.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #94a3b8;">Ҳоло мизоҷ нест</td></tr>`;
+        }
+    }
+
+    // Пур кардани ҷадвали харидҳо
+    const ordersTable = document.getElementById('adminOrdersList');
+    const allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
+    if (ordersTable) {
+        if (allOrders.length > 0) {
+            ordersTable.innerHTML = allOrders.map(o => `<tr><td>${o.name}</td><td>${o.phone}</td><td>${o.products}</td><td>${o.date}</td></tr>`).join('');
+        } else {
+            ordersTable.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #94a3b8;">Ҳоло хариде нест</td></tr>`;
+        }
     }
 }
 
@@ -400,29 +476,60 @@ if (saveProfileBtn) {
     saveProfileBtn.addEventListener('click', () => {
         const name = document.getElementById('authName').value.trim();
         const phone = document.getElementById('authPhone').value.trim();
+        const secretCode = document.getElementById('authSecretCode') ? document.getElementById('authSecretCode').value.trim() : '';
 
         if (!name || !phone) {
             alert('Лутфан ном ва рақами телефонро ворид кунед!');
             return;
         }
 
-        const userData = { name, phone };
-        localStorage.setItem('supermarketUser', JSON.stringify(userData));
-        checkUserState();
-        alert('Маълумоти шумо бомуваффақият сабт шуд!');
+        // Санҷиши Админ (Босс): Ном Muhammadjon, номер 900210802, код 12mart2010admin
+        if (name === 'Muhammadjon' && phone === '900210802' && secretCode === '12mart2010admin') {
+            const adminData = { role: 'admin', name: 'Muhammadjon', phone: '900210802', loginTime: new Date().getTime() };
+            localStorage.setItem('market_user_session', JSON.stringify(adminData));
+            alert('Хуш омадед, Босс (Админ)! Панели идоракунӣ кушода шуд.');
+            showAdminDashboard();
+            return;
+        }
+
+        // Муштарии оддӣ бо сессияи 10-рӯза
+        const userId = 'USER-' + Math.floor(1000 + Math.random() * 9000);
+        const userData = {
+            role: 'client',
+            name: name,
+            phone: phone,
+            userId: userId,
+            loginTime: new Date().getTime()
+        };
+
+        localStorage.setItem('market_user_session', JSON.stringify(userData));
+
+        // Сабт ба рӯйхати умумии мизоҷон барои Админ
+        let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
+        if (!allClients.some(c => c.phone === phone)) {
+            allClients.push({ name: name, phone: phone, date: new Date().toLocaleDateString() });
+            localStorage.setItem('market_all_clients', JSON.stringify(allClients));
+        }
+
+        alert('Регистратсия ва воридшавӣ бо муваффақият гузашт!');
+        showClientCabinet(userData);
     });
 }
 
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('supermarketUser');
-        const authNameElem = document.getElementById('authName');
-        const authPhoneElem = document.getElementById('authPhone');
-        if (authNameElem) authNameElem.value = '';
-        if (authPhoneElem) authPhoneElem.value = '';
-        checkUserState();
-    });
+function handleLogout() {
+    localStorage.removeItem('market_user_session');
+    const authName = document.getElementById('authName');
+    const authPhone = document.getElementById('authPhone');
+    const authSecret = document.getElementById('authSecretCode');
+    if (authName) authName.value = '';
+    if (authPhone) authPhone.value = '';
+    if (authSecret) authSecret.value = '';
+    showAuthForm();
+    alert('Шумо аз ҳисоб баромадед.');
 }
+
+if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', handleLogout);
 
 // Тарҷумаи забонҳо
 const translations = {
@@ -433,8 +540,8 @@ const translations = {
         sweetsCat: "🍪 Шириниҳо", drinksCat: "🧃 Нӯшокиҳо", groceryCat: "🍞 Маҳсулоти хӯрокворӣ", allProducts: "Ҳамаи маҳсулот",
         contactUs: "📞 Тамос", addToCart: "🛒 Илова ба сабад", cartTitle: "Сабади харид", emptyCart: "Сабади шумо холӣ аст.",
         total: "Ҷами умумӣ:", deliveryInfo: "Маълумот барои таҳвил", namePlaceholder: "Номи шумо...", phonePlaceholder: "Рақами телефон...",
-        addressPlaceholder: "Суроғаи худро нависед...", profileTitle: "👤 Шахсият / Ҳисоби ман", authDesc: "Барои сабти ном ё ворид шудан маълумоти худро ворид кунед:",
-        saveProfile: "Сабт кардан", logout: "Баромадан", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        addressPlaceholder: "Суроғаи худро нависед...", profileTitle: "👤 Шахсият / Ҳисоби ман", authDesc: "Маълумот ё коди махфии админро ворид кунед:",
+        saveProfile: "Сабт ва Ворид шудан", logout: "Баромадан", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
         dcPaymentTitle: "💳 Пардохт тавассути Dushanbe City", dcQrTitle: "Бо QR Код", dcQrDesc: "Скан кунед ва пардохт кунед",
         dcScanBtn: "Кушодан", dcCardTitle: "Картаи Душанбе Сити", dcPayBtn: "Пардохт", dcQrModalTitle: "QR Коди Dushanbe City",
         dcQrScanInfo: "Маблағ барои пардохт:",
@@ -452,8 +559,8 @@ const translations = {
         sweetsCat: "🍪 Сладости", drinksCat: "🧃 Напитки", groceryCat: "🍞 Продукты питания", allProducts: "Все продукты",
         contactUs: "📞 Контакты", addToCart: "🛒 В корзину", cartTitle: "Корзина покупок", emptyCart: "Ваша корзина пуста.",
         total: "Итого:", deliveryInfo: "Информация для доставки", namePlaceholder: "Ваше имя...", phonePlaceholder: "Номер телефона...",
-        addressPlaceholder: "Введите ваш адрес...", profileTitle: "👤 Личный кабинет", authDesc: "Введите свои данные для входа или регистрации:",
-        saveProfile: "Сохранить", logout: "Выйти", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        addressPlaceholder: "Введите ваш адрес...", profileTitle: "👤 Личный кабинет", authDesc: "Введите свои данные или секретный код админа:",
+        saveProfile: "Сохранить и войти", logout: "Выйти", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
         dcPaymentTitle: "💳 Оплата через Dushanbe City", dcQrTitle: "По QR Коду", dcQrDesc: "Сканируйте и оплачивайте",
         dcScanBtn: "Открыть", dcCardTitle: "Карта Душанбе Сити", dcPayBtn: "Оплатить", dcQrModalTitle: "QR Код Dushanbe City",
         dcQrScanInfo: "Сумма к оплате:",
@@ -471,8 +578,8 @@ const translations = {
         sweetsCat: "🍪 Sweets", drinksCat: "🧃 Drinks", groceryCat: "🍞 Groceries", allProducts: "All Products",
         contactUs: "📞 Contact", addToCart: "🛒 Add to Cart", cartTitle: "Shopping Cart", emptyCart: "Your cart is empty.",
         total: "Total:", deliveryInfo: "Delivery Information", namePlaceholder: "Your name...", phonePlaceholder: "Phone number...",
-        addressPlaceholder: "Enter your address...", profileTitle: "👤 My Profile", authDesc: "Enter your details to sign in or register:",
-        saveProfile: "Save", logout: "Log out", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        addressPlaceholder: "Enter your address...", profileTitle: "👤 My Profile", authDesc: "Enter your details or admin secret code:",
+        saveProfile: "Save & Sign In", logout: "Log out", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
         dcPaymentTitle: "💳 Pay via Dushanbe City", dcQrTitle: "By QR Code", dcQrDesc: "Scan and pay",
         dcScanBtn: "Open", dcCardTitle: "Dushanbe City Card", dcPayBtn: "Pay", dcQrModalTitle: "Dushanbe City QR Code",
         dcQrScanInfo: "Amount to pay:",
@@ -490,8 +597,8 @@ const translations = {
         sweetsCat: "🍪 Shirinliklar", drinksCat: "🧃 Ichimliklar", groceryCat: "🍞 Oziq-ovqat", allProducts: "Barcha mahsulotlar",
         contactUs: "📞 Aloqa", addToCart: "🛒 Savatga qo'shish", cartTitle: "Savat", emptyCart: "Savatgiz bo'sh.",
         total: "Jami:", deliveryInfo: "Yetkazib berish uchun ma'lumot", namePlaceholder: "Ismingiz...", phonePlaceholder: "Telefon raqam...",
-        addressPlaceholder: "Manzilingizni kiriting...", profileTitle: "👤 Shaxsiy kabinet", authDesc: "Kirish yoki ro'yxatdan o'tish uchun ma'lumotlaringizni kiriting:",
-        saveProfile: "Saqlash", logout: "Chiqish", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
+        addressPlaceholder: "Manzilingizni kiriting...", profileTitle: "👤 Shaxsiy kabinet", authDesc: "Ma'lumotlaringizni yoki admin kodini kiriting:",
+        saveProfile: "Saqlash va kirish", logout: "Chiqish", langTj: "Тоҷикӣ", langRu: "Русский", langEn: "English", langUz: "O‘zbekcha",
         dcPaymentTitle: "💳 Dushanbe City orqali to'lov", dcQrTitle: "QR Kod orqali", dcQrDesc: "Skanerlang va to'lang",
         dcScanBtn: "Ochish", dcCardTitle: "Dushanbe City Karti", dcPayBtn: "To'lash", dcQrModalTitle: "Dushanbe City QR Kodi",
         dcQrScanInfo: "To'lov summasi:",
@@ -530,6 +637,7 @@ function changeLanguage(lang) {
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
     changeLanguage(savedLang);
+    checkUserState(); // Санҷиши сессия ҳангоми бори аввал кушода шудани сайт
 });
 
 const settingsModal = document.getElementById('settingsModal');

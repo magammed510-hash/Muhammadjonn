@@ -8,8 +8,9 @@
 body {
     background-color: #ffffff;
     color: #1f2937;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: background-color 0.3s, color 0.3s;
+    padding-bottom: 30px;
 }
 
 .container {
@@ -26,37 +27,43 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    backdrop-filter: blur(10px);
 }
 
 .search-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
 }
 
 .hamburger-btn {
     background: transparent;
     border: 1px solid #d1d5db;
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px;
     display: none;
+    transition: 0.2s;
+}
+
+.hamburger-btn:hover {
+    background: #f3f4f6;
 }
 
 /* --- МЕНЮИ ПАҲЛӮӢ (DRAWER) --- */
 .side-drawer {
     position: fixed;
     top: 0;
-    left: -280px;
-    width: 280px;
+    left: -300px;
+    width: 300px;
     height: 100%;
     background-color: #ffffff;
-    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    box-shadow: 5px 0 25px rgba(0,0,0,0.15);
     z-index: 3000;
-    transition: left 0.3s ease;
-    padding: 20px;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 25px;
 }
 
 .side-drawer.active {
@@ -73,14 +80,20 @@ body {
 }
 
 .close-drawer {
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
+    color: #ef4444;
+    transition: transform 0.2s;
+}
+
+.close-drawer:hover {
+    transform: rotate(90deg);
 }
 
 .drawer-links {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .drawer-link {
@@ -88,14 +101,15 @@ body {
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
-    padding: 10px;
-    border-radius: 8px;
-    transition: background 0.2s;
+    padding: 12px 15px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
 }
 
 .drawer-link:hover {
-    background-color: #f3f4f6;
-    color: #10b981;
+    background-color: #ecfdf5;
+    color: #059669;
+    transform: translateX(5px);
 }
 
 .drawer-overlay {
@@ -106,6 +120,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
     z-index: 2500;
 }
 
@@ -117,11 +132,12 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #f0fdf4;
-    color: #15803d;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-weight: 600;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    color: #047857;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
 }
 
 .search-input-box {
@@ -130,26 +146,39 @@ body {
     max-width: 500px;
     margin: 0 10px;
     background-color: #f9fafb;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 12px;
     overflow: hidden;
+    transition: all 0.3s;
+}
+
+.search-input-box:focus-within {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 .search-input-box input {
     flex: 1;
-    padding: 10px 15px;
+    padding: 12px 16px;
     border: none;
     outline: none;
     background: transparent;
     color: #1f2937;
+    font-size: 15px;
 }
 
 .search-btn {
     background-color: #10b981;
     border: none;
-    padding: 0 15px;
+    padding: 0 20px;
     cursor: pointer;
     color: white;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background-color: #059669;
 }
 
 .user-actions {
@@ -161,63 +190,56 @@ body {
 .cart-open-btn, .dark-mode-btn, .settings-btn, .profile-btn {
     background: transparent;
     border: 1px solid #d1d5db;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 10px 14px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
+    transition: all 0.2s;
 }
 
-.cart-open-btn {
-    background-color: #10b981;
+.cart-open-btn:hover, .dark-mode-btn:hover, .settings-btn:hover, .profile-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.desktop-cart-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border: none;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.desktop-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669, #047857);
 }
 
 .badge {
     background-color: #ef4444;
     color: white;
-    padding: 2px 6px;
+    padding: 2px 8px;
     border-radius: 50%;
     font-size: 12px;
-}
-
-/* --- САБАДИ ШИНОКУНАНДА (FLOATING CART) ДАР ПОЁН --- */
-.floating-cart {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1500;
-}
-
-#floatingCartBtn {
-    background: #10b981;
-    color: white;
-    padding: 14px 24px;
-    border-radius: 50px;
-    border: none;
-    font-size: 16px;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-#floatingCartBtn:hover {
-    transform: scale(1.05);
 }
 
 /* --- HERO SECTION --- */
 .hero-section {
     background: linear-gradient(135deg, #059669 0%, #10b981 50%, #f97316 100%);
     color: white;
-    padding: 40px 0;
-    margin: 20px auto;
+    padding: 50px 0;
+    margin: 25px auto;
     max-width: 1200px;
-    border-radius: 16px;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(5, 150, 105, 0.2);
 }
 
 .hero-container {
@@ -228,30 +250,39 @@ body {
 }
 
 .hero-text h1 {
-    font-size: 38px;
-    font-weight: bold;
+    font-size: 42px;
+    font-weight: 800;
     margin-bottom: 15px;
+    line-height: 1.2;
 }
 
 .hero-text p {
-    font-size: 16px;
-    margin-bottom: 20px;
-    opacity: 0.9;
+    font-size: 18px;
+    margin-bottom: 25px;
+    opacity: 0.95;
 }
 
 .shop-now-btn {
     display: inline-block;
     background-color: #ffffff;
     color: #059669;
-    padding: 10px 24px;
-    border-radius: 20px;
+    padding: 12px 28px;
+    border-radius: 25px;
     font-weight: bold;
     text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+}
+
+.shop-now-btn:hover {
+    transform: scale(1.05);
+    background: #f8fafc;
 }
 
 .hero-image img {
-    max-width: 400px;
-    border-radius: 10px;
+    max-width: 420px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 /* --- КАТЕГОРИЯҲО ВА МАҲСУЛОТ --- */
@@ -264,18 +295,26 @@ body {
 
 .category-card {
     background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 15px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 18px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
+    font-weight: 600;
+}
+
+.category-card:hover {
+    border-color: #10b981;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
 }
 
 .category-card.active {
-    background-color: #10b981;
+    background: linear-gradient(135deg, #10b981, #059669);
     color: white;
-    border-color: #10b981;
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
 }
 
 .products-section {
@@ -285,69 +324,80 @@ body {
 }
 
 .section-header {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .section-header h2 {
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: 800;
+    color: #111827;
 }
 
 .product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 24px;
 }
 
 .product-card {
     background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 15px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 20px;
     text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    border-color: #10b981;
 }
 
 .product-card img {
     width: 100%;
-    height: 120px;
+    height: 140px;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    transition: transform 0.3s;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
 }
 
 .product-card h3 {
-    font-size: 15px;
-    color: #374151;
-    margin-bottom: 5px;
+    font-size: 16px;
+    color: #1f2937;
+    margin-bottom: 6px;
+    font-weight: 700;
 }
 
 .weight {
-    font-size: 12px;
+    font-size: 13px;
     color: #9ca3af;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .price-box {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: center;
 }
 
 .old-price {
-    font-size: 13px;
+    font-size: 14px;
     color: #9ca3af;
     text-decoration: line-through;
 }
 
 .new-price {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 800;
     color: #ef4444;
 }
 
@@ -356,32 +406,45 @@ body {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     background: #f9fafb;
-    padding: 6px;
-    border-radius: 8px;
+    padding: 8px;
+    border-radius: 12px;
     border: 1px solid #e5e7eb;
 }
 
 .qty-btn {
     background: #e5e7eb;
     border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s;
+}
+
+.qty-btn:hover {
+    background: #d1d5db;
 }
 
 .add-to-cart-btn {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 10px;
-    background: #10b981;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #10b981, #059669);
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    transition: all 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    transform: translateY(-1px);
 }
 
 /* --- МОДАЛҲО --- */
@@ -393,357 +456,23 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
-    background-color: #fff;
-    margin: 5% auto;
-    padding: 20px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
-}
-
-.close-modal, .close-settings, .close-profile {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.cart-items-container {
-    margin: 15px 0;
-    max-height: 200px;
-    overflow-y: auto;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 10px;
-}
-
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    background: #f9fafb;
-    padding: 8px 12px;
-    border-radius: 8px;
-}
-
-.remove-item-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.cart-modal-total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-.checkout-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.checkout-form input {
-    padding: 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    outline: none;
-}
-
-.order-btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.whatsapp-btn {
-    background-color: #25d366;
-}
-
-/* --- РЕЖИМИ ТОРИК (DARK MODE) --- */
-body.dark-theme {
-    background-color: #111827;
-    color: #f3f4f6;
-}
-
-body.dark-theme .search-bar-section,
-body.dark-theme .modal-content,
-body.dark-theme .side-drawer,
-body.dark-theme .product-card,
-body.dark-theme .category-card {
-    background-color: #1f2937;
-    color: #f3f4f6;
-    border-color: #374151;
-}
-
-body.dark-theme .search-input-box {
-    background-color: #374151;
-    border-color: #4b5563;
-}
-
-body.dark-theme .search-input-box input {
-    color: white;
-}
-
-body.dark-theme .checkout-form input {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: white;
-}
-
-/* --- ТАРҲИ МОБИЛӢ (RESPONSIVE) --- */
-@media (max-width: 768px) {
-    .hamburger-btn {
-        display: block;
-    }
-
-    .dropdown-category {
-        display: none;
-    }
-
-    .hero-container {
-        flex-direction: column;
-        text-align: center;
-        padding: 0 10px;
-    }
-
-    .hero-image img {
-        max-width: 80%;
-        margin-top: 15px;
-    }
-
-    .category-grid {
-        display: flex;
-        overflow-x: auto;
-        gap: 8px;
-        padding-bottom: 5px;
-    }
-
-    .category-card {
-        flex: 0 0 auto;
-        min-width: 100px;
-        padding: 8px;
-    }
-
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-
-    .product-card {
-        padding: 10px;
-    }
-
-    .product-card img {
-        height: 90px;
-    }
-    /* Дизайни волшебний ва часпаки кнопкаи сабад дар экран */
-#cartModalBtn.cart-open-btn {
-    position: fixed !important; /* Дар экран часпида мемонад ва бо саҳифа боло-поён меравад */
-    bottom: 25px !important;    /* Аз поёни экран каме болотар */
-    right: 25px !important;     /* Дар кунҷи рости экран */
-    z-index: 9999 !important;   /* Ҳамеша аз болои ҳама элементҳо меистад */
-    
-    background: linear-gradient(135deg, #10b981, #059669) !important;
-    color: white !important;
-    padding: 14px 22px !important;
-    border-radius: 50px !important; /* Шакли гирд ва замонавӣ */
-    font-size: 16px !important;
-    font-weight: bold !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5), 0 0 15px rgba(16, 185, 129, 0.3) !important;
-    cursor: pointer;
-    transition: all 0.3s ease !important;
-}
-
-/* Эффекти зебо ҳангоми расонидани муш ё ангушт */
-#cartModalBtn.cart-open-btn:hover {
-    transform: scale(1.08) translateY(-3px) !important;
-    box-shadow: 0 15px 30px rgba(16, 185, 129, 0.7), 0 0 20px rgba(16, 185, 129, 0.5) !important;
-}
-/* Панели часпаки поёнӣ (100% width) */
-.fixed-bottom-cart-panel {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px); /* Эффекти хира (glassmorphism) */
-    padding: 15px;
-    border-top: 1px solid #e5e7eb;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-}
-
-/* Дизайни тугмаи "волшебний" */
-.cart-open-btn {
-    width: 95% !important; /* Барои он ки 100% фазоро гирад */
-    background: linear-gradient(135deg, #059669, #10b981) !important;
-    color: white !important;
-    border: none !important;
-    padding: 18px !important;
-    border-radius: 15px !important;
-    font-size: 18px !important;
-    font-weight: bold !important;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
-    display: flex !important;
-    justify-content: center;
-    gap: 10px;
-    transition: transform 0.2s ease !important;
-}
-
-/* Барои он ки маҳсулоти охирин дар зери сабад намонанд */
-body {
-    padding-bottom: 100px;
-}
-}
-/* Стиль барои сабади поёнии волшебний дар телефонҳои мобилӣ */
-.magical-mobile-cart {
-    display: none; /* Пешфарз дар компютер пинҳон аст */
-}
-
-@media (max-width: 768px) {
-    .magical-mobile-cart {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 10px 15px;
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        box-sizing: border-box;
-    }
-
-    .magical-cart-btn {
-        width: 100% !important;
-        background: linear-gradient(135deg, #059669, #10b981) !important;
-        color: white !important;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
-        transition: transform 0.2s ease;
-    }
-
-    .magical-cart-btn:active {
-        transform: scale(0.98);
-    }
-
-    .magical-badge {
-        background: white;
-        color: #059669;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: bold;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-}
-@media (max-width: 768px) {
-    .magical-mobile-cart {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        padding: 12px 16px;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
-        box-sizing: border-box;
-        border-top: 1px solid rgba(255, 255, 255, 0.6);
-    }
-
-    .magical-cart-btn {
-        width: 100% !important;
-        /* Градиенти волшебний бо ранги тобнок */
-        background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%) !important;
-        background-size: 200% 200%;
-        color: white !important;
-        border: none;
-        padding: 14px 22px;
-        border-radius: 16px;
-        font-size: 17px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-        /* Аниматсияҳои ҷодугарӣ */
-        box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
-        animation: magicalGlow 4s ease infinite, magicalFloat 2s ease-in-out infinite;
-        transition: transform 0.2s ease;
-    }
-
-    .magical-cart-btn:active {
-        transform: scale(0.96);
-    }
-
-    .magical-badge {
-        background: #ffffff;
-        color: #059669;
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 15px;
-        font-weight: 900;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        animation: badgeBounce 1.5s ease infinite;
-    }
-}
-
-/* Эффектҳои махсуси аниматсионӣ */
-@keyframes magicalGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-@keyframes magicalFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-}
-
-@keyframes badgeBounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-}
-/* Дизайни ҷодугарӣ ва зебо барои модали сабад */
-#cartModal .modal-content {
-    background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
-    border-radius: 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    margin: 4% auto;
     padding: 25px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 520px;
+    position: relative;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.8);
-    animation: modalPopUp 0.3s ease-out;
+    animation: modalPopUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes modalPopUp {
@@ -751,20 +480,27 @@ body {
     100% { transform: scale(1); opacity: 1; }
 }
 
-#cartModal h2 {
-    color: #065f46;
-    font-size: 22px;
-    margin-bottom: 15px;
-    border-bottom: 2px dashed #10b981;
-    padding-bottom: 10px;
+.close-modal, .close-settings, .close-profile, .close-dc-qr {
+    position: absolute;
+    right: 20px;
+    top: 18px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s, transform 0.2s;
 }
 
-/* Қисми рӯйхати маҳсулоти дохили сабад */
+.close-modal:hover, .close-settings:hover, .close-profile:hover, .close-dc-qr:hover {
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
 .cart-items-container {
-    max-height: 250px;
+    margin: 15px 0;
+    max-height: 220px;
     overflow-y: auto;
-    margin-bottom: 15px;
-    padding-right: 5px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 10px;
 }
 
 .empty-cart-text {
@@ -774,45 +510,68 @@ body {
     padding: 20px 0;
 }
 
-/* Қисми ҷами умумӣ */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.remove-item-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #ef4444;
+}
+
 .cart-modal-total {
     background: #ecfdf5;
-    padding: 12px 15px;
-    border-radius: 12px;
+    padding: 14px 18px;
+    border-radius: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    border: 1px solid #10b98133;
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .cart-modal-total span {
     color: #047857;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .cart-modal-total strong {
     color: #065f46;
-    font-size: 18px;
+    font-size: 20px;
 }
 
-/* Форма ва кнопкаҳои таҳвил (WhatsApp / Telegram) */
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .checkout-form h3 {
     font-size: 16px;
     color: #374151;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
+    font-weight: 700;
 }
 
 .checkout-form input {
     width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 10px;
+    padding: 12px 16px;
     border: 1.5px solid #d1d5db;
     border-radius: 12px;
     outline: none;
     transition: all 0.3s;
-    box-sizing: border-box;
     background: #ffffff;
+    font-size: 15px;
 }
 
 .checkout-form input:focus {
@@ -820,17 +579,44 @@ body {
     box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
 }
 
-.checkout-buttons {
+.location-box {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+}
+
+.gps-btn {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+    color: white !important;
+    border: none;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    animation: gpsGlow 3s infinite;
+}
+
+.gps-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.checkout-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
 }
 
 .whatsapp-btn {
     background: linear-gradient(135deg, #25d366, #128c7e) !important;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 12px;
     font-weight: bold;
     flex: 1;
@@ -843,7 +629,7 @@ body {
     background: linear-gradient(135deg, #0088cc, #005f9e) !important;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 12px;
     font-weight: bold;
     flex: 1;
@@ -852,17 +638,142 @@ body {
     transition: transform 0.2s;
 }
 
-.whatsapp-btn:active, .telegram-btn:active {
+.whatsapp-btn:active, .telegram-btn:active, .gps-btn:active {
     transform: scale(0.96);
 }
-/* --- Дизайни волшебний барои интихоби забонҳо --- */
+
+/* --- DUSHANBE CITY PAYMENT SECTION --- */
+.dc-payment-section {
+    margin: 20px 0;
+    padding: 18px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+    border-radius: 18px;
+    border: 1px solid rgba(14, 165, 233, 0.25);
+}
+
+.dc-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.dc-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dc-card-option {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1.5px solid #e0f2fe;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.dc-card-option:hover {
+    transform: translateY(-3px);
+    border-color: #0284c7;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.15);
+    background: #f8fafc;
+}
+
+.dc-icon-box {
+    font-size: 24px;
+    margin-right: 14px;
+    background: #e0f2fe;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.dc-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dc-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.dc-desc {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.dc-action-btn {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.pulse-btn {
+    animation: dcPulse 2s infinite;
+}
+
+@keyframes dcPulse {
+    0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(2, 132, 199, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+}
+
+.magic-qr-box {
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #f0fdf4) !important;
+    border-radius: 22px !important;
+    max-width: 340px !important;
+}
+
+.qr-code-wrapper {
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    display: inline-block;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin: 15px 0 10px 0;
+}
+
+.qr-code-wrapper img {
+    display: block;
+    width: 160px;
+    height: 160px;
+}
+
+.qr-card-number {
+    font-size: 14px;
+    color: #334155;
+    margin-bottom: 5px;
+}
+
+.qr-amount-text {
+    font-size: 15px;
+    color: #047857;
+    font-weight: bold;
+}
+
+/* --- SETTINGS MODAL & LANGUAGES --- */
 .magic-settings-box {
     background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
     border-radius: 24px !important;
     padding: 30px !important;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25) !important;
-    border: 1px solid rgba(16, 185, 129, 0.3) !important;
-    animation: modalPopUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
 .magic-title {
@@ -871,9 +782,6 @@ body {
     font-weight: 800;
     text-align: center;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, #059669, #34d399);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .magic-subtitle {
@@ -913,7 +821,6 @@ body {
     color: #1f2937;
 }
 
-/* Эффектҳои ҷодугарӣ ҳангоми рафтори муш (Hover) ва пахш */
 .lang-option-btn:hover {
     border-color: #10b981;
     background: #ecfdf5;
@@ -925,183 +832,192 @@ body {
     transform: scale(1.2) rotate(8deg);
 }
 
-.lang-option-btn:active {
-    transform: translateY(0) scale(0.96);
+/* --- РЕЖИМИ ТОРИК (DARK MODE) --- */
+body.dark-theme {
+    background-color: #111827;
+    color: #f3f4f6;
 }
 
-/* --- Дизайн ва аниматсияи зебо барои тугмаи GPS --- */
-.location-box {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
+body.dark-theme .search-bar-section,
+body.dark-theme .modal-content,
+body.dark-theme .side-drawer,
+body.dark-theme .product-card,
+body.dark-theme .category-card,
+body.dark-theme .lang-option-btn,
+body.dark-theme .dc-card-option,
+body.dark-theme .cart-item {
+    background-color: #1f2937;
+    color: #f3f4f6;
+    border-color: #374151;
 }
 
-.gps-btn {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
-    color: white !important;
-    border: none;
-    padding: 0 18px;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-    animation: gpsGlow 3s infinite;
+body.dark-theme .search-input-box,
+body.dark-theme .checkout-form input,
+body.dark-theme .quantity-controller {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: white;
 }
 
-.gps-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-    background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+body.dark-theme .search-input-box input,
+body.dark-theme .checkout-form input {
+    color: white;
 }
 
-.gps-btn:active {
-    transform: scale(0.95);
+body.dark-theme .dropdown-category {
+    background: #064e3b;
+    color: #6ee7b7;
+}
+
+body.dark-theme .magic-settings-box,
+body.dark-theme .magic-qr-box {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+}
+
+body.dark-theme .lang-name,
+body.dark-theme .dc-title,
+body.dark-theme .checkout-form h3 {
+    color: #f3f4f6;
+}
+
+/* --- САБАДИ ВОЛШЕБНИЙ ДАР ПОЁНИ ЭКРАНИ МОБИЛӢ --- */
+.magical-mobile-cart {
+    display: none; /* Дар компютер пинҳон аст */
+}
+
+@media (max-width: 768px) {
+    .magical-mobile-cart {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 12px 16px;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        box-sizing: border-box;
+        border-top: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    body.dark-theme .magical-mobile-cart {
+        background: rgba(31, 41, 55, 0.9);
+        border-top-color: #374151;
+    }
+
+    .magical-cart-btn {
+        width: 100% !important;
+        background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%) !important;
+        background-size: 200% 200%;
+        color: white !important;
+        border: none;
+        padding: 14px 22px;
+        border-radius: 16px;
+        font-size: 17px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
+        animation: magicalGlow 4s ease infinite, magicalFloat 2s ease-in-out infinite;
+        transition: transform 0.2s ease;
+    }
+
+    .magical-cart-btn:active {
+        transform: scale(0.96);
+    }
+
+    .magical-badge {
+        background: #ffffff;
+        color: #059669;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 15px;
+        font-weight: 900;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        animation: badgeBounce 1.5s ease infinite;
+    }
+
+    .hamburger-btn {
+        display: block;
+    }
+
+    .dropdown-category {
+        display: none;
+    }
+
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .hero-image img {
+        max-width: 85%;
+        margin-top: 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 28px;
+    }
+
+    .category-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 8px;
+    }
+
+    .category-card {
+        flex: 0 0 auto;
+        min-width: 110px;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .product-card {
+        padding: 12px;
+    }
+
+    .product-card img {
+        height: 100px;
+    }
+
+    .product-card h3 {
+        font-size: 14px;
+    }
+
+    body {
+        padding-bottom: 90px; /* Барои он ки сабади поёнӣ маҳсулотро напӯшонад */
+    }
+}
+
+/* --- АНИМАТСИЯҲО --- */
+@keyframes magicalGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes magicalFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes badgeBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
 }
 
 @keyframes gpsGlow {
     0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.4); }
     50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); }
-}
-/* --- Стилҳои бахши пардохти Dushanbe City --- */
-.dc-payment-section {
-    margin: 20px 0;
-    padding: 16px;
-    background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
-    border-radius: 18px;
-    border: 1px solid rgba(14, 165, 233, 0.2);
-}
-
-.dc-section-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #0369a1;
-    margin-bottom: 12px;
-    text-align: center;
-}
-
-.dc-options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.dc-card-option {
-    display: flex;
-    align-items: center;
-    background: #ffffff;
-    padding: 12px 15px;
-    border-radius: 14px;
-    border: 1.5px solid #e0f2fe;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-}
-
-.dc-card-option:hover {
-    transform: translateY(-3px);
-    border-color: #0284c7;
-    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.15);
-    background: #f8fafc;
-}
-
-.dc-icon-box {
-    font-size: 24px;
-    margin-right: 12px;
-    background: #e0f2fe;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-}
-
-.dc-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.dc-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #0f172a;
-}
-
-.dc-desc {
-    font-size: 12px;
-    color: #64748b;
-}
-
-.dc-action-btn {
-    background: linear-gradient(135deg, #0284c7, #0369a1);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.dc-action-btn:active {
-    transform: scale(0.95);
-}
-
-/* Аниматсияи волшебний барои тугмаи пардохт */
-.pulse-btn {
-    animation: dcPulse 2s infinite;
-}
-
-@keyframes dcPulse {
-    0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(2, 132, 199, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
-}
-
-/* Модали QR Код */
-.magic-qr-box {
-    text-align: center;
-    background: linear-gradient(135deg, #ffffff, #f0fdf4) !important;
-    border-radius: 22px !important;
-    max-width: 320px !important;
-}
-
-.qr-code-wrapper {
-    background: white;
-    padding: 15px;
-    border-radius: 16px;
-    display: inline-block;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    margin: 15px 0 10px 0;
-}
-
-.qr-code-wrapper img {
-    display: block;
-    width: 160px;
-    height: 160px;
-}
-
-.qr-card-number {
-    font-size: 14px;
-    color: #334155;
-    margin-bottom: 5px;
-}
-
-.qr-amount-text {
-    font-size: 15px;
-    color: #047857;
-}
-
-.close-dc-qr {
-    float: right;
-    font-size: 22px;
-    cursor: pointer;
-    color: #94a3b8;
 }
