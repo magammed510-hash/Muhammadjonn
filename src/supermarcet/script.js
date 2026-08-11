@@ -425,11 +425,11 @@ function showAuthForm() {
             <div style="display: flex; flex-direction: column; gap: 14px;">
                 <div>
                     <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Номи Шумо</label>
-                    <input type="text" id="authName" placeholder="Масалан: Muhammadjon" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                    <input type="text" id="authName" placeholder="Масалан:Abdlo" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
                 </div>
                 <div>
                     <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Рақами Телефон</label>
-                    <input type="text" id="authPhone" placeholder="Масалан: 900210802" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                    <input type="text" id="authPhone" placeholder="Масалан: 900303322" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
                 </div>
                 <div>
                     <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Коди махсус (Танҳо барои Админ)</label>
