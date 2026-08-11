@@ -496,8 +496,8 @@
                     <button type="button" id="openQrModalBtn" class="dc-action-btn" data-i18n="dcScanBtn">Кушодан</button>
                 </div>
 
-                <!-- Варианти 2: Тугмаи Картаи Ман -->
-                <a href="#" id="dcCardPayBtn" target="_blank" class="dc-card-option dc-direct-pay">
+                <!-- Варианти 2: Тугмаи Пардохти Мустақими Карта -->
+                <a href="#" id="dcCardPayBtn" onclick="openDushanbeCityPay(event)" class="dc-card-option dc-direct-pay">
                     <div class="dc-icon-box">💳</div>
                     <div class="dc-info">
                         <span class="dc-title" data-i18n="dcCardTitle">Картаи Душанбе Сити</span>
@@ -550,7 +550,8 @@
                 <p data-i18n="authDesc" style="font-size: 13px; color: #666; margin-bottom: 10px;">Маълумот ё коди махфии админро ворид кунед:</p>
                 <input type="text" id="authName" placeholder="Номи шумо (ё Muhammadjon)..." data-i18n-placeholder="namePlaceholder">
                 <input type="text" id="authPhone" placeholder="Рақами телефон (ё 900210802)..." data-i18n-placeholder="phonePlaceholder">
-                <input type="password" id="authSecretCode" placeholder="Коди махфӣ (танҳо барои админ)..." style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
+                <!-- Майдони нав барои коди шахсии муштарӣ ё админ -->
+                <input type="password" id="authSecretCode" placeholder="Коди шахсии худро созед (парол)..." style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none; margin: 10px 0;">
                 <button type="button" id="saveProfileBtn" class="add-to-cart-btn" style="margin-top: 10px; width: 100%; background: #3b82f6;" data-i18n="saveProfile">Сабт ва Ворид шудан</button>
             </div>
 

@@ -180,12 +180,24 @@ window.removeItem = function(index) {
     updateCartUI();
 }
 
+// Функсияи пардохти мустақим тавассути Душанбе Сити бо рақами 872090906 ва маблағи умумӣ
+function openDushanbeCityPay(event) {
+    event.preventDefault();
+    const cardNum = "872090906";
+    let total = 0;
+    if (typeof cart !== 'undefined' && cart.length > 0) {
+        total = cart.reduce((sum, item) => sum + (item.basePrice * item.quantity), 0);
+    }
+    const payUrl = `https://dushanbepay.tj/pay?card=${cardNum}&amount=${total.toFixed(2)}`;
+    window.open(payUrl, '_blank');
+}
+
 function updateDushanbeCityPayment(totalAmount) {
     const cardNum = "872090906";
     
     const dcCardPayBtn = document.getElementById('dcCardPayBtn');
     if (dcCardPayBtn) {
-        dcCardPayBtn.href = `https://dushanbepay.tj/pay?card=${cardNum}&amount=${totalAmount}`;
+        dcCardPayBtn.href = `https://dushanbepay.tj/pay?card=${cardNum}&amount=${totalAmount.toFixed(2)}`;
     }
 
     const qrModalAmount = document.getElementById('qrModalAmount');
@@ -196,7 +208,7 @@ function updateDushanbeCityPayment(totalAmount) {
     const qrcodeContainer = document.getElementById('qrcodeContainer');
     if (qrcodeContainer && typeof QRCode !== 'undefined') {
         qrcodeContainer.innerHTML = "";
-        const qrData = `DUSHANBECITY:CARD=${cardNum};AMOUNT=${totalAmount.toFixed(2)}`;
+        const qrData = `https://dushanbepay.tj/pay?card=${cardNum}&amount=${totalAmount.toFixed(2)}`;
         
         new QRCode(qrcodeContainer, {
             text: qrData,
@@ -420,20 +432,20 @@ function showAuthForm() {
             <div style="text-align: center; margin-bottom: 20px;">
                 <div style="font-size: 45px; margin-bottom: 10px; animation: bounce 1.5s infinite;">🔐</div>
                 <h2 style="color: #0f172a; font-size: 22px; font-weight: 700; margin-bottom: 5px;">Регистратсияи Муштарӣ</h2>
-                <p style="color: #64748b; font-size: 13px;">Маълумоти худро барои даромадан ворид кунед (танҳо 1 маротиба)</p>
+                <p style="color: #64748b; font-size: 13px;">Маълумот ва коди шахсии худро ворид кунед</p>
             </div>
             <div style="display: flex; flex-direction: column; gap: 14px;">
                 <div>
                     <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Номи Шумо</label>
-                    <input type="text" id="authName" placeholder="Масалан:Abdlo" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                    <input type="text" id="authName" placeholder="Масалан: Abdlo" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
                 </div>
                 <div>
                     <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Рақами Телефон</label>
                     <input type="text" id="authPhone" placeholder="Масалан: 900303322" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
                 </div>
                 <div>
-                    <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Коди махсус (Танҳо барои Админ)</label>
-                    <input type="password" id="authSecretCode" placeholder="Агар админ бошед, занед..." style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                    <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Коди шахсии шумо (Парол)</label>
+                    <input type="password" id="authSecretCode" placeholder="Коди худро созед ё коди админ..." style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
                 </div>
                 <button id="saveProfileBtn" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;">Регистратсия шудан 🚀</button>
             </div>
@@ -452,22 +464,37 @@ function handleRegisterAction() {
     const name = document.getElementById('authName').value.trim();
     const phone = document.getElementById('authPhone').value.trim();
     const secretCode = document.getElementById('authSecretCode') ? document.getElementById('authSecretCode').value.trim() : '';
-    // Дар дохили handleRegisterAction ва баъд аз сохта шудани сессия инҳоро илова кунед:
-document.body.classList.remove('not-registered');
-const closeProfileBtn = document.querySelector('.close-profile');
-if (closeProfileBtn) closeProfileBtn.style.display = 'block';
 
-    if (!name || !phone) {
-        alert('Лутфан ном ва рақами телефонро ворид кунед!');
+    if (!name || !phone || !secretCode) {
+        alert('Лутфан ном, рақами телефон ва коди шахсии худро пурра ворид кунед!');
         return;
     }
 
     if (name === 'Muhammadjon' && phone === '900210802' && secretCode === '12mart2010admin') {
         const adminData = { role: 'admin', name: 'Muhammadjon', phone: '900210802', loginTime: new Date().getTime() };
         localStorage.setItem('market_user_session', JSON.stringify(adminData));
+        
+        document.body.classList.remove('not-registered');
+        const closeProfileBtn = document.querySelector('.close-profile');
+        if (closeProfileBtn) closeProfileBtn.style.display = 'block';
+
         alert('Хуш омадед, Босс (Админ)! Панели идоракунӣ кушода шуд.');
         showAdminDashboard();
         return;
+    }
+
+    // Санҷиши мизоҷони қаблӣ тавассути рақами телефон ва коди шахсӣ
+    let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
+    let existingClient = allClients.find(c => c.phone === phone);
+
+    if (existingClient) {
+        if (existingClient.code !== secretCode) {
+            alert('Коди шахсии шумо хато аст! Лутфан коди дурусти ҳисобатонро нависед.');
+            return;
+        }
+    } else {
+        allClients.push({ name: name, phone: phone, code: secretCode, date: new Date().toLocaleDateString() });
+        localStorage.setItem('market_all_clients', JSON.stringify(allClients));
     }
 
     const userId = 'USER-' + Math.floor(1000 + Math.random() * 9000);
@@ -475,19 +502,18 @@ if (closeProfileBtn) closeProfileBtn.style.display = 'block';
         role: 'client',
         name: name,
         phone: phone,
+        userCode: secretCode,
         userId: userId,
         loginTime: new Date().getTime()
     };
 
     localStorage.setItem('market_user_session', JSON.stringify(userData));
 
-    let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
-    if (!allClients.some(c => c.phone === phone)) {
-        allClients.push({ name: name, phone: phone, date: new Date().toLocaleDateString() });
-        localStorage.setItem('market_all_clients', JSON.stringify(allClients));
-    }
+    document.body.classList.remove('not-registered');
+    const closeProfileBtn = document.querySelector('.close-profile');
+    if (closeProfileBtn) closeProfileBtn.style.display = 'block';
 
-    alert('Регистратсия ва воридшавӣ бо муваффақият гузашт!');
+    alert('Воридшавӣ бо муваффақият анҷом ёфт!');
     showClientCabinet(userData);
 }
 
@@ -704,6 +730,7 @@ if (settingsBtn) {
 if (closeSettings) {
     closeSettings.addEventListener('click', () => { settingsModal.style.display = 'none'; });
 }
+
 // Санҷиши ҳатмии регистратсия ҳангоми кушодани сайт
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
@@ -714,7 +741,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const closeProfileBtn = document.querySelector('.close-profile');
     
     if (!savedSession) {
-        // Агар сабти ном накарда бошад, крестик (маҳкамкунак)-ро пинҳон мекунем то ки маҷбурӣ ном нависад
         if (closeProfileBtn) closeProfileBtn.style.display = 'none';
         if (profileModal) profileModal.style.display = 'flex';
         document.body.classList.add('not-registered');
