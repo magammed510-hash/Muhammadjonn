@@ -17,6 +17,15 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .magic-btn-glow { animation: glowPulse 2s infinite; }
         @keyframes glowPulse { 0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); } 50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); } 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); } }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
     </style>
 </head>
 <body>
@@ -621,135 +630,6 @@
         <span id="cartBadge" class="magical-badge">0</span>
     </button>
 </div>
-
-<!-- Илова кардани скрипти логикаи навкардашуда барои сессия ва админ -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Санҷиши сессияи 10-рӯза ва Админ ҳангоми боркунии сайт
-    checkSavedUserSession();
-
-    const saveProfileBtn = document.getElementById('saveProfileBtn');
-    if(saveProfileBtn) {
-        saveProfileBtn.addEventListener('click', function() {
-            const name = document.getElementById('authName').value.trim();
-            const phone = document.getElementById('authPhone').value.trim();
-            const secretCode = document.getElementById('authSecretCode').value.trim();
-
-            if(!name || !phone) {
-                alert('Лутфан ном ва рақами худро нависед!');
-                return;
-            }
-
-            // Санҷиши Админ (Босс): Ном Muhammadjon, номер 900210802, код 12mart2010admin
-            if(name === 'Muhammadjon' && phone === '900210802' && secretCode === '12mart2010admin') {
-                const adminData = { role: 'admin', name: 'Muhammadjon', phone: '900210802', loginTime: new Date().getTime() };
-                localStorage.setItem('market_user_session', JSON.stringify(adminData));
-                alert('Хуш омадед, Босс (Админ)! Панели идоракунӣ кушода шуд.');
-                showAdminDashboard();
-                return;
-            }
-
-            // Муштарии оддӣ
-            const userId = 'USER-' + Math.floor(1000 + Math.random() * 9000);
-            const userData = {
-                role: 'client',
-                name: name,
-                phone: phone,
-                userId: userId,
-                loginTime: new Date().getTime() // Захираи вақт барои мӯҳлати 10 рӯз
-            };
-
-            // Захира дар LocalStorage
-            localStorage.setItem('market_user_session', JSON.stringify(userData));
-
-            // Захира ба рӯйхати умумии мизоҷон барои Админ
-            let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
-            if(!allClients.some(c => c.phone === phone)) {
-                allClients.push({ name: name, phone: phone, date: new Date().toLocaleDateString() });
-                localStorage.setItem('market_all_clients', JSON.stringify(allClients));
-            }
-
-            alert('Регистратсия бо муваффақият гузашт!');
-            showClientCabinet(userData);
-        });
-    }
-
-    // Тугмаҳои баромадан
-    const logoutBtn = document.getElementById('logoutBtn');
-    const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-    if(logoutBtn) logoutBtn.addEventListener('click', logoutUser);
-    if(adminLogoutBtn) adminLogoutBtn.addEventListener('click', logoutUser);
-});
-
-function checkSavedUserSession() {
-    const savedSession = localStorage.getItem('market_user_session');
-    if(!savedSession) return;
-
-    const user = JSON.parse(savedSession);
-    const currentTime = new Date().getTime();
-    const tenDaysInMillis = 10 * 24 * 60 * 60 * 1000; // Мӯҳлати 10 рӯз
-
-    // Санҷиши мӯҳлати 10 рӯз
-    if(user.role !== 'admin' && (currentTime - user.loginTime > tenDaysInMillis)) {
-        localStorage.removeItem('market_user_session');
-        alert('Мӯҳлати сессияи 10-рӯзаи шумо ба охир расид. Лутфан аз нав ворид шавед.');
-        return;
-    }
-
-    if(user.role === 'admin') {
-        showAdminDashboard();
-    } else {
-        showClientCabinet(user);
-    }
-}
-
-function showAdminDashboard() {
-    document.getElementById('authFormSection').style.display = 'none';
-    document.getElementById('profileInfoSection').style.display = 'none';
-    document.getElementById('adminPanelSection').style.display = 'block';
-
-    // Пур кардани ҷадвали мизоҷон
-    const clientsTable = document.getElementById('adminUsersList');
-    const allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
-    if(allClients.length > 0) {
-        clientsTable.innerHTML = allClients.map(c => `<tr><td>${c.name}</td><td>${c.phone}</td><td>${c.date}</td></tr>`).join('');
-    } else {
-        clientsTable.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #94a3b8;">Ҳоло мизоҷ нест</td></tr>`;
-    }
-
-    // Пур кардани ҷадвали харидҳо
-    const ordersTable = document.getElementById('adminOrdersList');
-    const allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
-    if(allOrders.length > 0) {
-        ordersTable.innerHTML = allOrders.map(o => `<tr><td>${o.name}</td><td>${o.phone}</td><td>${o.products}</td><td>${o.date}</td></tr>`).join('');
-    }
-}
-
-function showClientCabinet(user) {
-    document.getElementById('authFormSection').style.display = 'none';
-    document.getElementById('adminPanelSection').style.display = 'none';
-    document.getElementById('profileInfoSection').style.display = 'block';
-
-    document.getElementById('userDisplayName').innerText = user.name;
-    document.getElementById('userDisplayPhone').innerText = 'Рақам: ' + user.phone;
-    document.getElementById('userDisplayId').innerText = user.userId;
-
-    // Пур кардани худкори маълумот дар формаи харид
-    if(document.getElementById('clientName')) document.getElementById('clientName').value = user.name;
-    if(document.getElementById('clientPhone')) document.getElementById('clientPhone').value = user.phone;
-}
-
-function logoutUser() {
-    localStorage.removeItem('market_user_session');
-    document.getElementById('authFormSection').style.display = 'block';
-    document.getElementById('profileInfoSection').style.display = 'none';
-    document.getElementById('adminPanelSection').style.display = 'none';
-    document.getElementById('authName').value = '';
-    document.getElementById('authPhone').value = '';
-    document.getElementById('authSecretCode').value = '';
-    alert('Шумо аз ҳисоб баромадед.');
-}
-</script>
 
 <script src="./script.js"></script>
 </body>

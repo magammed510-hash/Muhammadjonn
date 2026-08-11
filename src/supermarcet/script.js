@@ -32,7 +32,6 @@ if (closeModal) {
     });
 }
 
-// Пӯшидани модалҳо ҳангоми пахш дар берун
 window.addEventListener('click', (e) => { 
     if (e.target === cartModal) cartModal.style.display = 'none';
     const profileModal = document.getElementById('profileModal');
@@ -43,7 +42,6 @@ window.addEventListener('click', (e) => {
     if (e.target === dcQrModal) dcQrModal.style.display = 'none';
 });
 
-// Менюи Гамбургер
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const sideDrawer = document.getElementById('sideDrawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
@@ -91,7 +89,6 @@ if (drawerSettings) {
     });
 }
 
-// Плюс ва минус кардани маҳсулот дар карточкаҳо
 document.querySelectorAll('.product-card').forEach(card => {
     const minusBtn = card.querySelector('.minus-btn');
     const plusBtn = card.querySelector('.plus-btn');
@@ -183,7 +180,6 @@ window.removeItem = function(index) {
     updateCartUI();
 }
 
-// Системаи пардохти Dushanbe City ва QR Код
 function updateDushanbeCityPayment(totalAmount) {
     const cardNum = "872090906";
     
@@ -213,7 +209,6 @@ function updateDushanbeCityPayment(totalAmount) {
     }
 }
 
-// Кушодани модали QR Код
 const dcQrModal = document.getElementById('dcQrModal');
 const openQrModalBtn = document.getElementById('openQrModalBtn');
 const closeDcQr = document.querySelector('.close-dc-qr');
@@ -231,7 +226,6 @@ if (closeDcQr) {
     });
 }
 
-// Категорияҳо ва Филтр
 const categoryCards = document.querySelectorAll('.category-card');
 const productCards = document.querySelectorAll('.product-card');
 const sectionTitle = document.getElementById('sectionTitle');
@@ -256,7 +250,6 @@ categoryCards.forEach(catCard => {
     });
 });
 
-// Ҷустуҷӯ (Search)
 const searchInput = document.getElementById('searchInput');
 const emptySearchState = document.getElementById('emptySearchState');
 
@@ -281,7 +274,6 @@ if (searchInput) {
     });
 }
 
-// Режими торик (Dark Mode)
 const darkModeBtn = document.getElementById('darkModeToggle');
 if (darkModeBtn) {
     darkModeBtn.addEventListener('click', () => {
@@ -290,7 +282,6 @@ if (darkModeBtn) {
     });
 }
 
-// GPS ва суроға
 const clientAddressInput = document.getElementById('clientAddress');
 const getGpsBtn = document.getElementById('getGpsBtn');
 
@@ -314,7 +305,6 @@ if (getGpsBtn) {
     });
 }
 
-// Сабти фармоиш ва фиристодан ба Админ (Босс)
 function saveOrderToAdmin(clientName, clientPhone, productsSummary) {
     let allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
     allOrders.push({
@@ -354,7 +344,6 @@ function generateOrderText() {
 
     text += `\n💰 Ҷами умумӣ: ${total.toFixed(2)} сомонӣ`;
 
-    // Сабти харид дар омори Админ (Босс)
     saveOrderToAdmin(name, phone, productsListStr);
 
     return text;
@@ -378,7 +367,6 @@ if (sendTelegram) {
     });
 }
 
-// Бахши Профил, Сессия ва Панели Админ
 const profileModal = document.getElementById('profileModal');
 const profileModalBtn = document.getElementById('profileModalBtn');
 const closeProfile = document.querySelector('.close-profile');
@@ -388,9 +376,6 @@ const adminPanelSection = document.getElementById('adminPanelSection');
 const saveProfileBtn = document.getElementById('saveProfileBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-const userDisplayName = document.getElementById('userDisplayName');
-const userDisplayPhone = document.getElementById('userDisplayPhone');
-const userDisplayId = document.getElementById('userDisplayId');
 
 if (profileModalBtn) {
     profileModalBtn.addEventListener('click', () => {
@@ -411,9 +396,8 @@ function checkUserState() {
     }
 
     const currentTime = new Date().getTime();
-    const tenDaysInMillis = 10 * 24 * 60 * 60 * 1000; // Мӯҳлати 10 рӯз
+    const tenDaysInMillis = 10 * 24 * 60 * 60 * 1000;
 
-    // Санҷиши мӯҳлати 10 рӯз барои муштарии оддӣ
     if (savedSession.role !== 'admin' && (currentTime - savedSession.loginTime > tenDaysInMillis)) {
         localStorage.removeItem('market_user_session');
         alert('Мӯҳлати сессияи 10-рӯзаи шумо ба охир расид. Лутфан аз нав ворид шавед.');
@@ -429,27 +413,148 @@ function checkUserState() {
 }
 
 function showAuthForm() {
-    if (authFormSection) authFormSection.style.display = 'block';
+    if (authFormSection) {
+        authFormSection.style.display = 'block';
+        authFormSection.style.animation = "fadeInScale 0.3s ease-in-out";
+        authFormSection.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 45px; margin-bottom: 10px; animation: bounce 1.5s infinite;">🔐</div>
+                <h2 style="color: #0f172a; font-size: 22px; font-weight: 700; margin-bottom: 5px;">Регистратсияи Муштарӣ</h2>
+                <p style="color: #64748b; font-size: 13px;">Маълумоти худро барои даромадан ворид кунед (танҳо 1 маротиба)</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                    <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Номи Шумо</label>
+                    <input type="text" id="authName" placeholder="Масалан: Muhammadjon" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Рақами Телефон</label>
+                    <input type="text" id="authPhone" placeholder="Масалан: 900210802" style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Коди махсус (Танҳо барои Админ)</label>
+                    <input type="password" id="authSecretCode" placeholder="Агар админ бошед, занед..." style="width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; outline: none;">
+                </div>
+                <button id="saveProfileBtn" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer;">Регистратсия шудан 🚀</button>
+            </div>
+        `;
+        
+        const newSaveBtn = document.getElementById('saveProfileBtn');
+        if (newSaveBtn) {
+            newSaveBtn.addEventListener('click', handleRegisterAction);
+        }
+    }
     if (profileInfoSection) profileInfoSection.style.display = 'none';
     if (adminPanelSection) adminPanelSection.style.display = 'none';
+}
+
+function handleRegisterAction() {
+    const name = document.getElementById('authName').value.trim();
+    const phone = document.getElementById('authPhone').value.trim();
+    const secretCode = document.getElementById('authSecretCode') ? document.getElementById('authSecretCode').value.trim() : '';
+    // Дар дохили handleRegisterAction ва баъд аз сохта шудани сессия инҳоро илова кунед:
+document.body.classList.remove('not-registered');
+const closeProfileBtn = document.querySelector('.close-profile');
+if (closeProfileBtn) closeProfileBtn.style.display = 'block';
+
+    if (!name || !phone) {
+        alert('Лутфан ном ва рақами телефонро ворид кунед!');
+        return;
+    }
+
+    if (name === 'Muhammadjon' && phone === '900210802' && secretCode === '12mart2010admin') {
+        const adminData = { role: 'admin', name: 'Muhammadjon', phone: '900210802', loginTime: new Date().getTime() };
+        localStorage.setItem('market_user_session', JSON.stringify(adminData));
+        alert('Хуш омадед, Босс (Админ)! Панели идоракунӣ кушода шуд.');
+        showAdminDashboard();
+        return;
+    }
+
+    const userId = 'USER-' + Math.floor(1000 + Math.random() * 9000);
+    const userData = {
+        role: 'client',
+        name: name,
+        phone: phone,
+        userId: userId,
+        loginTime: new Date().getTime()
+    };
+
+    localStorage.setItem('market_user_session', JSON.stringify(userData));
+
+    let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
+    if (!allClients.some(c => c.phone === phone)) {
+        allClients.push({ name: name, phone: phone, date: new Date().toLocaleDateString() });
+        localStorage.setItem('market_all_clients', JSON.stringify(allClients));
+    }
+
+    alert('Регистратсия ва воридшавӣ бо муваффақият гузашт!');
+    showClientCabinet(userData);
 }
 
 function showClientCabinet(user) {
     if (authFormSection) authFormSection.style.display = 'none';
     if (adminPanelSection) adminPanelSection.style.display = 'none';
-    if (profileInfoSection) profileInfoSection.style.display = 'block';
+    if (profileInfoSection) {
+        profileInfoSection.style.display = 'block';
+        profileInfoSection.style.animation = "fadeInScale 0.3s ease-in-out";
+        
+        profileInfoSection.innerHTML = `
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 50px; margin-bottom: 8px;">👤</div>
+                <h3 id="userDisplayName" style="color: #0f172a; font-size: 20px; font-weight: 700; margin-bottom: 2px;">${user.name}</h3>
+                <p id="userDisplayPhone" style="color: #64748b; font-size: 13px;">Рақам: ${user.phone}</p>
+                <p id="userDisplayId" style="color: #94a3b8; font-size: 11px; margin-top: 2px;">ID: ${user.userId || 'USER-1000'}</p>
+            </div>
+            
+            <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0;">
+                <label style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 6px;">Редактироват кардани ном:</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="editClientName" value="${user.name}" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none;">
+                    <button id="updateNameBtn" style="background: #10b981; color: white; border: none; padding: 0 14px; border-radius: 8px; font-weight: 600; cursor: pointer;">Тағйир</button>
+                </div>
+            </div>
 
-    if (userDisplayName) userDisplayName.textContent = user.name;
-    if (userDisplayPhone) userDisplayPhone.textContent = 'Рақам: ' + user.phone;
-    if (userDisplayId) userDisplayId.textContent = user.userId;
+            <button id="logoutBtn" style="width: 100%; background: #ef4444; color: white; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer;">Баромадан аз ҳисоб</button>
+        `;
+
+        const updateNameBtn = document.getElementById('updateNameBtn');
+        if (updateNameBtn) {
+            updateNameBtn.addEventListener('click', () => {
+                const newNameInput = document.getElementById('editClientName').value.trim();
+                if (!newNameInput) {
+                    alert('Лутфан номро ворид кунед!');
+                    return;
+                }
+                user.name = newNameInput;
+                localStorage.setItem('market_user_session', JSON.stringify(user));
+                
+                let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
+                const clientIndex = allClients.findIndex(c => c.phone === user.phone);
+                if (clientIndex !== -1) {
+                    allClients[clientIndex].name = newNameInput;
+                    localStorage.setItem('market_all_clients', JSON.stringify(allClients));
+                }
+
+                alert('Номи шумо бо муваффақият тағйир ёфт!');
+                showClientCabinet(user);
+            });
+        }
+
+        const newLogoutBtn = document.getElementById('logoutBtn');
+        if (newLogoutBtn) {
+            newLogoutBtn.addEventListener('click', handleLogout);
+        }
+    }
 }
 
 function showAdminDashboard() {
     if (authFormSection) authFormSection.style.display = 'none';
     if (profileInfoSection) profileInfoSection.style.display = 'none';
-    if (adminPanelSection) adminPanelSection.style.display = 'block';
+    if (adminPanelSection) {
+        adminPanelSection.style.display = 'block';
+        adminPanelSection.style.animation = "fadeInScale 0.3s ease-in-out";
+    }
 
-    // Пур кардани ҷадвали мизоҷон
     const clientsTable = document.getElementById('adminUsersList');
     const allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
     if (clientsTable) {
@@ -460,7 +565,6 @@ function showAdminDashboard() {
         }
     }
 
-    // Пур кардани ҷадвали харидҳо
     const ordersTable = document.getElementById('adminOrdersList');
     const allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
     if (ordersTable) {
@@ -472,58 +576,8 @@ function showAdminDashboard() {
     }
 }
 
-if (saveProfileBtn) {
-    saveProfileBtn.addEventListener('click', () => {
-        const name = document.getElementById('authName').value.trim();
-        const phone = document.getElementById('authPhone').value.trim();
-        const secretCode = document.getElementById('authSecretCode') ? document.getElementById('authSecretCode').value.trim() : '';
-
-        if (!name || !phone) {
-            alert('Лутфан ном ва рақами телефонро ворид кунед!');
-            return;
-        }
-
-        // Санҷиши Админ (Босс): Ном Muhammadjon, номер 900210802, код 12mart2010admin
-        if (name === 'Muhammadjon' && phone === '900210802' && secretCode === '12mart2010admin') {
-            const adminData = { role: 'admin', name: 'Muhammadjon', phone: '900210802', loginTime: new Date().getTime() };
-            localStorage.setItem('market_user_session', JSON.stringify(adminData));
-            alert('Хуш омадед, Босс (Админ)! Панели идоракунӣ кушода шуд.');
-            showAdminDashboard();
-            return;
-        }
-
-        // Муштарии оддӣ бо сессияи 10-рӯза
-        const userId = 'USER-' + Math.floor(1000 + Math.random() * 9000);
-        const userData = {
-            role: 'client',
-            name: name,
-            phone: phone,
-            userId: userId,
-            loginTime: new Date().getTime()
-        };
-
-        localStorage.setItem('market_user_session', JSON.stringify(userData));
-
-        // Сабт ба рӯйхати умумии мизоҷон барои Админ
-        let allClients = JSON.parse(localStorage.getItem('market_all_clients') || '[]');
-        if (!allClients.some(c => c.phone === phone)) {
-            allClients.push({ name: name, phone: phone, date: new Date().toLocaleDateString() });
-            localStorage.setItem('market_all_clients', JSON.stringify(allClients));
-        }
-
-        alert('Регистратсия ва воридшавӣ бо муваффақият гузашт!');
-        showClientCabinet(userData);
-    });
-}
-
 function handleLogout() {
     localStorage.removeItem('market_user_session');
-    const authName = document.getElementById('authName');
-    const authPhone = document.getElementById('authPhone');
-    const authSecret = document.getElementById('authSecretCode');
-    if (authName) authName.value = '';
-    if (authPhone) authPhone.value = '';
-    if (authSecret) authSecret.value = '';
     showAuthForm();
     alert('Шумо аз ҳисоб баромадед.');
 }
@@ -531,7 +585,6 @@ function handleLogout() {
 if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
 if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', handleLogout);
 
-// Тарҷумаи забонҳо
 const translations = {
     tj: {
         settings: "Танзимот", selectLang: "Интихоби забон:", cart: "Сабад", searchPlaceholder: "Ҷустуҷӯи маҳсулот...",
@@ -637,7 +690,7 @@ function changeLanguage(lang) {
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
     changeLanguage(savedLang);
-    checkUserState(); // Санҷиши сессия ҳангоми бори аввал кушода шудани сайт
+    checkUserState();
 });
 
 const settingsModal = document.getElementById('settingsModal');
@@ -651,3 +704,24 @@ if (settingsBtn) {
 if (closeSettings) {
     closeSettings.addEventListener('click', () => { settingsModal.style.display = 'none'; });
 }
+// Санҷиши ҳатмии регистратсия ҳангоми кушодани сайт
+window.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
+    changeLanguage(savedLang);
+    
+    const savedSession = JSON.parse(localStorage.getItem('market_user_session'));
+    const profileModal = document.getElementById('profileModal');
+    const closeProfileBtn = document.querySelector('.close-profile');
+    
+    if (!savedSession) {
+        // Агар сабти ном накарда бошад, крестик (маҳкамкунак)-ро пинҳон мекунем то ки маҷбурӣ ном нависад
+        if (closeProfileBtn) closeProfileBtn.style.display = 'none';
+        if (profileModal) profileModal.style.display = 'flex';
+        document.body.classList.add('not-registered');
+        checkUserState();
+    } else {
+        if (closeProfileBtn) closeProfileBtn.style.display = 'block';
+        document.body.classList.remove('not-registered');
+        checkUserState();
+    }
+});

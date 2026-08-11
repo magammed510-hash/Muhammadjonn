@@ -882,29 +882,38 @@ body.dark-theme .checkout-form h3 {
 
 /* --- САБАДИ ВОЛШЕБНИЙ ДАР ПОЁНИ ЭКРАНИ МОБИЛӢ --- */
 .magical-mobile-cart {
-    display: none; /* Дар компютер пинҳон аст */
+    display: none;
 }
 
 @media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    .search-container .cart-open-btn,
+    .search-container #cartModalBtn,
+    .search-container #cartModalBtnMobile {
+        display: none !important;
+    }
+
     .magical-mobile-cart {
-        display: block;
+        display: block !important;
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        padding: 12px 16px;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+        padding: 10px 16px;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
         z-index: 1000;
         box-sizing: border-box;
-        border-top: 1px solid rgba(255, 255, 255, 0.6);
     }
 
     body.dark-theme .magical-mobile-cart {
-        background: rgba(31, 41, 55, 0.9);
-        border-top-color: #374151;
+        background: rgba(31, 41, 55, 0.95);
     }
 
     .magical-cart-btn {
@@ -996,7 +1005,7 @@ body.dark-theme .checkout-form h3 {
     }
 
     body {
-        padding-bottom: 90px; /* Барои он ки сабади поёнӣ маҳсулотро напӯшонад */
+        padding-bottom: 90px;
     }
 }
 
@@ -1021,37 +1030,12 @@ body.dark-theme .checkout-form h3 {
     0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.4); }
     50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); }
 }
-@media (max-width: 768px) {
-    /* Пешгирӣ кардани скроли барзиёди уфуқӣ ё хатогиҳо дар телафони мобилӣ */
-    html, body {
-        overflow-x: hidden;
-        width: 100%;
-        position: relative;
-    }
-
-    /* Хориҷ кардани тугмаи сабади зиёдатӣ аз болои менюи мобилӣ (сарпӯш) */
-    .search-container .cart-open-btn,
-    .search-container #cartModalBtn,
-    .search-container #cartModalBtnMobile {
-        display: none !important;
-    }
-
-    /* Танҳо як сабади сеҳрнок дар поёни экран амал мекунад */
-    .magical-mobile-cart {
-        display: block !important;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 10px 16px;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        box-sizing: border-box;
-    }
-
-    body.dark-theme .magical-mobile-cart {
-        background: rgba(31, 41, 55, 0.95);
-    }
+/* --- БАРОИ МАҶБУРИИ РЕГИСТРАТСИЯ --- */
+body.not-registered header,
+body.not-registered .hero-section,
+body.not-registered .products-section,
+body.not-registered .fixed-bottom-cart-panel {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
 }
