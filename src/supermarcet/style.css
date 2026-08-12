@@ -1751,3 +1751,137 @@ body.dark-theme .category-card {
     .category-grid { display: flex; overflow-x: auto; padding-bottom: 5px; }
     .category-card { flex: 0 0 auto; }
 }
+/* --- ТАРҲИ МОБИЛӢ ВА АНИМАТСИЯҲОИ ҚИСМИ БОЛОИ СОМОНА --- */
+
+@keyframes mobileHeaderFade {
+    0% { opacity: 0; transform: translateY(-15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mobilePulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+@media (max-width: 768px) {
+    /* Сатри болоӣ (Header) дар телефонҳо */
+    .search-bar-section {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 10px 15px;
+        border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        animation: mobileHeaderFade 0.4s ease-out;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+    }
+
+    /* Тугмаи менюи паҳлӯӣ (Hamburger) бо аниматсия */
+    .hamburger-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffffff, #f1f5f9);
+        border: 1px solid #cbd5e1;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 18px;
+        color: #1e293b;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hamburger-btn:active {
+        transform: scale(0.9);
+        background: #e2e8f0;
+    }
+
+    /* Қуттии ҷустуҷӯ (Search Bar) дар мобилӣ */
+    .search-input-box {
+        display: flex;
+        flex: 1;
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        transition: all 0.3s ease;
+    }
+
+    .search-input-box:focus-within {
+        border-color: #10b981;
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15), inset 0 2px 4px rgba(0,0,0,0.01);
+    }
+
+    .search-input-box input {
+        flex: 1;
+        padding: 10px 14px;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: #1e293b;
+        font-size: 14px;
+    }
+
+    .search-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border: none;
+        padding: 0 16px;
+        cursor: pointer;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        transition: filter 0.2s;
+    }
+    .search-btn:active {
+        filter: brightness(0.9);
+    }
+
+    /* Тугмаҳои амалӣ (Профил, Танзимот ва ғайра) дар шапкаи мобилӣ */
+    .user-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .dark-mode-btn, .settings-btn, .profile-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffffff, #f1f5f9);
+        border: 1px solid #cbd5e1;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        transition: all 0.25s ease;
+    }
+    
+    .dark-mode-btn:active, .settings-btn:active, .profile-btn:active {
+        transform: scale(0.92);
+    }
+
+    /* Пинҳон кардани элементҳои компютерӣ дар мобилӣ */
+    .desktop-cart-btn, .open-rating-btn {
+        display: none !important;
+    }
+    
+    .dropdown-category {
+        display: none !important;
+    }
+}
