@@ -1885,3 +1885,214 @@ body.dark-theme .category-card {
         display: none !important;
     }
 }
+/* --- ТАРҲИ ЗЕБОИ БОЛОИ СОМОНА ВА РЕЙТИНГ БАРОИ ТЕЛЕФОН ВА КОМПЮТЕР --- */
+
+@keyframes mobileHeaderFade {
+    0% { opacity: 0; transform: translateY(-15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes royalGlow {
+    0% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(245, 158, 11, 0.1); }
+    50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.8), inset 0 0 20px rgba(245, 158, 11, 0.3); }
+    100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(245, 158, 11, 0.1); }
+}
+
+@keyframes floatAnim {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes royalFadeIn {
+    0% { opacity: 0; transform: translateY(15px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Сатри болоӣ (Header) */
+.search-bar-section {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Тугмаи Королевӣ барои Рейтинг (Ҳам барои компютер ва ҳам барои телефон) */
+.open-rating-btn {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+    animation: royalGlow 3s infinite ease-in-out;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.open-rating-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.5);
+}
+
+/* Тарҳрезии корти рейтинг (Таносуби 10 сомонӣ = 1 бал дар назар гирифта шудааст) */
+.rating-modal-content {
+    background: linear-gradient(145deg, #ffffff, #fffbeb);
+    width: 90%;
+    max-width: 450px;
+    border-radius: 32px;
+    padding: 30px;
+    position: relative;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 35px 70px rgba(245, 158, 11, 0.3), 0 10px 25px rgba(0,0,0,0.1);
+    border: 2px solid #fde68a;
+    animation: royalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.close-rating-modal {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #d97706;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.close-rating-modal:hover {
+    transform: rotate(90deg) scale(1.15);
+    background: #f59e0b;
+    color: #ffffff;
+}
+
+.rating-item-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.rating-item-card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: #f59e0b;
+}
+
+/* Ҷойҳои 1, 2, 3 дар рейтинг */
+.rank-1 {
+    background: linear-gradient(135deg, #fef08a, #fde047);
+    border: 2px solid #eab308;
+    box-shadow: 0 8px 25px rgba(234, 179, 8, 0.35);
+    animation: floatAnim 4s ease-in-out infinite;
+}
+
+.rank-2 {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    border: 2px solid #94a3b8;
+    box-shadow: 0 6px 20px rgba(148, 163, 184, 0.3);
+}
+
+.rank-3 {
+    background: linear-gradient(135deg, #ffedd5, #fed7aa);
+    border: 2px solid #f97316;
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+}
+
+/* --- НАМУДИ МОБИЛӢ (ТЕЛЕФОН) --- */
+@media (max-width: 768px) {
+    .search-bar-section {
+        padding: 8px 12px;
+        animation: mobileHeaderFade 0.4s ease-out;
+    }
+
+    .search-container {
+        gap: 8px;
+    }
+
+    /* Тугмаи рейтинг дар телефон дида мешавад ва хеле зебо ҷойгир аст */
+    .open-rating-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    .hamburger-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffffff, #f1f5f9);
+        border: 1px solid #cbd5e1;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-input-box {
+        flex: 1;
+        border-radius: 10px;
+    }
+
+    .search-input-box input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .search-btn {
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+    .user-actions {
+        gap: 6px;
+    }
+
+    .dark-mode-btn, .settings-btn, .profile-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .desktop-cart-btn {
+        display: none !important;
+    }
+    
+    .dropdown-category {
+        display: none !important;
+    }
+}
