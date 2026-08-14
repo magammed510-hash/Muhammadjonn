@@ -83,21 +83,110 @@ if (drawerSettings) {
     });
 }
 
-// Product Quantity & Add to Cart
+/* ============================================================ */
+/* ★★★ МАНТИҚИ НАВ: Интихоби ҳаҷм (variants) ва таъм/ранг (flavors) ★★★ */
+/* ============================================================ */
+
+function setupVariantsAndFlavors() {
+    document.querySelectorAll('.product-card').forEach(card => {
+
+        // --- Интихоби ҳаҷм (масалан 1.5л / 1л / 500г) ---
+        const variantsRaw = card.dataset.variants;
+        const variantSelect = card.querySelector('.variant-select');
+
+        if (variantsRaw && variantSelect) {
+            let variants = [];
+            try { variants = JSON.parse(variantsRaw); } catch (e) { variants = []; }
+
+            variantSelect.innerHTML = variants.map((v, i) =>
+                `<option value="${i}">${v.label}</option>`
+            ).join('');
+
+            variantSelect.addEventListener('change', () => {
+                applyVariant(card, variants[parseInt(variantSelect.value)]);
+            });
+
+            // Ҳолати аввалин (default)
+            if (variants.length > 0) applyVariant(card, variants[0]);
+        }
+
+        // --- Интихоби таъм/ранг (масалан барои Мохито) ---
+        const flavorsRaw = card.dataset.flavors;
+        const flavorSelect = card.querySelector('.flavor-select');
+
+        if (flavorsRaw && flavorSelect) {
+            let flavors = [];
+            try { flavors = JSON.parse(flavorsRaw); } catch (e) { flavors = []; }
+
+            flavorSelect.innerHTML = flavors.map((f, i) =>
+                `<option value="${i}">${f.label}</option>`
+            ).join('');
+
+            flavorSelect.addEventListener('change', () => {
+                applyFlavor(card, flavors[parseInt(flavorSelect.value)]);
+            });
+
+            if (flavors.length > 0) applyFlavor(card, flavors[0]);
+        }
+    });
+}
+
+function applyVariant(card, variant) {
+    if (!variant) return;
+
+    // Нархи навро ба сифати "нархи асосӣ"-и корт менависем
+    card.dataset.basePrice = variant.price;
+
+    const weightEl = card.querySelector('.variant-weight') || card.querySelector('.weight');
+    if (weightEl) weightEl.textContent = variant.weight || variant.label;
+
+    const oldPriceEl = card.querySelector('.variant-old-price') || card.querySelector('.old-price');
+    if (oldPriceEl && variant.oldPrice) oldPriceEl.textContent = parseFloat(variant.oldPrice).toFixed(2) + ' сом';
+
+    // Аз нав ҳисоб кардани нархи намоён бо назардошти миқдори интихобшуда
+    const qtyValueEl = card.querySelector('.qty-value');
+    const priceDisplay = card.querySelector('.product-price');
+    const qty = qtyValueEl ? parseInt(qtyValueEl.textContent) || 1 : 1;
+    if (priceDisplay) {
+        priceDisplay.textContent = (parseFloat(variant.price) * qty).toFixed(2) + ' сом';
+    }
+
+    card.dataset.currentVariantLabel = variant.label;
+}
+
+function applyFlavor(card, flavor) {
+    if (!flavor) return;
+    card.dataset.currentFlavor = flavor.value;
+
+    // Ранги ҳошияи корт мувофиқи таъм/ранги интихобшуда тағйир меёбад
+    if (flavor.color) {
+        card.style.borderColor = flavor.color;
+        card.style.boxShadow = `0 6px 20px ${flavor.color}33`;
+    }
+}
+
+/* ============================================================ */
+/* Миқдор ва Илова ба сабад (барои ҳамаи маҳсулот, аз ҷумла нав) */
+/* ============================================================ */
+
 document.querySelectorAll('.product-card').forEach(card => {
     const minusBtn = card.querySelector('.minus-btn');
     const plusBtn = card.querySelector('.plus-btn');
     const qtyValue = card.querySelector('.qty-value');
     const priceDisplay = card.querySelector('.product-price');
-    const basePrice = parseFloat(card.dataset.basePrice);
 
     let currentQty = 1;
+
+    function refreshPrice() {
+        const basePrice = parseFloat(card.dataset.basePrice) || 0;
+        if (priceDisplay) priceDisplay.textContent = (basePrice * currentQty).toFixed(2) + ' сом';
+    }
 
     if (plusBtn) {
         plusBtn.addEventListener('click', () => {
             currentQty++;
             qtyValue.textContent = currentQty;
-            priceDisplay.textContent = (basePrice * currentQty).toFixed(2) + ' сом';
+            refreshPrice();
         });
     }
 
@@ -106,7 +195,7 @@ document.querySelectorAll('.product-card').forEach(card => {
             if (currentQty > 1) {
                 currentQty--;
                 qtyValue.textContent = currentQty;
-                priceDisplay.textContent = (basePrice * currentQty).toFixed(2) + ' сом';
+                refreshPrice();
             }
         });
     }
@@ -114,8 +203,20 @@ document.querySelectorAll('.product-card').forEach(card => {
     const addBtn = card.querySelector('.add-to-cart-btn');
     if (addBtn) {
         addBtn.addEventListener('click', () => {
-            const nameElem = card.querySelector('[data-i18n^="p"]');
-            const name = nameElem ? nameElem.textContent : card.dataset.name;
+            const nameElem = card.querySelector('[data-i18n^="p"]') || card.querySelector('h3');
+            let name = nameElem ? nameElem.textContent : card.dataset.name;
+
+            // Агар маҳсулот ҳаҷм дошта бошад — онро ба номаш илова мекунем
+            if (card.dataset.currentVariantLabel) {
+                name += ` (${card.dataset.currentVariantLabel})`;
+            }
+            // Агар маҳсулот таъм/ранг дошта бошад — онро низ илова мекунем
+            if (card.dataset.currentFlavor) {
+                name += ` — ${card.dataset.currentFlavor}`;
+            }
+
+            const basePrice = parseFloat(card.dataset.basePrice) || 0;
+
             const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
                 existingItem.quantity += currentQty;
@@ -157,7 +258,7 @@ function updateCartUI() {
             <div class="cart-item">
                 <div>
                     <strong>${item.name}</strong>
-                    <p style="margin: 0; font-size: 13px; color: #666;">${item.basePrice} сом × ${item.quantity} = ${itemTotal.toFixed(2)} сом</p>
+                    <p style="margin: 0; font-size: 13px; color: #666;">${item.basePrice.toFixed(2)} сом × ${item.quantity} = ${itemTotal.toFixed(2)} сом</p>
                 </div>
                 <button class="remove-item-btn" onclick="removeItem(${index})">❌</button>
             </div>
@@ -640,6 +741,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLanguage') || 'tj';
     changeLanguage(savedLang);
 
+    // ★ Роҳандозии интихоби ҳаҷм ва таъм/ранг барои маҳсулоти нав
+    setupVariantsAndFlavors();
+
     if (localStorage.getItem('dark_theme') === 'true') {
         document.body.classList.add('dark-theme');
         const darkModeBtn = document.getElementById('darkModeToggle');
@@ -661,5 +765,26 @@ window.addEventListener('DOMContentLoaded', () => {
         if (closeProfileBtn) closeProfileBtn.style.display = 'block';
         document.body.classList.remove('not-registered');
         checkUserState();
+    }
+});
+// Пайваст кардани кнопкаи рейтинги меню ба модал
+document.addEventListener('DOMContentLoaded', () => {
+    const drawerRating = document.getElementById('drawerRating');
+    const ratingModal = document.getElementById('ratingModal');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    if (drawerRating) {
+        drawerRating.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Менюи паҳлӯиро мепӯширад
+            if (sideDrawer) sideDrawer.classList.remove('active');
+            if (drawerOverlay) drawerOverlay.classList.remove('active');
+            
+            // Модали рейтингро мекушояд
+            if (ratingModal) {
+                ratingModal.style.display = 'flex';
+            }
+        });
     }
 });

@@ -25,12 +25,12 @@
         </div>
         
         <div class="user-actions">
-            <button id="cartModalBtn" class="cart-open-btn desktop-cart-btn">
-                🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadgeDesktop">0</span>
+            <button class="open-rating-btn" id="openRatingModalBtn" title="Рейтинг" style="padding: 6px 8px; font-size: 13px;">
+                🏆 <span class="rating-btn-text" data-i18n="ratingBtnText">Рейтинг</span>
             </button>
             
-            <button class="open-rating-btn" id="openRatingModalBtn" title="Рейтинги пешсафон">
-                🏆 <span class="rating-btn-text" data-i18n="ratingBtnText">Рейтинг</span>
+            <button id="cartModalBtn" class="cart-open-btn desktop-cart-btn">
+                🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadgeDesktop">0</span>
             </button>
             
             <button id="profileModalBtn" class="profile-btn magic-btn-glow" aria-label="Шахсият">👤</button>
@@ -47,10 +47,11 @@
         <span id="closeDrawer" class="close-drawer">&times;</span>
     </div>
     <div class="drawer-links">
-        <a href="#products" class="drawer-link" data-i18n="allProducts">📦 Ҳамаи маҳсулот</a>
-        <a href="#" class="drawer-link" id="drawerProfile" data-i18n="profileTitle">👤 Шахсият / Ҳисоби ман</a>
+        <a href="#" class="drawer-link" id="drawerRating" style="background: #e0e7ff; color: #4f46e5; font-weight: bold; border-radius: 8px;">🏆 Рейтинги пешсафон (Top 100)</a>
+        <a href="#products" class="drawer-link">📦 Ҳамаи маҳсулот</a>
+        <a href="#" class="drawer-link" id="drawerProfile">👤 Шахсият / Ҳисоби ман</a>
         <a href="https://wa.me/992900210802" target="_blank" class="drawer-link">📞 Тамос бо мо (WhatsApp)</a>
-        <a href="#" class="drawer-link" id="drawerSettings" data-i18n="settings">⚙️ Танзимот ва Забон</a>
+        <a href="#" class="drawer-link" id="drawerSettings">⚙️ Танзимот ва Забон</a>
     </div>
 </div>
 <div id="drawerOverlay" class="drawer-overlay"></div>
@@ -103,14 +104,29 @@
         </div>
 
         <div class="product-grid" id="productGrid">
-            <!-- 1. Себ -->
-            <div class="product-card" data-category="fruits" data-name="Себи Соҳилӣ" data-base-price="12.00">
-                <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6" alt="Себ">
-                <h3 data-i18n="p1">Себи Соҳилӣ</h3>
-                <p class="weight" data-i18n="w1">1 кг</p>
+
+            <!-- ★ Малако МариМолоко — интихоби ҳаҷм -->
+            <div class="product-card"
+                 data-category="grocery"
+                 data-name="Малако МариМолоко"
+                 data-base-price="35.00"
+                 data-variants='[
+                    {"label":"1.5 л","weight":"1.5 литр","price":"35.00","oldPrice":"35.00"},
+                    {"label":"1 л","weight":"1 литр","price":"25.00","oldPrice":"25.00"},
+                    {"label":"480 г","weight":"480 грамм","price":"15.00","oldPrice":"18.00"}
+                 ]'>
+                <img src="./WhatsApp Image 2026-08-13 at 18.30.58.jpeg" alt="Малако">
+                <h3>Малако МариМолоко</h3>
+                <p class="weight variant-weight">1.5 литр</p>
+
+                <div class="variant-picker">
+                    <label class="variant-label">📏 Ҳаҷм:</label>
+                    <select class="variant-select"></select>
+                </div>
+
                 <div class="price-box">
-                    <span class="old-price">15.00 сом</span>
-                    <span class="new-price product-price">12.00 сом</span>
+                    <span class="old-price variant-old-price">35.00 сом</span>
+                    <span class="new-price product-price">35.00 сом</span>
                 </div>
                 <div class="quantity-controller">
                     <button class="qty-btn minus-btn">-</button>
@@ -120,11 +136,113 @@
                 <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
-            <!-- 2. Нон -->
-            <div class="product-card" data-category="grocery" data-name="Нони Фатир" data-base-price="6.00">
-                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff" alt="Нон">
-                <h3 data-i18n="p2">Нони Фатири Тоҷикӣ</h3>
-                <p class="weight" data-i18n="w2">1 дона</p>
+            <!-- ★ RC Cola — интихоби ҳаҷм -->
+            <div class="product-card"
+                 data-category="drinks"
+                 data-name="RC Cola"
+                 data-base-price="14.00"
+                 data-variants='[
+                    {"label":"1.5 л","weight":"1.5 литр","price":"14.00","oldPrice":"14.00"},
+                    {"label":"1 л","weight":"1 литр","price":"11.00","oldPrice":"10.00"},
+                    {"label":"500 мл","weight":"500 мл","price":"7.00","oldPrice":"7.00"}
+                 ]'>
+                <img src="./img/WhatsApp Image 2026-08-13 at 18.30.55.jpeg" alt="RC Cola">
+                <h3>RC Cola</h3>
+                <p class="weight variant-weight">1.5 литр</p>
+
+                <div class="variant-picker">
+                    <label class="variant-label">📏 Ҳаҷм:</label>
+                    <select class="variant-select"></select>
+                </div>
+
+                <div class="price-box">
+                    <span class="old-price variant-old-price">14.00 сом</span>
+                    <span class="new-price product-price">14.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- ★ Fanta — интихоби ҳаҷм -->
+            <div class="product-card"
+                 data-category="drinks"
+                 data-name="Fanta Апельсин"
+                 data-base-price="11.50"
+                 data-variants='[
+                    {"label":"1.5 л","weight":"1.5 литр","price":"11.50","oldPrice":"14.00"},
+                    {"label":"1 л","weight":"1 литр","price":"9.00","oldPrice":"10.00"},
+                    {"label":"500 мл","weight":"500 мл","price":"6.00","oldPrice":"7.00"}
+                 ]'>
+                <img src="./img3/WhatsApp Image 2026-08-13 at 18.30.41.jpeg" alt="Fanta">
+                <h3>Fanta Апельсин</h3>
+                <p class="weight variant-weight">1.5 литр</p>
+
+                <div class="variant-picker">
+                    <label class="variant-label">📏 Ҳаҷм:</label>
+                    <select class="variant-select"></select>
+                </div>
+
+                <div class="price-box">
+                    <span class="old-price variant-old-price">14.00 сом</span>
+                    <span class="new-price product-price">11.50 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- ★ Мохито Fiesta — интихоби ҳаҷм ВА интихоби таъм/ранг -->
+            <div class="product-card"
+                 data-category="drinks"
+                 data-name="Мохито Fiesta"
+                 data-base-price="9.50"
+                 data-variants='[
+                    {"label":"1 л","weight":"1 литр","price":"9.50","oldPrice":"12.00"},
+                    {"label":"500 мл","weight":"500 мл","price":"6.00","oldPrice":"7.00"}
+                 ]'
+                 data-flavors='[
+                    {"label":"🍓 Клубничӣ (Сурх)","value":"Клубничӣ","color":"#e11d48"},
+                    {"label":"🌿 Мохито классикӣ (Сабз)","value":"Мохито классикӣ","color":"#16a34a"},
+                    {"label":"🥭 Манго-Кокос (Норанҷӣ)","value":"Манго-Кокос","color":"#f97316"}
+                 ]'>
+                <img src="./WhatsApp Image 2026-08-13 at 18.30.54.jpeg" alt="Мохито Fiesta">
+                <h3>Мохито Fiesta</h3>
+                <p class="weight variant-weight">1 литр</p>
+
+                <div class="variant-picker">
+                    <label class="variant-label">📏 Ҳаҷм:</label>
+                    <select class="variant-select"></select>
+                </div>
+
+                <div class="variant-picker flavor-picker">
+                    <label class="variant-label">🎨 Таъм/Ранг:</label>
+                    <select class="flavor-select"></select>
+                </div>
+
+                <div class="price-box">
+                    <span class="old-price variant-old-price">12.00 сом</span>
+                    <span class="new-price product-price">9.50 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 2. Нежниий -->
+            <div class="product-card" data-category="grocery" data-name="Нежниий" data-base-price="6.00">
+                <img src="./img/WhatsApp Image 2026-08-14 at 05.21.06.jpeg" alt="Нежниий">
+                <h3>Нежниий</h3>
+                <p class="weight">5%</p>
                 <div class="price-box">
                     <span class="old-price">7.50 сом</span>
                     <span class="new-price product-price">6.00 сом</span>
@@ -137,268 +255,12 @@
                 <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
-            <!-- 3. Набот -->
-            <div class="product-card" data-category="sweets" data-name="Наботи Хуҷанд" data-base-price="25.00">
-                <img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f" alt="Набот">
-                <h3 data-i18n="p3">Наботи Асли Хуҷанд</h3>
-                <p class="weight" data-i18n="w3">500 г</p>
-                <div class="price-box">
-                    <span class="old-price">30.00 сом</span>
-                    <span class="new-price product-price">25.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 4. Об -->
-            <div class="product-card" data-category="drinks" data-name="Оби Сиёма" data-base-price="4.00">
-                <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d" alt="Об">
-                <h3 data-i18n="p4">Оби Маъдании Сиёма</h3>
-                <p class="weight" data-i18n="w4">1.5 литр</p>
-                <div class="price-box">
-                    <span class="old-price">5.50 сом</span>
-                    <span class="new-price product-price">4.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 5. Банан -->
-            <div class="product-card" data-category="fruits" data-name="Бананҳои тоза" data-base-price="18.00">
-                <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e" alt="Банан">
-                <h3 data-i18n="p5">Бананҳои тоза</h3>
-                <p class="weight" data-i18n="w5">1 кг</p>
+            <!-- 3. Сладонеж -->
+            <div class="product-card" data-category="sweets" data-name="Сладонеж" data-base-price="20.00">
+                <img src="./WhatsApp Image 2026-08-13 at 18.30.55.jpeg" alt="Сладонеж">
+                <h3>Сладонеж</h3>
                 <div class="price-box">
                     <span class="old-price">22.00 сом</span>
-                    <span class="new-price product-price">18.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 6. Помидор -->
-            <div class="product-card" data-category="fruits" data-name="Помидори сабзавот" data-base-price="15.00">
-                <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea" alt="Помидор">
-                <h3 data-i18n="p6">Помидори сабзавот</h3>
-                <p class="weight" data-i18n="w6">1 кг</p>
-                <div class="price-box">
-                    <span class="old-price">18.00 сом</span>
-                    <span class="new-price product-price">15.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 7. Бодиринг -->
-            <div class="product-card" data-category="fruits" data-name="Бодиринг" data-base-price="10.00">
-                <img src="https://images.unsplash.com/photo-1449300079323-02e209d9d3a6" alt="Бодиринг">
-                <h3 data-i18n="p7">Бодиринг</h3>
-                <p class="weight" data-i18n="w7">1 кг</p>
-                <div class="price-box">
-                    <span class="old-price">13.00 сом</span>
-                    <span class="new-price product-price">10.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 8. Картошка -->
-            <div class="product-card" data-category="grocery" data-name="Картошка" data-base-price="7.00">
-                <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da" alt="Картошка">
-                <h3 data-i18n="p8">Картошка</h3>
-                <p class="weight" data-i18n="w8">1 кг</p>
-                <div class="price-box">
-                    <span class="old-price">9.00 сом</span>
-                    <span class="new-price product-price">7.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 9. Пиёз -->
-            <div class="product-card" data-category="grocery" data-name="Пиёз" data-base-price="6.00">
-                <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da" alt="Пиёз">
-                <h3 data-i18n="p9">Пиёз</h3>
-                <p class="weight" data-i18n="w9">1 кг</p>
-                <div class="price-box">
-                    <span class="old-price">8.00 сом</span>
-                    <span class="new-price product-price">6.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 10. Шир -->
-            <div class="product-card" data-category="grocery" data-name="Шир (1 литр)" data-base-price="11.00">
-                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150" alt="Шир">
-                <h3 data-i18n="p10">Шир (1 литр)</h3>
-                <p class="weight" data-i18n="w10">1 л</p>
-                <div class="price-box">
-                    <span class="old-price">14.00 сом</span>
-                    <span class="new-price product-price">11.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 11. Қаймоқ -->
-            <div class="product-card" data-category="grocery" data-name="Қаймоқ" data-base-price="25.00">
-                <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da" alt="Қаймоқ">
-                <h3 data-i18n="p11">Қаймоқ</h3>
-                <p class="weight" data-i18n="w11">400 г</p>
-                <div class="price-box">
-                    <span class="old-price">30.00 сом</span>
-                    <span class="new-price product-price">25.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 12. Тухм -->
-            <div class="product-card" data-category="grocery" data-name="Тухм (1 дона)" data-base-price="2.00">
-                <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5" alt="Тухм">
-                <h3 data-i18n="p12">Тухм (1 дона)</h3>
-                <p class="weight" data-i18n="w12">1 дона</p>
-                <div class="price-box">
-                    <span class="old-price">2.50 сом</span>
-                    <span class="new-price product-price">2.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 13. Равған -->
-            <div class="product-card" data-category="grocery" data-name="Равғани офтобпараст" data-base-price="22.00">
-                <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5" alt="Равған">
-                <h3 data-i18n="p13">Равғани офтобпараст</h3>
-                <p class="weight" data-i18n="w13">1 л</p>
-                <div class="price-box">
-                    <span class="old-price">26.00 сом</span>
-                    <span class="new-price product-price">22.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 14. Орд -->
-            <div class="product-card" data-category="grocery" data-name="Орд (1 кг)" data-base-price="8.00">
-                <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df" alt="Орд">
-                <h3 data-i18n="p14">Орд (1 кг)</h3>
-                <p class="weight" data-i18n="w14">1 кг</p>
-                <div class="price-box">
-                    <span class="old-price">10.00 сом</span>
-                    <span class="new-price product-price">8.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 15. Шакар -->
-            <div class="product-card" data-category="grocery" data-name="Шакар" data-base-price="13.00">
-                <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Шакар">
-                <h3 data-i18n="p15">Шакар</h3>
-                <p class="weight" data-i18n="w15">1 кг</p>
-                <div class="price-box">
-                    <span class="old-price">16.00 сом</span>
-                    <span class="new-price product-price">13.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 16. Чои сабз -->
-            <div class="product-card" data-category="drinks" data-name="Чои сабз" data-base-price="15.00">
-                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3" alt="Чои сабз">
-                <h3 data-i18n="p16">Чои сабз</h3>
-                <p class="weight" data-i18n="w16">100 г</p>
-                <div class="price-box">
-                    <span class="old-price">18.00 сом</span>
-                    <span class="new-price product-price">15.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 17. Чои сиёҳ -->
-            <div class="product-card" data-category="drinks" data-name="Чои сиёҳ" data-base-price="16.00">
-                <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Чои сиёҳ">
-                <h3 data-i18n="p17">Чои сиёҳ</h3>
-                <p class="weight" data-i18n="w17">100 г</p>
-                <div class="price-box">
-                    <span class="old-price">20.00 сом</span>
-                    <span class="new-price product-price">16.00 сом</span>
-                </div>
-                <div class="quantity-controller">
-                    <button class="qty-btn minus-btn">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
-            </div>
-
-            <!-- 18. Шоколад -->
-            <div class="product-card" data-category="sweets" data-name="Шоколад" data-base-price="20.00">
-                <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Шоколад">
-                <h3 data-i18n="p18">Шоколад</h3>
-                <p class="weight" data-i18n="w18">1 дона</p>
-                <div class="price-box">
-                    <span class="old-price">25.00 сом</span>
                     <span class="new-price product-price">20.00 сом</span>
                 </div>
                 <div class="quantity-controller">
@@ -409,14 +271,13 @@
                 <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
-            <!-- 19. Печенье -->
-            <div class="product-card" data-category="sweets" data-name="Печенье" data-base-price="10.00">
-                <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35" alt="Печенье">
-                <h3 data-i18n="p19">Печенье</h3>
-                <p class="weight" data-i18n="w19">300 г</p>
+            <!-- 4. Мини-Рулет -->
+            <div class="product-card" data-category="sweets" data-name="Мини-Рулет" data-base-price="15.00">
+                <img src="./WhatsApp Image 2026-08-13 at 18.30.41.jpeg" alt="Мини-Рулет">
+                <h3>Мини-Рулет</h3>
                 <div class="price-box">
-                    <span class="old-price">13.00 сом</span>
-                    <span class="new-price product-price">10.00 сом</span>
+                    <span class="old-price">17.00 сом</span>
+                    <span class="new-price product-price">15.00 сом</span>
                 </div>
                 <div class="quantity-controller">
                     <button class="qty-btn minus-btn">-</button>
@@ -426,14 +287,14 @@
                 <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
 
-            <!-- 20. Лимон -->
-            <div class="product-card" data-category="fruits" data-name="Лимон" data-base-price="30.00">
-                <img src="https://images.unsplash.com/photo-1511381939415-e44015466834" alt="Лимон">
-                <h3 data-i18n="p20">Лимон</h3>
-                <p class="weight" data-i18n="w20">1 кг</p>
+            <!-- 5. Tolo -->
+            <div class="product-card" data-category="sweets" data-name="Tolo" data-base-price="3.00">
+                <img src="./img/WhatsApp Image 2026-08-14 at 05.09.54.jpeg" alt="Tolo">
+                <h3>Tolo</h3>
+                <p class="weight">калон</p>
                 <div class="price-box">
-                    <span class="old-price">35.00 сом</span>
-                    <span class="new-price product-price">30.00 сом</span>
+                    <span class="old-price">3.50 сом</span>
+                    <span class="new-price product-price">3.00 сом</span>
                 </div>
                 <div class="quantity-controller">
                     <button class="qty-btn minus-btn">-</button>
@@ -442,6 +303,102 @@
                 </div>
                 <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
             </div>
+
+            <!-- 6. Frutis -->
+            <div class="product-card" data-category="grocery" data-name="Frutis" data-base-price="8.00">
+                <img src="./img/WhatsApp Image 2026-08-13 at 18.30.56.jpeg" alt="Frutis">
+                <h3>Frutis</h3>
+                <p class="weight">8%</p>
+                <div class="price-box">
+                    <span class="old-price">9.00 сом</span>
+                    <span class="new-price product-price">8.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 7. Олёнка -->
+            <div class="product-card" data-category="sweets" data-name="Олёнка" data-base-price="12.00">
+                <img src="./img2/WhatsApp Image 2026-08-13 at 18.30.56.jpeg" alt="Олёнка">
+                <h3>Олёнка</h3>
+                <div class="price-box">
+                    <span class="old-price">14.00 сом</span>
+                    <span class="new-price product-price">12.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 8. ★ Воздушный — интихоби намуди шоколад (Чёрный/Белый/Молочный) -->
+            <div class="product-card"
+                 data-category="sweets"
+                 data-name="Воздушный"
+                 data-base-price="12.00"
+                 data-flavors='[
+                    {"label":"⚫ Шоколади сиёҳ (Чёрный)","value":"Шоколади сиёҳ","color":"#1f2937"},
+                    {"label":"⚪ Шоколади сафед (Белый)","value":"Шоколади сафед","color":"#94a3b8"},
+                    {"label":"🟤 Шоколади ширӣ (Молочный)","value":"Шоколади ширӣ","color":"#a16207"}
+                 ]'>
+                <img src="./img2/WhatsApp Image 2026-08-13 at 18.30.57.jpeg" alt="Воздушный">
+                <h3>Воздушный</h3>
+
+                <div class="variant-picker flavor-picker">
+                    <label class="variant-label">🎨 Намуд:</label>
+                    <select class="flavor-select"></select>
+                </div>
+
+                <div class="price-box">
+                    <span class="old-price">13.00 сом</span>
+                    <span class="new-price product-price">12.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 9. Milka -->
+            <div class="product-card" data-category="sweets" data-name="Milka" data-base-price="15.00">
+                <img src="./img3/WhatsApp Image 2026-08-13 at 18.30.56.jpeg" alt="Milka">
+                <h3>Milka</h3>
+                <div class="price-box">
+                    <span class="old-price">17.00 сом</span>
+                    <span class="new-price product-price">15.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
+            <!-- 10. GORILLA -->
+            <div class="product-card" data-category="drinks" data-name="GORILLA" data-base-price="13.00">
+                <img src="./img3/WhatsApp Image 2026-08-13 at 18.30.42.jpeg" alt="GORILLA">
+                <h3>GORILLA</h3>
+                <div class="price-box">
+                    <span class="old-price">14.00 сом</span>
+                    <span class="new-price product-price">13.00 сом</span>
+                </div>
+                <div class="quantity-controller">
+                    <button class="qty-btn minus-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn" data-i18n="addToCart">🛒 Илова ба сабад</button>
+            </div>
+
         </div>
 
         <div id="emptySearchState" class="empty-state" style="display: none;">
@@ -534,15 +491,12 @@
         <span class="close-profile">&times;</span>
         <div id="profileContent">
             
-            <!-- Формаи сабти ном / воридшавӣ -->
             <div id="authFormSection" class="checkout-form" style="margin-top: 15px;">
                 <!-- Динамикӣ тавассути JS пур мешавад -->
             </div>
 
-            <!-- Қисми кабинети муштарӣ -->
             <div id="profileInfoSection" style="display: none; margin-top: 15px;"></div>
 
-            <!-- Панели Босс (Админ) -->
             <div id="adminPanelSection" style="display: none; margin-top: 15px;">
                 <div class="admin-dashboard-box">
                     <h2>👑 Панели Босс (Админ)</h2>
@@ -601,6 +555,7 @@
             </button>
         </div>
     </div>
+    
 </div>
 
 <!-- Сабади моделӣ барои мобилӣ -->
