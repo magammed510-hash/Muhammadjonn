@@ -788,3 +788,144 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// --- ФУНКСИЯИ РЕГИСТРАТСИЯИ КУРЬЕР ---
+function registerCourier(e) {
+if (e) e.preventDefault();
+
+// Гирифтани маълумот аз input-ҳо  
+const name = document.getElementById('courierRegName').value.trim();  
+const surname = document.getElementById('courierRegSurname').value.trim();  
+const phone = document.getElementById('courierRegPhone').value.trim();  
+const address = document.getElementById('courierRegAddress').value.trim();  
+const age = document.getElementById('courierRegAge').value.trim();  
+const password = document.getElementById('courierRegPass').value.trim();  
+
+// Гирифтани базаи корбарон аз localStorage  
+let users = JSON.parse(localStorage.getItem('shop_users')) || [];  
+  
+// Санҷиши мавҷуд будани рақам  
+if (users.find(u => u.phone === phone)) {  
+    alert("Ин рақами телефон аллакай ба қайд гирифта шудааст!");  
+    return;  
+}  
+
+// Сохтани объекти курьер  
+const newCourier = {  
+    id: Date.now(), // ID-и беназир  
+    name: `${name} ${surname}`,  
+    phone: phone,  
+    address: address,  
+    age: age,  
+    password: password,  
+    role: "courier",  
+    status: "pending", // Дар интизори санҷиши Админ  
+    approved: false    // То тасдиқи админ дастрасӣ надорад  
+};  
+
+// Захира кардан дар localStorage  
+users.push(newCourier);  
+localStorage.setItem('shop_users', JSON.stringify(users));  
+// Отправка уведомления в Telegram админу
+    const token = "8255937787:AAHz4_F47ogwah3g75Jt_eFDy_0K0DgGngE";
+const chatId = "6121488024";
+    const text = `🚨 Новая заявка курьера!\n👤 Имя: ${name} ${surname}\n📞 Телефон: ${phone}\n📍 Адрес: ${address}`;
+    
+    fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=` + encodeURIComponent(text))
+        .catch(err => console.log("Ошибка отправки в Telegram:", err));
+alert("Дархости шумо барои курьер шудан бомуваффақият фиристода шуд!\nПас аз тасдиқи Админ шумо метавонед ворид шавед.");  
+  
+// Пӯшидани модал (агар функцияи closeAuthModal мавҷуд бошад)  
+if (typeof closeAuthModal === 'function') {  
+    closeAuthModal();  
+}
+
+}
+// Функция открытия/закрытия чата
+function openChatModal() {
+    document.getElementById('chatModal').style.display = 'block';
+}
+function closeChatModal() {
+    document.getElementById('chatModal').style.display = 'none';
+}
+
+// Отправка текстового сообщения
+function sendTextMessage() {
+    const input = document.getElementById('chatMessageInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const chatMessages = document.getElementById('chatMessages');
+    chatMessages.innerHTML += `<div style="align-self: flex-end; background: #4f46e5; color: white; padding: 8px 12px; border-radius: 8px; max-width: 70%; word-break: break-word; margin-bottom: 5px;">${text}</div>`;
+    
+    input.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Отправка фото (видео заблокировано через accept="image/*")
+function sendPhotoMessage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Проверка, что это точно картинка
+    if (!file.type.startsWith('image/')) {
+        alert("Разрешено отправлять только изображения!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.innerHTML += `
+            <div style="align-self: flex-end; background: #4f46e5; color: white; padding: 6px; border-radius: 8px; max-width: 70%;">
+                <img src="${e.target.result}" style="max-width: 100%; border-radius: 6px; display: block;">
+            </div>`;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = ''; // сброс инпута
+}
+function sendOrderToChat() {
+    // Гирифтани маълумот аз майдонҳои форма
+    const nameInput = document.querySelector('input[placeholder*="Ном"]') || document.getElementById('deliveryName');
+    const phoneInput = document.querySelector('input[placeholder*="Телефон"]') || document.getElementById('deliveryPhone');
+    const gpsInput = document.querySelector('input[placeholder*="GPS"]') || document.getElementById('deliveryGps');
+
+    const name = nameInput ? nameInput.value : "Номаълум";
+    const phone = phoneInput ? phoneInput.value : "Телефон нест";
+    const gps = gpsInput ? gpsInput.value : "GPS нест";
+
+    // Тайёр кардани матни паём
+    const orderMessage = `🛒 Фармоиши нав:\n👤 Ном: ${name}\n📞 Тел: ${phone}\n📍 Ҷойгиршавӣ (GPS): ${gps}`;
+
+    // Намоиш додани паём дар чат
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+        chatMessages.innerHTML += `<div style="background: #e5e7eb; padding: 10px; border-radius: 8px; margin: 5px 0; color: #333;">${orderMessage}</div>`;
+    }
+
+    // Кушодани равзанаи чат
+    if (typeof openChatModal === 'function') {
+        openChatModal();
+    }
+
+    alert("Маълумот бо муваффақият ба чати админ фиристода шуд!");
+}
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Рақами корт нусхабардорӣ шуд: " + text);
+    }).catch(err => {
+        console.error('Хатогӣ дар нусхабардорӣ: ', err);
+    });
+}
+function openDushanbeCity() {
+    // Нусхабардории рақам ҳангоми пахши тугма
+    copyToClipboard('872090906');
+    
+    // Кӯшиши кушодани барнома
+    window.location.href = "intent://dushanbe.city#Intent;scheme=dushanbepay;package=tj.dushanbepay.app;end";
+    
+    // Агар кор накунад, хабар медиҳем
+    setTimeout(() => {
+        alert("Рақам нусхабардорӣ шуд! Лутфан барномаи 'Душанбе Сити'-ро кушоед ва рақамро ворид кунед.");
+    }, 500);
+}

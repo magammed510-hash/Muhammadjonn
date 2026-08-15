@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperMarket - Маҳсулоти Тоҷикистон</title>
     <link rel="stylesheet" href="./style.css">
+    
     <!-- Китобхонаи тавлиди QR-код -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
@@ -25,10 +26,12 @@
         </div>
         
         <div class="user-actions">
-            <button class="open-rating-btn" id="openRatingModalBtn" title="Рейтинг" style="padding: 6px 8px; font-size: 13px;">
-                🏆 <span class="rating-btn-text" data-i18n="ratingBtnText">Рейтинг</span>
-            </button>
-            
+            <button onclick="openChatModal()" class="profile-btn" title="Чат" style="background: #4f46e5; color: white;">💬</button>
+
+<button class="open-rating-btn" id="openRatingModalBtn" title="Рейтинг" style="padding: 6px 8px; font-size: 13px;">
+    🏆 <span class="rating-btn-text" data-i18n="ratingBtnText">Рейтинг</span>
+</button>
+
             <button id="cartModalBtn" class="cart-open-btn desktop-cart-btn">
                 🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadgeDesktop">0</span>
             </button>
@@ -433,15 +436,20 @@
                     <button type="button" id="openQrModalBtn" class="dc-action-btn" data-i18n="dcScanBtn">Кушодан</button>
                 </div>
 
-                <a href="#" id="dcCardPayBtn" onclick="openDushanbeCityPay(event)" class="dc-card-option dc-direct-pay">
-                    <div class="dc-icon-box">💳</div>
-                    <div class="dc-info">
-                        <span class="dc-title" data-i18n="dcCardTitle">Картаи Душанбе Сити</span>
-                        <span class="dc-desc">8720 9090 6</span>
-                    </div>
-                    <span class="dc-action-btn pulse-btn" data-i18n="dcPayBtn">Пардохт</span>
-                </a>
-            </div>
+               <div class="dc-card-option">
+    <div class="dc-icon-box">💳</div>
+    <div class="dc-info">
+        <span class="dc-title">Картаи Душанбе Сити</span>
+        <span class="dc-desc" id="card-number" onclick="copyToClipboard('872090906')" style="cursor: pointer; color: #2563eb;">
+            8720 9090 6 📋
+        </span>
+    </div>
+    <!-- Ин ҷо мо class-и 'dc-action-btn'-ро истифода мебарем, то дизайн мисли боло шавад -->
+    <a href="intent://dushanbe.city#Intent;scheme=dushanbepay;package=tj.dushanbepay.app;end" class="dc-action-btn">
+        Душанбе Сити
+    </a>
+</div>
+<br>
         </div>
         <p style="color: red;">Мушарихои мухтарам агар 'Пардохт' кор накард дар номерхои 872090906 пардохт кунед ва чекашро бо хамрохи "Малумот барои тахвил" ячоя карда дар ватсап фиристед.</p>
       <br>
@@ -456,7 +464,9 @@
             </div>
             
             <div class="checkout-buttons">
-                <button id="sendWhatsApp" class="order-btn whatsapp-btn">📱 WhatsApp</button>
+          <button type="button" onclick="sendOrderToChat()" class="order-btn" style="background: #22c55e; color: white; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+    💬 Фиристодан ба Админ
+</button>
             </div>
         </div>
     </div>
@@ -515,17 +525,17 @@
                         </table>
                     </div>
 
-                    <h3 style="margin-top: 20px; font-size: 16px; color: #60a5fa;">🛍 Таърихи харидҳо:</h3>
-                    <div style="max-height: 150px; overflow-y: auto; margin-top: 5px;">
-                        <table class="admin-table">
-                            <thead>
-                                <tr><th>Мизоҷ</th><th>Телефон</th><th>Маҳсулот</th><th>Сана</th></tr>
-                            </thead>
-                            <tbody id="adminOrdersList">
-                                <tr><td colspan="4" style="text-align: center; color: #94a3b8;">Ҳоло хариде нест</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                   <h3 style="margin-top: 20px; font-size: 16px; color: #60a5fa;">💬 Чат с клиентом</h3>
+<div style="max-height: 150px; overflow-y: auto; margin-top: 5px;">
+    <table class="admin-table">
+        <thead>
+            ...
+        </thead>
+        <tbody id="adminOrdersList">
+            ...
+        </tbody>
+    </table>
+</div>
 
                     <button type="button" id="adminLogoutBtn" class="order-btn" style="background-color: #ef4444; width: 100%; margin-top: 20px;" data-i18n="logout">Баромадан</button>
                 </div>
@@ -567,7 +577,74 @@
         <span id="cartBadge" class="magical-badge">0</span>
     </button>
 </div>
+<!-- Модали Авторизатсия ва Регистратсия -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-auth" onclick="closeAuthModal()">×</span>
+            <h2>Ворид шудан / Регистратсия</h2>
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" onclick="switchAuthTab('client')">👤 Клиент</button>
+                <button class="auth-tab-btn" onclick="switchAuthTab('courier')">🚚 Курьер</button>
+            </div>
 
+            <!-- Формаи Клиент / Воридшавӣ -->
+            <div id="clientAuthForm">
+                <form onsubmit="registerClient(event)" style="margin-bottom: 20px;">
+                    <h3>Регистратсияи Клиент</h3>
+                    <input type="text" id="clientRegName" placeholder="Номи шумо" required style="margin-bottom:10px;">
+                    <input type="text" id="clientRegPhone" placeholder="Рақами телефон" required style="margin-bottom:10px;">
+                    <input type="password" id="clientRegPass" placeholder="Парол" required style="margin-bottom:10px;">
+                    <button type="submit" class="add-to-cart-btn">Ба қайд гирифтан (Клиент)</button>
+                </form>
+                
+                <hr style="margin: 15px 0; border:0; border-top:1px solid #cbd5e1;">
+
+                <form onsubmit="loginUser(event)">
+                    <h3>Ворид шудан ба система</h3>
+                    <input type="text" id="loginPhone" placeholder="Рақами телефон" required style="margin-bottom:10px;">
+                    <input type="password" id="loginPass" placeholder="Парол" required style="margin-bottom:10px;">
+                    <button type="submit" class="add-to-cart-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">Ворид шудан</button>
+                </form>
+            </div>
+
+            <!-- Формаи Курьер -->
+            <div id="courierAuthForm" style="display: none;">
+                <form onsubmit="registerCourier(event)">
+                    <h3>Регистратсияи Курьер</h3>
+                    <input type="text" id="courierRegName" placeholder="Ном" required style="margin-bottom:10px;">
+                    <input type="text" id="courierRegSurname" placeholder="Фамилия" required style="margin-bottom:10px;">
+                    <input type="text" id="courierRegPhone" placeholder="Рақами телефон" required style="margin-bottom:10px;">
+                    <input type="text" id="courierRegAddress" placeholder="Суроға/маҳалли зист" required style="margin-bottom:10px;">
+                    <input type="number" id="courierRegAge" placeholder="Синну сол" required style="margin-bottom:10px;">
+                    <input type="password" id="courierRegPass" placeholder="Парол" required style="margin-bottom:10px;">
+                    <p style="font-size: 13px; color: #d97706; margin-bottom: 12px; font-weight: 600;">
+                        ⚠️ Registration-и Courier бояд аз ҷониби Admin тасдиқ шавад.
+                    </p>
+                    <button type="submit" class="add-to-cart-btn" style="background: linear-gradient(135deg, #d97706, #b45309);">Дархост барои Курьер</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Окно чата с клиентом / курьером -->
+<div id="chatModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 450px;">
+        <span class="close-chat" onclick="closeChatModal()">&times;</span>
+        <h3>💬 Чат с курьером / поддержкой</h3>
+        
+        <div id="chatMessages" style="height: 250px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; overflow-y: auto; margin-bottom: 10px; background: #f8fafc; display: flex; flex-direction: column; gap: 8px;">
+            <!-- Сообщения будут появляться здесь -->
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <!-- Инпут для выбора ТОЛЬКО картинок (видео запрещено через accept="image/*") -->
+            <input type="file" id="chatImageInput" accept="image/*" style="display: none;" onchange="sendPhotoMessage(event)">
+            <button type="button" onclick="document.getElementById('chatImageInput').click()" style="padding: 10px 12px; background: #e2e8f0; border: none; border-radius: 8px; cursor: pointer;" title="Отправить фото">📷</button>
+            
+            <input type="text" id="chatMessageInput" placeholder="Напишите сообщение..." style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <button type="button" onclick="sendTextMessage()" style="padding: 10px 15px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer;">➤</button>
+        </div>
+    </div>
+</div>
 <script src="./script.js"></script>
 </body>
 </html>
