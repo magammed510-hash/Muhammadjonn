@@ -25,19 +25,36 @@
             <button class="search-btn" aria-label="Ҷустуҷӯ">🔍</button>
         </div>
         
-        <div class="user-actions">
-            <button class="open-rating-btn" id="openRatingModalBtn" title="Рейтинг" style="padding: 6px 8px; font-size: 13px;">
-                🏆 <span class="rating-btn-text" data-i18n="ratingBtnText">Рейтинг</span>
-            </button>
-            
-            <button id="cartModalBtn" class="cart-open-btn desktop-cart-btn">
-                🛒 <span data-i18n="cart">Сабад</span> <span class="badge" id="cartBadgeDesktop">0</span>
-            </button>
-            
-            <button id="profileModalBtn" class="profile-btn magic-btn-glow" aria-label="Шахсият">👤</button>
-            <button id="darkModeToggle" class="dark-mode-btn" aria-label="Режими торик">🌙</button>
-            <button id="settingsBtn" class="settings-btn" aria-label="Танзимот">⚙️</button>
-        </div>
+       <div class="user-actions">
+
+    <button class="open-rating-btn" id="openRatingModalBtn" title="Рейтинг">
+        🏆 <span class="rating-btn-text" data-i18n="ratingBtnText">Рейтинг</span>
+    </button>
+
+    <button id="cartModalBtn" class="cart-open-btn desktop-cart-btn">
+        🛒 <span data-i18n="cart">Сабад</span>
+        <span class="badge" id="cartBadgeDesktop">0</span>
+    </button>
+
+    <!-- ЧАТ: дар телефон дар ҷои Account -->
+    <a href="#" id="drawerChat" class="mobile-chat-top-btn" aria-label="Чат">
+        💬
+    </a>
+
+    <!-- Account: дар телефон пинҳон мешавад -->
+    <button id="profileModalBtn"
+            class="profile-btn magic-btn-glow"
+            aria-label="Шахсият">
+        👤
+    </button>
+
+    <button id="darkModeToggle"
+            class="dark-mode-btn"
+            aria-label="Режими торик">
+        🌙
+    </button>
+
+</div>
     </div>
 </header>
 
@@ -616,6 +633,46 @@
             </div>
         </div>
     </div>
+<!-- CHAT -->
+<div id="chatWidget" class="chat-widget">
+
+    <button id="chatOpenBtn" class="chat-open-btn" type="button">
+        💬 <span>Чат</span>
+    </button>
+
+    <div id="chatBox" class="chat-box">
+
+        <div class="chat-header">
+            <div>
+                <strong>💬 SuperMarket_Rahimov</strong>
+                <small>Онлайн</small>
+            </div>
+
+            <button id="chatCloseBtn" class="chat-close-btn" type="button">
+                ×
+            </button>
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+            <div class="chat-message bot-message">
+                Салом! 👋 Чӣ кӯмак лозим?
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Паёми худро нависед..."
+                autocomplete="off"
+            >
+
+            <button id="chatSendBtn" type="button">➤</button>
+        </div>
+
+    </div>
+</div>
+
 <script src="./script.js"></script>
 </body>
 </html>

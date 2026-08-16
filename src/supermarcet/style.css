@@ -1731,3 +1731,471 @@ body.dark-theme .flavor-picker {
         box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
     }
 }
+/* =========================
+   CHAT - NEW VERSION
+========================= */
+
+.chat-widget {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    z-index: 999999;
+    font-family: inherit;
+}
+
+.chat-open-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 0;
+    padding: 13px 18px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, .25);
+}
+
+.chat-open-btn:hover {
+    transform: translateY(-2px);
+}
+
+.chat-box {
+    display: none;
+    width: 350px;
+    height: 480px;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, .30);
+    flex-direction: column;
+}
+
+.chat-box.active {
+    display: flex;
+}
+
+.chat-header {
+    min-height: 60px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #fff;
+}
+
+.chat-header strong {
+    display: block;
+    font-size: 15px;
+}
+
+.chat-header small {
+    display: block;
+    margin-top: 3px;
+    opacity: .85;
+    font-size: 11px;
+}
+
+.chat-close-btn {
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f8fafc;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 10px 13px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.bot-message {
+    margin-right: auto;
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.user-message {
+    margin-left: auto;
+    background: #2563eb;
+    color: #fff;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+}
+
+.chat-input-area input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 22px;
+    padding: 10px 13px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.chat-input-area input:focus {
+    border-color: #2563eb;
+}
+
+.chat-input-area button {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* ТЕЛЕФОН */
+@media (max-width: 600px) {
+
+    .chat-widget {
+        right: 12px;
+        bottom: 75px;
+    }
+
+    .chat-open-btn {
+        padding: 11px 15px;
+        font-size: 14px;
+    }
+
+    .chat-box {
+        width: calc(100vw - 24px);
+        height: 65vh;
+        max-height: 500px;
+    }
+}
+/* Пинҳон кардани кнопкаи чати поён */
+#chatOpenBtn {
+    display: none !important;
+}
+/* =========================
+   📱 CHAT BUTTON — MOBILE HEADER
+========================= */
+
+@media (max-width: 768px) {
+
+    /* Chat button дар header */
+    #chatOpenBtn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+
+        padding: 0;
+        border-radius: 12px;
+
+        border: 1px solid #cbd5e1;
+
+        background: linear-gradient(135deg, #ffffff, #f1f5f9);
+        color: #2563eb;
+
+        font-size: 19px;
+        line-height: 1;
+
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+        transition: all 0.25s ease;
+    }
+
+    #chatOpenBtn:hover {
+        transform: translateY(-2px);
+        border-color: #93c5fd;
+        box-shadow: 0 6px 15px rgba(37,99,235,0.18);
+    }
+
+    #chatOpenBtn:active {
+        transform: scale(0.90);
+    }
+
+    /* Агар дар дохилаш матн бошад, танҳо emoji/icon нишон дода шавад */
+    #chatOpenBtn span,
+    #chatOpenBtn .chat-text {
+        display: none;
+    }
+
+    #chatOpenBtn::before {
+        content: "💬";
+        font-size: 19px;
+    }
+
+    /* Кнопкаи Chat дигар дар поён набошад */
+    .chat-widget {
+        right: 12px;
+        bottom: 75px;
+    }
+
+    /* Худи панели Chat ҳангоми кушодан мемонад */
+    .chat-box {
+        width: calc(100vw - 24px);
+        height: 65vh;
+        max-height: 500px;
+    }
+
+    /* Chat аз Burger menu нест */
+    #drawerChat {
+        display: none !important;
+    }
+}
+
+/* Дар компютер кнопкаи оддӣ */
+@media (min-width: 769px) {
+    #chatOpenBtn {
+        display: flex;
+    }
+}/* =========================
+   📱 CHAT BUTTON — MOBILE HEADER
+========================= */
+
+@media (max-width: 768px) {
+
+    /* Chat button дар header */
+    #chatOpenBtn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+
+        padding: 0;
+        border-radius: 12px;
+
+        border: 1px solid #cbd5e1;
+
+        background: linear-gradient(135deg, #ffffff, #f1f5f9);
+        color: #2563eb;
+
+        font-size: 19px;
+        line-height: 1;
+
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+        transition: all 0.25s ease;
+    }
+
+    #chatOpenBtn:hover {
+        transform: translateY(-2px);
+        border-color: #93c5fd;
+        box-shadow: 0 6px 15px rgba(37,99,235,0.18);
+    }
+
+    #chatOpenBtn:active {
+        transform: scale(0.90);
+    }
+
+    /* Агар дар дохилаш матн бошад, танҳо emoji/icon нишон дода шавад */
+    #chatOpenBtn span,
+    #chatOpenBtn .chat-text {
+        display: none;
+    }
+
+    #chatOpenBtn::before {
+        content: "💬";
+        font-size: 19px;
+    }
+
+    /* Кнопкаи Chat дигар дар поён набошад */
+    .chat-widget {
+        right: 12px;
+        bottom: 75px;
+    }
+
+    /* Худи панели Chat ҳангоми кушодан мемонад */
+    .chat-box {
+        width: calc(100vw - 24px);
+        height: 65vh;
+        max-height: 500px;
+    }
+
+    /* Chat аз Burger menu нест */
+    #drawerChat {
+        display: none !important;
+    }
+}
+
+/* Дар компютер кнопкаи оддӣ */
+@media (min-width: 769px) {
+    #chatOpenBtn {
+        display: flex;
+    }
+}
+/* =====================================================
+   📱 CHAT ДАР ҶОИ ACCOUNT — ТАНҲО ДАР ТЕЛЕФОН
+   ===================================================== */
+
+/* Дар компютер чат дар боло нишон дода нашавад */
+.mobile-chat-top-btn {
+    display: none;
+}
+
+/* Кнопкаи кӯҳнаи чатро пурра пинҳон мекунем */
+#chatOpenBtn {
+    display: none !important;
+}
+
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+
+    /* Account аз header нест мешавад */
+    #profileModalBtn {
+        display: none !important;
+    }
+
+    /* Chat дар ҷои Account */
+    .mobile-chat-top-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+
+        padding: 0;
+        margin: 0;
+
+        border-radius: 12px;
+
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+        border: 1px solid rgba(255,255,255,0.3);
+
+        color: #fff;
+        text-decoration: none;
+
+        font-size: 18px;
+
+        box-shadow:
+            0 4px 12px rgba(37,99,235,0.30);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .mobile-chat-top-btn:active {
+        transform: scale(0.90);
+    }
+
+    .mobile-chat-top-btn:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 7px 18px rgba(37,99,235,0.40);
+    }
+
+    /* Чат дигар аз поён ҷойгир нашавад */
+    .chat-widget {
+        position: static !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: auto;
+        height: auto;
+    }
+
+    /* Худи равзанаи чат ҳангоми кушодан */
+    .chat-box {
+        position: fixed !important;
+
+        right: 12px !important;
+        bottom: 75px !important;
+
+        width: calc(100vw - 24px) !important;
+        height: 65vh !important;
+        max-height: 500px;
+
+        z-index: 999999 !important;
+    }
+}
+/* 📱 CHAT BUTTON - MOBILE */
+@media (max-width: 600px) {
+
+    #chatOpenBtn {
+        display: none !important;
+    }
+
+    #drawerChat {
+        font-size: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    #drawerChat::before {
+        content: "💬";
+        font-size: 20px;
+    }
+
+    #drawerChat::after {
+        content: "✨";
+        font-size: 13px;
+        margin-left: auto;
+    }
+}
+/* =========================
+   CHAT - MOBILE
+========================= */
+@media (max-width: 768px) {
+
+    #chatWidget {
+        position: fixed !important;
+        right: 15px !important;
+        bottom: 85px !important;
+        z-index: 99999 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    #chatOpenBtn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        position: relative !important;
+        z-index: 100000 !important;
+    }
+
+    #chatBox {
+        position: fixed !important;
+        right: 15px !important;
+        bottom: 145px !important;
+        z-index: 100001 !important;
+    }
+
+    /* Сабад дар поён мемонад, чат болои он */
+    #fixedCartContainer {
+        z-index: 9990 !important;
+    }
+}

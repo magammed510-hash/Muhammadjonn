@@ -832,5 +832,251 @@ alert("Дархости шумо барои курьер шудан бомува
 if (typeof closeAuthModal === 'function') {  
     closeAuthModal();  
 }
-
 }
+// =========================
+// BURGER MENU + SETTINGS + CHAT
+// =========================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =========================
+    // ELEMENTS
+    // =========================
+
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const sideDrawer = document.getElementById("sideDrawer");
+    const drawerOverlay = document.getElementById("drawerOverlay");
+    const closeDrawer = document.getElementById("closeDrawer");
+
+    const drawerSettings = document.getElementById("drawerSettings");
+    const drawerChat = document.getElementById("drawerChat");
+
+    const settingsModal = document.getElementById("settingsModal");
+
+    const chatOpenBtn = document.getElementById("chatOpenBtn");
+    const chatCloseBtn = document.getElementById("chatCloseBtn");
+    const chatBox = document.getElementById("chatBox");
+    const chatInput = document.getElementById("chatInput");
+    const chatSendBtn = document.getElementById("chatSendBtn");
+    const chatMessages = document.getElementById("chatMessages");
+
+
+    // =========================
+    // BURGER MENU
+    // =========================
+
+    function openDrawer() {
+        if (sideDrawer) sideDrawer.classList.add("active");
+        if (drawerOverlay) drawerOverlay.classList.add("active");
+    }
+
+    function closeDrawerMenu() {
+        if (sideDrawer) sideDrawer.classList.remove("active");
+        if (drawerOverlay) drawerOverlay.classList.remove("active");
+    }
+
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener("click", function () {
+            openDrawer();
+        });
+    }
+
+    if (closeDrawer) {
+        closeDrawer.addEventListener("click", function () {
+            closeDrawerMenu();
+        });
+    }
+
+    if (drawerOverlay) {
+        drawerOverlay.addEventListener("click", function () {
+            closeDrawerMenu();
+        });
+    }
+
+
+    // =========================
+    // SETTINGS FROM BURGER
+    // =========================
+
+    if (drawerSettings) {
+        drawerSettings.addEventListener("click", function (e) {
+
+            e.preventDefault();
+
+            closeDrawerMenu();
+
+            if (settingsModal) {
+                settingsModal.style.display = "flex";
+            }
+        });
+    }
+
+
+    // =========================
+    // CHAT OPEN
+    // =========================
+
+    function openChat() {
+
+        if (!chatBox) {
+            console.log("chatBox ёфт нашуд");
+            return;
+        }
+
+        chatBox.classList.add("active");
+
+        if (chatOpenBtn) {
+            chatOpenBtn.style.display = "none";
+        }
+
+        if (chatInput) {
+            setTimeout(function () {
+                chatInput.focus();
+            }, 200);
+        }
+    }
+
+
+    // =========================
+    // CHAT CLOSE
+    // =========================
+
+    function closeChat() {
+
+        if (!chatBox) return;
+
+        chatBox.classList.remove("active");
+
+        if (chatOpenBtn) {
+            chatOpenBtn.style.display = "flex";
+        }
+    }
+
+
+    // =========================
+    // CHAT BUTTON
+    // =========================
+
+    if (chatOpenBtn) {
+        chatOpenBtn.addEventListener("click", function () {
+            openChat();
+        });
+    }
+
+
+    // =========================
+    // CHAT CLOSE BUTTON
+    // =========================
+
+    if (chatCloseBtn) {
+        chatCloseBtn.addEventListener("click", function () {
+            closeChat();
+        });
+    }
+
+
+    // =========================
+    // CHAT FROM BURGER
+    // =========================
+
+    if (drawerChat) {
+
+        drawerChat.addEventListener("click", function (e) {
+
+            e.preventDefault();
+
+            // Аввал менюро мебандем
+            closeDrawerMenu();
+
+            // Баъд Chat-ро мекушоем
+            openChat();
+        });
+    }
+
+
+    // =========================
+    // SEND MESSAGE
+    // =========================
+
+    function sendMessage() {
+
+        if (!chatInput || !chatMessages) return;
+
+        const text = chatInput.value.trim();
+
+        if (!text) return;
+
+
+        // USER MESSAGE
+        const userMessage = document.createElement("div");
+
+        userMessage.className =
+            "chat-message user-message";
+
+        userMessage.textContent = text;
+
+        chatMessages.appendChild(userMessage);
+
+        chatInput.value = "";
+
+        chatMessages.scrollTop =
+            chatMessages.scrollHeight;
+
+
+        // BOT MESSAGE
+        setTimeout(function () {
+
+            const botMessage =
+                document.createElement("div");
+
+            botMessage.className =
+                "chat-message bot-message";
+
+            botMessage.textContent =
+                "Ташаккур! 😊 Паёматон қабул шуд. Барои фармоиш метавонед аз сабад истифода баред.";
+
+            chatMessages.appendChild(botMessage);
+
+            chatMessages.scrollTop =
+                chatMessages.scrollHeight;
+
+        }, 500);
+    }
+
+
+    // =========================
+    // SEND BUTTON
+    // =========================
+
+    if (chatSendBtn) {
+
+        chatSendBtn.addEventListener(
+            "click",
+            function () {
+                sendMessage();
+            }
+        );
+    }
+
+
+    // =========================
+    // ENTER TO SEND
+    // =========================
+
+    if (chatInput) {
+
+        chatInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    sendMessage();
+                }
+            }
+        );
+    }
+
+});
