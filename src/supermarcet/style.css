@@ -2771,7 +2771,7 @@ body.dark-theme .flavor-picker {
     color: #334155;
 }
 
-.personality-options {
+.personality-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
