@@ -1080,3 +1080,234 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+/* =====================================================
+   ROLE SELECTOR
+===================================================== */
+
+function selectRole(role) {
+
+    const currentUser = getCurrentUser();
+
+    /*
+       Агар касе аллакай дар аккаунт бошад,
+       аввал бояд Logout кунад.
+    */
+
+    if (currentUser) {
+
+        alert(
+            "⚠️ Аввал аз аккаунти ҳозира бароед,\n" +
+            "баъд метавонед нақши дигарро интихоб кунед."
+        );
+
+        showLoggedUser();
+
+        return;
+    }
+
+
+    const clientForm =
+        document.getElementById("clientAuthForm");
+
+    const courierForm =
+        document.getElementById("courierAuthForm");
+
+    const clientBtn =
+        document.getElementById("clientRoleBtn");
+
+    const courierBtn =
+        document.getElementById("courierRoleBtn");
+
+
+    if (role === "client") {
+
+        clientForm.style.display = "block";
+
+        courierForm.style.display = "none";
+
+        clientBtn.classList.add("active");
+
+        courierBtn.classList.remove("active");
+
+    } else {
+
+        clientForm.style.display = "none";
+
+        courierForm.style.display = "block";
+
+        courierBtn.classList.add("active");
+
+        clientBtn.classList.remove("active");
+    }
+}
+
+
+/* =====================================================
+   OPEN AUTH
+===================================================== */
+
+function openAuthModal() {
+
+    const modal =
+        document.getElementById("authModal");
+
+    const currentUser =
+        getCurrentUser();
+
+
+    if (currentUser) {
+
+        showLoggedUser();
+
+    } else {
+
+        document.getElementById(
+            "loggedUserSection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "clientAuthForm"
+        ).style.display = "block";
+
+        document.getElementById(
+            "courierAuthForm"
+        ).style.display = "none";
+
+        document.getElementById(
+            "clientRoleBtn"
+        ).classList.add("active");
+
+        document.getElementById(
+            "courierRoleBtn"
+        ).classList.remove("active");
+    }
+
+
+    modal.style.display = "flex";
+}
+
+
+/* =====================================================
+   SHOW CURRENT USER
+===================================================== */
+
+function showLoggedUser() {
+
+    const currentUser =
+        getCurrentUser();
+
+    if (!currentUser) return;
+
+
+    document.getElementById(
+        "clientAuthForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "courierAuthForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loggedUserSection"
+    ).style.display = "block";
+
+
+    let icon = "👤";
+
+    let roleText = "Клиент";
+
+
+    if (currentUser.role === "courier") {
+
+        icon = "🚚";
+
+        roleText = "Курьер";
+    }
+
+
+    if (currentUser.role === "admin") {
+
+        icon = "👑";
+
+        roleText = "Админ";
+    }
+
+
+    document.getElementById(
+        "loggedUserIcon"
+    ).textContent = icon;
+
+
+    document.getElementById(
+        "loggedUserName"
+    ).textContent =
+        currentUser.name || "Корбар";
+
+
+    document.getElementById(
+        "loggedUserRole"
+    ).textContent =
+        roleText;
+}
+
+
+/* =====================================================
+   LOGOUT + CHANGE ROLE
+===================================================== */
+
+function logoutAndChooseRole() {
+
+    const ok =
+        confirm(
+            "Аз аккаунт баромадан мехоҳед?"
+        );
+
+    if (!ok) return;
+
+
+    localStorage.removeItem(
+        "currentUser"
+    );
+
+
+    document.getElementById(
+        "loggedUserSection"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "clientAuthForm"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "courierAuthForm"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "clientRoleBtn"
+    ).classList.add("active");
+
+
+    document.getElementById(
+        "courierRoleBtn"
+    ).classList.remove("active");
+
+
+    alert(
+        "✅ Шумо баромадед. Акнун метавонед нақши дигарро интихоб кунед."
+    );
+}
+
+
+/* =====================================================
+   CLOSE
+===================================================== */
+
+function closeAuthModal() {
+
+    document.getElementById(
+        "authModal"
+    ).style.display = "none";
+}

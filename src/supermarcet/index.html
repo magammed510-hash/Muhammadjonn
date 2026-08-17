@@ -594,17 +594,64 @@
                 <button class="auth-tab-btn active" onclick="switchAuthTab('client')">👤 Клиент</button>
                 <button class="auth-tab-btn" onclick="switchAuthTab('courier')">🚚 Курьер</button>
             </div>
-
-            <!-- Формаи Клиент / Воридшавӣ -->
-            <div id="clientAuthForm">
-                <form onsubmit="registerClient(event)" style="margin-bottom: 20px;">
-                    <h3>Регистратсияи Клиент</h3>
-                    <input type="text" id="clientRegName" placeholder="Номи шумо" required style="margin-bottom:10px;">
-                    <input type="text" id="clientRegPhone" placeholder="Рақами телефон" required style="margin-bottom:10px;">
-                    <input type="password" id="clientRegPass" placeholder="Парол" required style="margin-bottom:10px;">
-                    <button type="submit" class="add-to-cart-btn">Ба қайд гирифтан (Клиент)</button>
                 </form>
-                
+                <input type="text"
+       id="clientRegName"
+       placeholder="👤 Номи шумо"
+       required
+       style="margin-bottom:10px;">
+
+<input type="text"
+       id="clientRegPhone"
+       placeholder="📱 Рақами телефон"
+       required
+       style="margin-bottom:10px;">
+
+<!-- ШАХСИЯТ -->
+<div class="personality-selector">
+    <label class="personality-label">Шахсияти шумо</label>
+
+    <div class="personality-options">
+
+        <button type="button"
+                class="personality-btn active"
+                data-role="client"
+                onclick="selectPersonality('client')">
+            👤
+            <span>Клиент</span>
+        </button>
+
+        <button type="button"
+                class="personality-btn"
+                data-role="courier"
+                onclick="selectPersonality('courier')">
+            🚚
+            <span>Курьер</span>
+        </button>
+
+        <button type="button"
+                class="personality-btn"
+                data-role="admin"
+                onclick="selectPersonality('admin')">
+            👑
+            <span>Админ</span>
+        </button>
+
+    </div>
+
+    <input type="hidden" id="selectedPersonality" value="client">
+</div>
+
+<input type="password"
+       id="clientRegPass"
+       placeholder="🔐 Парол"
+       required
+       style="margin-bottom:10px;">
+
+<button type="submit"
+        class="add-to-cart-btn">
+    ✨ Ба қайд гирифтан
+</button>
                 <hr style="margin: 15px 0; border:0; border-top:1px solid #cbd5e1;">
 
                 <form onsubmit="loginUser(event)">
@@ -633,6 +680,7 @@
             </div>
         </div>
     </div>
+    
 <!-- CHAT -->
 <div id="chatWidget" class="chat-widget">
 
