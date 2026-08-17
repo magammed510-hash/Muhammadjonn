@@ -611,33 +611,24 @@
 <div class="personality-selector">
     <label class="personality-label">Шахсияти шумо</label>
 
-    <div class="personality-options">
+   <!-- ШАХСИЯТ -->
+<div class="personality-selector">
+    <label class="personality-label">Шахсият интихоб кунед:</label>
 
-        <button type="button"
-                class="personality-btn active"
-                data-role="client"
-                onclick="selectPersonality('client')">
-            👤
-            <span>Клиент</span>
+    <div class="personality-buttons">
+        <button type="button" class="personality-btn active" data-role="client">
+            👤 Клиент
         </button>
 
-        <button type="button"
-                class="personality-btn"
-                data-role="courier"
-                onclick="selectPersonality('courier')">
-            🚚
-            <span>Курьер</span>
+        <button type="button" class="personality-btn" data-role="courier">
+            🚚 Курьер
         </button>
 
-        <button type="button"
-                class="personality-btn"
-                data-role="admin"
-                onclick="selectPersonality('admin')">
-            👑
-            <span>Админ</span>
+        <button type="button" class="personality-btn" data-role="admin">
+            👑 Админ
         </button>
-
     </div>
+</div>
 
     <input type="hidden" id="selectedPersonality" value="client">
 </div>
