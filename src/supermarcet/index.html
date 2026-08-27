@@ -37,9 +37,12 @@
     </button>
 
     <!-- ЧАТ: дар телефон дар ҷои Account -->
-    <a href="#" id="drawerChat" class="mobile-chat-top-btn" aria-label="Чат">
-        💬
-    </a>
+    <a href="https://wa.me/992900210802"
+   target="_blank"
+   class="mobile-chat-top-btn"
+   aria-label="WhatsApp">
+    📞
+</a>
 
     <!-- Account: дар телефон пинҳон мешавад -->
     <button id="profileModalBtn"
@@ -600,7 +603,7 @@
        placeholder="👤 Номи шумо"
        required
        style="margin-bottom:10px;">
-
+   <form onsubmit="handleClientRegister(event)">
 <input type="text"
        id="clientRegPhone"
        placeholder="📱 Рақами телефон"
@@ -608,23 +611,6 @@
        style="margin-bottom:10px;">
 
 <!-- ШАХСИЯТ -->
-<div class="personality-selector">
-    <label class="personality-label">Шахсият интихоб кунед:</label>
-
-    <div class="personality-buttons">
-        <button type="button" class="personality-btn active" data-role="client">
-            👤 Клиент
-        </button>
-
-        <button type="button" class="personality-btn" data-role="courier">
-            🚚 Курьер
-        </button>
-
-        <button type="button" class="personality-btn" data-role="admin">
-            👑 Админ
-        </button>
-    </div>
-</div>
 
 <input type="hidden" id="selectedPersonality" value="client">
 
@@ -644,7 +630,7 @@
                     <h3>Ворид шудан ба система</h3>
                     <input type="text" id="loginPhone" placeholder="Рақами телефон" required style="margin-bottom:10px;">
                     <input type="password" id="loginPass" placeholder="Парол" required style="margin-bottom:10px;">
-                    <button type="submit" class="client-register-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">Ба кайд гирифтан (клиент)</button>
+                <button type="submit" class="add-to-cart-btn">Ворид шудан</button>
                 </form>
             </div>
 
@@ -668,44 +654,7 @@
     </div>
     
 <!-- CHAT -->
-<div id="chatWidget" class="chat-widget">
 
-    <button id="chatOpenBtn" class="chat-open-btn" type="button">
-        💬 <span>Чат</span>
-    </button>
-
-    <div id="chatBox" class="chat-box">
-
-        <div class="chat-header">
-            <div>
-                <strong>💬 SuperMarket_Rahimov</strong>
-                <small>Онлайн</small>
-            </div>
-
-            <button id="chatCloseBtn" class="chat-close-btn" type="button">
-                ×
-            </button>
-        </div>
-
-        <div id="chatMessages" class="chat-messages">
-            <div class="chat-message bot-message">
-                Салом! 👋 Чӣ кӯмак лозим?
-            </div>
-        </div>
-
-        <div class="chat-input-area">
-            <input
-                type="text"
-                id="chatInput"
-                placeholder="Паёми худро нависед..."
-                autocomplete="off"
-            >
-
-            <button id="chatSendBtn" type="button">➤</button>
-        </div>
-
-    </div>
-</div>
 
 <script src="./script.js"></script>
 </body>
