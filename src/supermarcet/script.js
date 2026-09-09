@@ -390,11 +390,26 @@ if (getGpsBtn) {
         }
     });
 }
+//order
+const ORDER_STATUS_LABELS = {
+    received:    { icon: '🧾', text: 'Қабул шуд',      color: '#3b82f6' },
+    preparing:   { icon: '👨‍🍳', text: 'Омода мешавад',  color: '#f59e0b' },
+    on_the_way:  { icon: '🚚', text: 'Дар роҳ',         color: '#8b5cf6' },
+    delivered:   { icon: '✅', text: 'Расонда шуд',      color: '#10b981' },
+    cancelled:   { icon: '❌', text: 'Бекор шуд',        color: '#ef4444' }
+};
 
-// Save Order & Points (1 бал ба ҳар 10 сомонӣ)
 function saveOrderToAdmin(clientName, clientPhone, productsSummary, totalAmount) {
     let allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
-    allOrders.push({ name: clientName, phone: clientPhone, products: productsSummary, date: new Date().toLocaleString() });
+    allOrders.push({
+        id: 'ORD-' + Date.now(),
+        name: clientName,
+        phone: clientPhone,
+        products: productsSummary,
+        total: totalAmount,
+        date: new Date().toLocaleString(),
+        status: 'received'
+    });
     localStorage.setItem('market_all_orders', JSON.stringify(allOrders));
 
     let addedPoints = Math.floor(totalAmount / 10);
@@ -518,7 +533,28 @@ function handleRegisterAction() {
     document.querySelector('.close-profile').style.display = 'block';
     showClientCabinet(userData);
 }
+function renderClientOrderStatus(phone) {
+    let allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
+    let myOrders = allOrders.filter(o => o.phone === phone).reverse();
 
+    if (myOrders.length === 0) {
+        return `<p style="text-align:center; color:#94a3b8; font-size:13px; padding:10px 0;">Шумо ҳанӯз фармоише надоред.</p>`;
+    }
+
+    return myOrders.map(o => {
+        const st = ORDER_STATUS_LABELS[o.status] || ORDER_STATUS_LABELS.received;
+        return `
+            <div class="order-status-card">
+                <div class="order-status-top">
+                    <strong>#${(o.id || '').slice(-6)}</strong>
+                    <span class="order-status-badge" style="background:${st.color}22; color:${st.color};">${st.icon} ${st.text}</span>
+                </div>
+                <p class="order-status-products">${o.products}</p>
+                <p class="order-status-date">${o.date}</p>
+            </div>
+        `;
+    }).join('');
+}
 function showClientCabinet(user) {
     if (authFormSection) authFormSection.style.display = 'none';
     if (adminPanelSection) adminPanelSection.style.display = 'none';
@@ -529,14 +565,19 @@ function showClientCabinet(user) {
 
         profileInfoSection.innerHTML = `
             <div style="text-align: center; margin-bottom: 20px;">
-                <div style="font-size: 40px; margin-bottom: 8px;">👤</div>
-                <h3 style="color: #0f172a; font-size: 20px;">${user.name}</h3>
-                <p style="color: #64748b; font-size: 13px;">Рақам: ${user.phone}</p>
-                <div style="margin-top: 10px; background: #fef3c7; color: #d97706; padding: 6px 12px; display: inline-block; border-radius: 20px; font-weight: bold; font-size: 13px;">
+                ...
                     ⭐ Балҳои ман: ${client.points || 0} бал (1 бал = 10 сом)
                 </div>
             </div>
-            <button id="logoutBtn" style="width: 100%; background: #ef4444; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer;" data-i18n="logout">Баромадан</button>
+
+            <div style="margin-top:20px; text-align:left;">
+                <h3 style="font-size:15px; color:#334155; margin-bottom:10px;">📦 Ҳолати фармоишҳои ман</h3>
+                <div style="display:flex; flex-direction:column; gap:10px; max-height:260px; overflow-y:auto;">
+                    ${renderClientOrderStatus(user.phone)}
+                </div>
+            </div>
+
+            <button id="logoutBtn" ...>Баромадан</button>
         `;
         document.getElementById('logoutBtn').addEventListener('click', handleLogout);
     }
@@ -549,11 +590,37 @@ function showAdminDashboard() {
 
     renderAdminUsersTable();
 
-    const ordersTable = document.getElementById('adminOrdersList');
+   const ordersTable = document.getElementById('adminOrdersList');
     const allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
     if (ordersTable) {
-        ordersTable.innerHTML = allOrders.length > 0 ? allOrders.map(o => `<tr><td>${o.name}</td><td>${o.phone}</td><td>${o.products}</td><td>${o.date}</td></tr>`).join('') : `<tr><td colspan="4" style="text-align: center; color: #94a3b8;">Ҳоло хариде нест</td></tr>`;
+        ordersTable.innerHTML = allOrders.length > 0 ? allOrders.map((o, idx) => {
+            const st = ORDER_STATUS_LABELS[o.status] || ORDER_STATUS_LABELS.received;
+            return `
+                <tr>
+                    <td>${o.name}</td>
+                    <td>${o.phone}</td>
+                    <td>${o.products}</td>
+                    <td>${o.date}</td>
+                    <td>
+                        <select onchange="updateOrderStatus(${idx}, this.value)"
+                            style="padding:4px 6px; border-radius:8px; border:1px solid #475569; background:#0f172a; color:${st.color}; font-weight:700;">
+                            ${Object.entries(ORDER_STATUS_LABELS).map(([key, val]) =>
+                                `<option value="${key}" ${o.status === key ? 'selected' : ''}>${val.icon} ${val.text}</option>`
+                            ).join('')}
+                        </select>
+                    </td>
+                </tr>`;
+        }).join('') : `<tr><td colspan="5" style="text-align: center; color: #94a3b8;">Ҳоло хариде нест</td></tr>`;
     }
+    window.updateOrderStatus = function(index, newStatus) {
+    let allOrders = JSON.parse(localStorage.getItem('market_all_orders') || '[]');
+    if (allOrders[index]) {
+        allOrders[index].status = newStatus;
+        localStorage.setItem('market_all_orders', JSON.stringify(allOrders));
+        showAdminDashboard();
+        alert('Ҳолати фармоиш нав шуд!');
+    }
+};
 }
 
 function renderAdminUsersTable() {
